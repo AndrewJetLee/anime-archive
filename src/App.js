@@ -6,15 +6,22 @@ import {
   Link
 } from "react-router-dom";
 import Home from './pages/Home';
+import styled from "styled-components";
 
 function App() {
   return (
-    <div className="App">
+    <Container className="App">
       <Router path="/">
         <Home />
       </Router>
-    </div>
+    </Container>
   );
 }
 
 export default App;
+
+const Container = styled.div`
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+`

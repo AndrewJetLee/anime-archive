@@ -1,9 +1,13 @@
-
+import styled from "styled-components"
 
 const Nav = () => {
   return (
-    <div>Nav</div>
+    <Container>Nav</Container>
   )
 }
 
 export default Nav
+
+const Container = styled.nav`
+    
+`
