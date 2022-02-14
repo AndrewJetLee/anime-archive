@@ -16,7 +16,7 @@ export default Home;
 const Container = styled.div`
   display: flex;
   border: solid;
-  width: 80vw;
+  width: 70vw;
   flex-direction: column;
   min-height: 100vh;
 `;

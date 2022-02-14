@@ -3,6 +3,7 @@ import { Navigation } from "swiper";
 import styled from "styled-components";
 import "swiper/css";
 import "swiper/css/navigation";
+import CarouselItem from "./CarouselItem";
 
 const Carousel = () => {
   return (
@@ -15,7 +16,9 @@ const Carousel = () => {
         onSlideChange={() => console.log("slide change")}
         onSwiper={(swiper) => console.log(swiper)}
       >
-        <SwiperSlide>Slide 1</SwiperSlide>
+        <SwiperSlide>
+          <CarouselItem />
+        </SwiperSlide>
         <SwiperSlide>Slide 2</SwiperSlide>
         <SwiperSlide>Slide 3</SwiperSlide>
         <SwiperSlide>Slide 4</SwiperSlide>
@@ -33,5 +36,5 @@ const Carousel = () => {
 export default Carousel
 
 const Container = styled.div`
-
+  display: flex; 
 `
