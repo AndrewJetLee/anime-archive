@@ -1,5 +1,8 @@
 const express = require("express");
 const cors = require("cors");
+const animeRouter = require("./routers/anime");
+const mangaRouter = require("./routers/manga");
+const userRouter = require("./routers/user");
 
 // initialize server
 const app = express();
@@ -13,6 +16,11 @@ app.use(
     extended: true,
   })
 );
+
+// assign routers
+app.use("/api/anime", animeRouter);
+app.use("/api/manga", mangaRouter);
+app.use("/api/user", userRouter);
 
 // start server
 const startServer = async () => {
