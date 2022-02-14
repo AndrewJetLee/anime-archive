@@ -15,14 +15,16 @@ const Carousel = ({title}) => {
         navigation={true}
         modules={[Navigation]}
         spaceBetween={50}
-        slidesPerView={5}
+        slidesPerView={6}
         onSlideChange={() => console.log("slide change")}
         onSwiper={(swiper) => console.log(swiper)}
       >
         <SwiperSlide>
           <CarouselItem />
         </SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
+        <SwiperSlide>
+          <CarouselItem />
+        </SwiperSlide>
         <SwiperSlide>Slide 3</SwiperSlide>
         <SwiperSlide>Slide 4</SwiperSlide>
         <SwiperSlide>Slide 5</SwiperSlide>

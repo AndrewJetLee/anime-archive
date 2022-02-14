@@ -3,16 +3,39 @@ import styled from "styled-components";
 const CarouselItem = () => {
   return (
     <Container>
-
+      <Image src="./images/attack-on-titan-image.jpg"></Image>
+      <Title>Attack on Titan</Title>
     </Container>
   )
 }
 
 export default CarouselItem
 
-const Container = styled.div`
+const Container = styled.a`
     flex: 1; 
-    width: 100%;
+    width: 200px;
     border: solid;
-    height: 200px;
+    display: flex;
+    height: 250px;
+    flex-direction: column;
+    transition-property: opacity;
+    transition-duration: .16s;
+    :hover {
+      opacity: .5;
+    }
+`
+
+const Image = styled.img`
+    object-fit: fill;
+    width: 100%;
+    height: 100%;
+    position: relative;
+`
+
+const Title = styled.span`
+  display: block;
+  position: absolute;
+  z-index: 1000;
+  bottom: 0;
+  color: white;
 `
