@@ -6,7 +6,8 @@ const Home = () => {
   return (
     <Container>
       <Nav />
-      <Carousel />
+      <Carousel title={"Popular Anime"}/>
+      <Carousel title={"Popular Manga"}/>
     </Container>
   );
 };

@@ -5,9 +5,12 @@ import "swiper/css";
 import "swiper/css/navigation";
 import CarouselItem from "./CarouselItem";
 
-const Carousel = () => {
+const Carousel = ({title}) => {
   return (
     <Container>
+        <Title>
+          {title}
+        </Title>
          <Swiper
         navigation={true}
         modules={[Navigation]}
@@ -36,5 +39,9 @@ const Carousel = () => {
 export default Carousel
 
 const Container = styled.div`
-  display: flex; 
+
+`
+
+const Title = styled.h2`
+  
 `
