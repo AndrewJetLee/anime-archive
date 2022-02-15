@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-const CarouselItem = () => {
+const CarouselItem = ({item}) => {
   return (
     <Container>
-      <Image src="./images/attack-on-titan-image.jpg"></Image>
+      <Image src={item.attributes.posterImage.small}></Image>
       <Title>Attack on Titan</Title>
     </Container>
   )

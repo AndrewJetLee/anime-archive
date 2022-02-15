@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import CarouselItem from "./CarouselItem";
 
-const Carousel = ({title}) => {
+const Carousel = ({title, data}) => {
   return (
     <Container>
         <Title>
@@ -19,20 +19,11 @@ const Carousel = ({title}) => {
         onSlideChange={() => console.log("slide change")}
         onSwiper={(swiper) => console.log(swiper)}
       >
-        <SwiperSlide>
-          <CarouselItem />
-        </SwiperSlide>
-        <SwiperSlide>
-          <CarouselItem />
-        </SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
-        <SwiperSlide>Slide 5</SwiperSlide>
-        <SwiperSlide>Slide 1</SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
-        <SwiperSlide>Slide 5</SwiperSlide>
+        {data.map((item, i) => 
+          <SwiperSlide key={i}>
+            <CarouselItem item={item} />
+          </SwiperSlide>
+        )}
       </Swiper>
     </Container>
   )
