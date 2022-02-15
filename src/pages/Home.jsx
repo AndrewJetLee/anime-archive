@@ -2,13 +2,31 @@ import Nav from "../components/Nav";
 import styled from "styled-components";
 import Carousel from "../components/Carousel";
 import Footer from "../components/Footer";
+import { publicRequest } from "../requestMethods";
+import { useEffect, useState } from "react";
 
 const Home = () => {
+  const [trendingAnime, setTrendingAnime] = useState([]);
+
+  useEffect(() => {
+    getTrendingAnime()
+  }, [])
+
+  const getTrendingAnime = async () => {
+    try {
+      const { data } = await publicRequest.get("/anime/");
+      console.log(data);
+      setTrendingAnime(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <Container>
       <Wrapper>
         <Nav />
-        <Carousel title={"Popular Anime"} />
+        <Carousel title={"Popular Anime"} anime={trendingAnime}/>
         <Carousel title={"Popular Manga"} />
       </Wrapper>
       <Footer />
