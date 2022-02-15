@@ -1,36 +1,36 @@
 import styled from "styled-components";
 
-const CarouselItem = ({item}) => {
+const CarouselItem = ({ item }) => {
   return (
     <Container>
-      <Image src={item.attributes.posterImage.small}></Image>
-      <Title>Attack on Titan</Title>
+      <Image src={item.attributes.posterImage.small} className="animeImage" />
+      <Title>{item.attributes.canonicalTitle}</Title>
+      <Background></Background>
     </Container>
-  )
-}
+  );
+};
 
-export default CarouselItem
+export default CarouselItem;
 
-const Container = styled.a`
-    flex: 1; 
-    width: 200px;
-    border: solid;
-    display: flex;
-    height: 250px;
-    flex-direction: column;
-    transition-property: opacity;
-    transition-duration: .16s;
-    :hover {
-      opacity: .5;
-    }
-`
+const Container = styled.div`
+  flex: 1;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  transition-property: opacity;
+  transition-duration: 0.16s;
+  position: relative;
+  :hover {
+    opacity: 0.5;
+  }
+`;
 
 const Image = styled.img`
-    object-fit: fill;
-    width: 100%;
-    height: 100%;
-    position: relative;
-`
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  position: relative;
+`;
 
 const Title = styled.span`
   display: block;
@@ -38,4 +38,13 @@ const Title = styled.span`
   z-index: 1000;
   bottom: 0;
   color: white;
-`
+`;
+
+const Background = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent 0%, black 100%);
+` 

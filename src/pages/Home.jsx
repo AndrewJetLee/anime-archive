@@ -26,8 +26,8 @@ const Home = () => {
     <Container>
       <Wrapper>
         <Nav />
-        <Carousel title={"Popular Anime"} data={trendingAnime}/>
-        <Carousel title={"Popular Manga"} data={trendingAnime}/>
+        <Carousel title={"Trending Anime"} data={trendingAnime}/>
+        <Carousel title={"Trending Manga"} data={trendingAnime}/>
       </Wrapper>
       <Footer />
     </Container>
