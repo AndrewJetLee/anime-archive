@@ -1,12 +1,14 @@
 import styled from "styled-components"
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import { publicRequest } from '../requestMethods';
 
 const Nav = () => {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    console.log("clicked");
+    let response = await publicRequest.get(`anime/?filter[text]=demon`)
+    console.log(response);
   }
 
 
