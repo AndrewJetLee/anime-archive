@@ -1,14 +1,17 @@
 import styled from "styled-components"
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import { publicRequest } from '../requestMethods';
+import { apiRequest } from '../requestMethods';
+import { useState } from "react";
 
 const Nav = () => {
+  const [query, setQuery] = useState("");
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    let response = await publicRequest.get(`anime/?filter[text]=demon`)
-    console.log(response);
+    console.log(query);
+    let response = await apiRequest.get(`anime/?filter[text]=${query}`)
+    console.log(response.data.data);
   }
 
 
@@ -19,7 +22,9 @@ const Nav = () => {
         </Left>
         <Center>
             <InputWrapper onSubmit={handleSearch}>
-                <SearchInput placeholder="Search Anime, Manga, and more..."></SearchInput><SearchIcon className="searchIcon" onClick={handleSearch}/>
+                <SearchInput onChange={(e) => {
+                    setQuery(e.target.value)
+                }} placeholder="Search Anime, Manga, and more..."></SearchInput><SearchIcon className="searchIcon" onClick={handleSearch}/>
             </InputWrapper>
         </Center>
         <Right>
