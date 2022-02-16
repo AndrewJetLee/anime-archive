@@ -7,17 +7,20 @@ import { useEffect, useState } from "react";
 
 const Home = () => {
   const [trendingAnime, setTrendingAnime] = useState([]);
-  const [trendingManga, setTrandingManga] = useState([]);
+  const [trendingManga, setTrendingManga] = useState([]);
 
   useEffect(() => {
-    getTrendingAnime()
+     getAllMedia()
   }, [])
 
-  const getTrendingAnime = async () => {
+  const getAllMedia = async () => {
     try {
-      const { data } = await publicRequest.get("/anime/");
-      console.log(data);
-      setTrendingAnime(data);
+      const trendingAnime = await publicRequest.get("/anime/");
+      const trendingManga = await publicRequest.get("/manga/");
+      console.log(trendingAnime.data);
+      console.log(trendingManga.data);
+      setTrendingAnime(trendingAnime.data);
+      setTrendingManga(trendingManga.data);
     } catch (err) {
       console.log(err);
     }
@@ -29,7 +32,7 @@ const Home = () => {
       <Wrapper>
         <Nav />
         <Carousel title={"Trending Anime"} data={trendingAnime}/>
-        <Carousel title={"Trending Manga"} data={trendingAnime}/>
+        <Carousel title={"Trending Manga"} data={trendingManga}/>
       </Wrapper>
       <Footer />
     </Container>

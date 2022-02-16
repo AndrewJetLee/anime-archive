@@ -3,14 +3,21 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 
 const Nav = () => {
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    console.log("clicked");
+  }
+
+
   return (
     <Container>
         <Left>
             <Logo src="./images/aa-logo.jpg"/>
         </Left>
         <Center>
-            <InputWrapper>
-                <SearchInput placeholder="Search Anime, Manga, and more..."></SearchInput><SearchIcon className="searchIcon"/>
+            <InputWrapper onSubmit={handleSearch}>
+                <SearchInput placeholder="Search Anime, Manga, and more..."></SearchInput><SearchIcon className="searchIcon" onClick={handleSearch}/>
             </InputWrapper>
         </Center>
         <Right>
@@ -50,7 +57,7 @@ const Center = styled.div`
     display: flex;
     align-items: center;
 `
-const InputWrapper = styled.div`
+const InputWrapper = styled.form`
     display: flex;
     align-items: center;
     border: solid 1px;
