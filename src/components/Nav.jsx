@@ -3,15 +3,20 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { apiRequest } from '../requestMethods';
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Nav = () => {
   const [query, setQuery] = useState("");
+  const navigate = useNavigate();
 
   const handleSearch = async (e) => {
     e.preventDefault();
     console.log(query);
-    let response = await apiRequest.get(`anime/?filter[text]=${query}`)
-    console.log(response.data.data);
+    let animeResult = await apiRequest.get(`anime/?filter[text]=${query}`)
+    let mangaResult = await apiRequest.get(`manga/?filter[text]=${query}`)
+    let result = [...animeResult.data.data, ...mangaResult.data.data];
+    console.log(result);
+    navigate("/find", { state: result});
   }
 
 
