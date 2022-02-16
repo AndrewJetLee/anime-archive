@@ -1,7 +1,6 @@
 const router = require("express").Router();
+const { getTrending } = require("../controllers/manga");
 
-router.get("/", async (req, res) => {
-    res.send("Gigity goo");
-});
+router.get("/", getTrending);
 
 module.exports = router; 

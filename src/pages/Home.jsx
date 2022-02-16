@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 const Home = () => {
   const [trendingAnime, setTrendingAnime] = useState([]);
+  const [trendingManga, setTrandingManga] = useState([]);
 
   useEffect(() => {
     getTrendingAnime()
@@ -21,6 +22,7 @@ const Home = () => {
       console.log(err);
     }
   }
+  
 
   return (
     <Container>

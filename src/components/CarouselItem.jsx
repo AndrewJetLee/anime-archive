@@ -46,5 +46,5 @@ const Background = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to bottom, transparent 0%, black 100%);
+  background: linear-gradient(to bottom, transparent 0%, black 200%);
 ` 
