@@ -1,8 +1,17 @@
 import styled from "styled-components";
+import { apiRequest } from "../requestMethods";
+import { useNavigate } from "react-router-dom";
 
 const CarouselItem = ({ item }) => {
+  const navigate = useNavigate();
+
+  const handleClick = async (e) => {
+    const response = await apiRequest.get(`/${item.type}/${item.id}`);
+    navigate("/media", { state: response.data.data });
+  };
+
   return (
-    <Container>
+    <Container onClick={handleClick}>
       <Image src={item.attributes.posterImage.medium} className="animeImage" />
       <Title>{item.attributes.canonicalTitle}</Title>
       <Background></Background>
@@ -47,4 +56,4 @@ const Background = styled.div`
   right: 0;
   bottom: 0;
   background: linear-gradient(to bottom, transparent 0%, black 200%);
-` 
+`;

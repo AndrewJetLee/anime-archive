@@ -4,9 +4,10 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import Home from './pages/Home';
 import styled from "styled-components";
+import Home from './pages/Home';
 import Search from './pages/Search';
+import Media from './pages/Media';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/search" element={<Search/>}/>
+          <Route path="/media" element={<Media/>}/>
         </Routes>
       </Router>
     </Container>
