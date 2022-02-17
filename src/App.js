@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import Home from './pages/Home';
 import styled from "styled-components";
-import AnimeList from './pages/AnimeList';
+import Search from './pages/Search';
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home/>}/>
-          <Route path="/find" element={<AnimeList/>}/>
+          <Route path="/find" element={<Search/>}/>
         </Routes>
       </Router>
     </Container>
