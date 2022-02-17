@@ -2,7 +2,7 @@ import Nav from "../components/Nav";
 import styled from "styled-components";
 import Carousel from "../components/Carousel";
 import Footer from "../components/Footer";
-import { publicRequest } from "../requestMethods";
+import { apiRequest } from "../requestMethods";
 import { useEffect, useState } from "react";
 
 const Home = () => {
@@ -15,12 +15,12 @@ const Home = () => {
 
   const getAllMedia = async () => {
     try {
-      const trendingAnime = await publicRequest.get("/anime/");
-      const trendingManga = await publicRequest.get("/manga/");
+      const trendingAnime = await apiRequest.get("/trending/anime");
+      const trendingManga = await apiRequest.get("/trending/manga");
       console.log(trendingAnime.data);
       console.log(trendingManga.data);
-      setTrendingAnime(trendingAnime.data);
-      setTrendingManga(trendingManga.data);
+      setTrendingAnime(trendingAnime.data.data);
+      setTrendingManga(trendingManga.data.data);
     } catch (err) {
       console.log(err);
     }
