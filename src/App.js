@@ -27,4 +27,5 @@ const Container = styled.div`
     display: flex;
     width: 100vw;
     justify-content: center;
+    overflow-x: hidden;
 `

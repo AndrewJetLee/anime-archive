@@ -9,4 +9,5 @@ html {
 body {
   font-size: 1.6rem;
   font-family: Verdana, Arial, sans-serif;
+  overflow-x: hidden;
 }

@@ -3,7 +3,7 @@ import styled from "styled-components";
 const CarouselItem = ({ item }) => {
   return (
     <Container>
-      <Image src={item.attributes.posterImage.small} className="animeImage" />
+      <Image src={item.attributes.posterImage.medium} className="animeImage" />
       <Title>{item.attributes.canonicalTitle}</Title>
       <Background></Background>
     </Container>
@@ -19,6 +19,7 @@ const Container = styled.div`
   transition-property: opacity;
   transition-duration: 0.16s;
   position: relative;
+  cursor: pointer;
   :hover {
     opacity: 0.5;
   }

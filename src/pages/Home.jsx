@@ -43,7 +43,6 @@ export default Home;
 
 const Container = styled.div`
   display: flex;
-  border: solid;
   width: 100vw;
   flex-direction: column;
   align-items: center;
@@ -53,7 +52,6 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   display: flex;
-  border: solid;
   width: 70vw;
   flex-direction: column;
   min-height: 100vh;
