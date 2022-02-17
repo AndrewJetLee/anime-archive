@@ -11,7 +11,7 @@ const Search = () => {
     <Container>
       <Wrapper>
         <Nav />
-        <List />
+        <List items={location.state}/>
       </Wrapper>
 
       <Footer />

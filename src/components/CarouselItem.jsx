@@ -14,7 +14,6 @@ export default CarouselItem;
 
 const Container = styled.div`
   flex: 1;
-  width: 200px;
   display: flex;
   flex-direction: column;
   transition-property: opacity;
