@@ -16,7 +16,7 @@ const Nav = () => {
     let mangaResult = await apiRequest.get(`manga/?filter[text]=${query}`)
     let result = [...animeResult.data.data, ...mangaResult.data.data];
     console.log(result);
-    navigate("/find", { state: result});
+    navigate("/search", { state: result});
   }
 
 
