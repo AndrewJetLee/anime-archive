@@ -45,7 +45,7 @@ const Container = styled.div`
 `;
 
 const Header = styled.div`
-    background-color: #e1e7f5;
+    background-color: #f5e1e1;
     width: 70vw;
     line-height: 0;
 `
