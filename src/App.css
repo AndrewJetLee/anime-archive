@@ -10,3 +10,11 @@ body {
   font-size: 1.6rem;
   font-family: Verdana, Arial, sans-serif;
 }
+
+li {
+  list-style-type: none;
+}
+
+ul {
+  padding: 0;
+}

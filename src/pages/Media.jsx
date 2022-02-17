@@ -21,7 +21,15 @@ const Media = () => {
           <ImageWrapper>
             <Image src={item.attributes.posterImage.medium} />
           </ImageWrapper>
-          <Information></Information>
+          <Information>
+              <ul>
+                  <li><strong>Type:</strong> {item.attributes.showType}</li>
+                  <li><strong>Episodes:</strong> {item.attributes.episodeCount}</li>
+                  <li><strong>Status: </strong>{item.attributes.status}</li>
+                  <li><strong>Aired: </strong>{item.attributes.startDate} to {item.attributes.endDate}</li>
+                  <li><strong>Placeholder: </strong>{item.attributes.status}</li>
+              </ul>
+          </Information>
           <Statistics></Statistics>
         </Left>
         <Right>
@@ -79,7 +87,13 @@ const Image = styled.img`
     width: 100%;
     height: 100%;
 `;
-const Information = styled.div``;
+const Information = styled.div`
+    font-size: 1.2rem;
+    li {
+        margin-top: 8px;
+    }
+    
+`;
 const Statistics = styled.div``;
 
 // Right Column
