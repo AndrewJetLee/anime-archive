@@ -53,6 +53,7 @@ export default Nav;
 const Container = styled.nav`
   display: flex;
   justify-content: space-between;
+  width: 70vw;
 `;
 
 //Left nav and children
