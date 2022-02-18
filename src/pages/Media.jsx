@@ -7,6 +7,9 @@ const Media = () => {
   const location = useLocation();
   const item = location.state;
   console.log(location.state);
+
+  
+
   return (
     <Container>
       <Nav />
@@ -33,8 +36,13 @@ const Media = () => {
           <Statistics></Statistics>
         </Left>
         <Right>
-          <Details></Details>
-          <Synopsis></Synopsis>
+          <Details>
+              
+          </Details>
+          <Synopsis>
+            <h5>Synopsis</h5>
+            <p>{item.attributes.synopsis}</p>
+          </Synopsis>
         </Right>
       </Wrapper>
       <Footer />
@@ -100,6 +108,18 @@ const Statistics = styled.div``;
 const Right = styled.div`
   flex: 4;
   background-color: pink;
+  margin-left: 4px;
+  border-left: solid 1px rgb(190, 190, 190);
 `;
 const Details = styled.div``;
-const Synopsis = styled.div``;
+const Synopsis = styled.div`
+  padding: 4px;
+  h5 {
+    margin: 0;
+  }
+  p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    border-bottom: solid 1px rgb(190, 190, 190);
+  }
+`;
