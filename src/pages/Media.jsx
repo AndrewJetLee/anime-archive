@@ -13,10 +13,10 @@ const Media = () => {
     <Container>
       <Nav />
       <Header>
-          <Titles>
-              <CanonTitle>{item.attributes.canonicalTitle}</CanonTitle>
-              <EnglishTitle>{item.attributes.titles.en}</EnglishTitle>
-          </Titles>
+        <Titles>
+          <CanonTitle>{item.attributes.canonicalTitle}</CanonTitle>
+          <EnglishTitle>{item.attributes.titles.en}</EnglishTitle>
+        </Titles>
       </Header>
       <Wrapper>
         <Left>
@@ -24,21 +24,52 @@ const Media = () => {
             <Image src={item.attributes.posterImage.medium} />
           </ImageWrapper>
           <Information>
-              <ul>
-                  <li><strong>Type:</strong> {item.attributes.showType}</li>
-                  <li><strong>Episodes:</strong> {item.attributes.episodeCount}</li>
-                  <li><strong>Status: </strong>{item.attributes.status}</li>
-                  <li><strong>Aired: </strong>{item.attributes.startDate} to {item.attributes.endDate}</li>
-                  <li><strong>Placeholder: </strong>{item.attributes.status}</li>
-                  <li><strong>Rating: </strong>{item.attributes.ageRating} - {item.attributes.ageRatingGuide}</li>
-              </ul>
+            <SideBarList>
+              <li>
+                <strong>Type:</strong> {item.attributes.showType}
+              </li>
+              <li>
+                <strong>Episodes:</strong> {item.attributes.episodeCount}
+              </li>
+              <li>
+                <strong>Status: </strong>
+                {item.attributes.status}
+              </li>
+              <li>
+                <strong>Aired: </strong>
+                {item.attributes.startDate} to {item.attributes.endDate}
+              </li>
+              <li>
+                <strong>Rating: </strong>
+                {item.attributes.ageRating} - {item.attributes.ageRatingGuide}
+              </li>
+            </SideBarList>
           </Information>
-          <Statistics></Statistics>
+          <Statistics>
+            <SideBarList>
+              <li>
+                <strong>Score:</strong> {item.attributes.averageRating}
+              </li>
+              <li>
+                <strong>Ranked:</strong> #{item.attributes.ratingRank}
+              </li>
+              <li>
+                <strong>Popularity: </strong>
+                #{item.attributes.popularityRank}
+              </li>
+              <li>
+                <strong>Members: </strong>
+                {item.attributes.userCount}
+              </li>
+              <li>
+                <strong>Favorites: </strong>
+                {item.attributes.favoritesCount}
+              </li>
+            </SideBarList>
+          </Statistics>
         </Left>
         <Right>
-          <Details>
-              
-          </Details>
+          <Details></Details>
           <Synopsis>
             <h5>Synopsis</h5>
             <p>{item.attributes.synopsis}</p>
@@ -61,20 +92,15 @@ const Container = styled.div`
 `;
 
 const Header = styled.div`
-    background-color: #f5e1e1;
-    width: 70vw;
-    line-height: 0;
-`
-const Titles = styled.div`
-    
-`
-const CanonTitle = styled.h3`
-    
-`
+  background-color: #f5e1e1;
+  width: 70vw;
+  line-height: 0;
+`;
+const Titles = styled.div``;
+const CanonTitle = styled.h3``;
 const EnglishTitle = styled.h4`
-    color: #858585;
-`
-
+  color: #858585;
+`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -88,21 +114,22 @@ const Left = styled.div`
   display: flex;
   flex-direction: column;
 `;
-const ImageWrapper = styled.div`
-    
-`;
+const ImageWrapper = styled.div``;
 const Image = styled.img`
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 `;
 const Information = styled.div`
-    font-size: 1.2rem;
-    li {
-        margin-top: 8px;
-    }
-    
+  
 `;
 const Statistics = styled.div``;
+
+const SideBarList = styled.ul`
+  font-size: 1.2rem;
+  li {
+    margin-top: 8px;
+  }
+`;
 
 // Right Column
 const Right = styled.div`
