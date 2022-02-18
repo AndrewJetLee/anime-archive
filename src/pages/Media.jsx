@@ -2,13 +2,12 @@ import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
+import { apiRequest } from "../requestMethods";
 
 const Media = () => {
   const location = useLocation();
   const item = location.state;
   console.log(location.state);
-
-  
 
   return (
     <Container>
@@ -31,6 +30,7 @@ const Media = () => {
                   <li><strong>Status: </strong>{item.attributes.status}</li>
                   <li><strong>Aired: </strong>{item.attributes.startDate} to {item.attributes.endDate}</li>
                   <li><strong>Placeholder: </strong>{item.attributes.status}</li>
+                  <li><strong>Rating: </strong>{item.attributes.ageRating} - {item.attributes.ageRatingGuide}</li>
               </ul>
           </Information>
           <Statistics></Statistics>
@@ -116,10 +116,12 @@ const Synopsis = styled.div`
   padding: 4px;
   h5 {
     margin: 0;
+    border-bottom: solid 1px rgb(190, 190, 190);
+    padding-bottom: 4px;
   }
   p {
     font-size: 1.2rem;
     line-height: 1.5;
-    border-bottom: solid 1px rgb(190, 190, 190);
+    margin-top: 4px;
   }
 `;
