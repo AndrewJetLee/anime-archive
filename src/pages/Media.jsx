@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
-import { apiRequest } from "../requestMethods";
 
 const Media = () => {
   const location = useLocation();
@@ -92,7 +91,7 @@ const Container = styled.div`
 `;
 
 const Header = styled.div`
-  background-color: #f5e1e1;
+  background-color: ${props => props.theme.secondary};
   width: 70vw;
   line-height: 0;
 `;
