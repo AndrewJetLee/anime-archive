@@ -3,6 +3,7 @@ const cors = require("cors");
 const animeRouter = require("./routers/anime");
 const mangaRouter = require("./routers/manga");
 const userRouter = require("./routers/user");
+const connectToDb = require("./db");
 
 // initialize server
 const app = express();
@@ -21,6 +22,9 @@ app.use(
 app.use("/api/anime", animeRouter);
 app.use("/api/manga", mangaRouter);
 app.use("/api/user", userRouter);
+
+// connect to db
+connectToDb()
 
 // start server
 const startServer = async () => {
