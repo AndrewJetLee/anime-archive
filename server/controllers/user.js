@@ -19,5 +19,12 @@ module.exports = {
             res.status(500).json(err);
         }
         res.json("Success")
+    },
+    getList: async (req, res) => {
+        try {
+            res.status(200).json("Got the goods");
+        } catch (err) {
+            res.status(500).json(err);
+        }
     }
 }
