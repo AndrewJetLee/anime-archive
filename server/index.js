@@ -4,6 +4,8 @@ const animeRouter = require("./routers/anime");
 const mangaRouter = require("./routers/manga");
 const userRouter = require("./routers/user");
 const connectToDb = require("./db");
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
 
 // initialize server
 const app = express();
@@ -17,6 +19,14 @@ app.use(
     extended: true,
   })
 );
+
+// session setup
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  store: MongoStore.create({ mongoUrl: process.env.DB_STRING}),
+  resave: false,
+  saveUninitialized: true,
+}));
 
 // assign routers
 app.use("/api/anime", animeRouter);
