@@ -6,6 +6,7 @@ const userRouter = require("./routers/user");
 const connectToDb = require("./db");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
+const passport = require("passport");
 
 // initialize server
 const app = express();
@@ -27,6 +28,17 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
 }));
+
+// passport 
+require('./config/passport');
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use((req, res, next) => {
+  console.log(req.session);
+  console.log(req.user);
+  next();
+});
 
 // assign routers
 app.use("/api/anime", animeRouter);
