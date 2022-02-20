@@ -5,7 +5,7 @@ const { validatePassword } = require("../utility/passwordHelpers");
 
 const verifyUser = async (username, password, done) => {
     try {
-        const user = await User.findOne({username});
+        const user = await User.findOne({username: username});
         if (!user) {
             return done(null, false);
         }
