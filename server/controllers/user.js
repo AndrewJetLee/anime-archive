@@ -22,7 +22,9 @@ module.exports = {
     },
     getList: async (req, res) => {
         try {
-            res.status(200).json("Got the goods");
+            const user = await User.findById(req.session.passport.user);
+            const { hash, salt, ...others } = user._doc; 
+            res.status(200).json(others);
         } catch (err) {
             res.status(500).json(err);
         }
