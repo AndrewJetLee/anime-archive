@@ -25,7 +25,6 @@ const Nav = () => {
         <Left>
           <Logo src="./images/aa-logo.jpg" onClick={() => navigate("/")}/>
         </Left>
-
         <Right>
           <Icons>
             <MenuIcon className="icon" />
@@ -78,18 +77,16 @@ const Left = styled.div``;
 
 const Logo = styled.img`
   display: inline-block;
-  width: 5rem;
+  width: 5.5rem;
   cursor: pointer;
 `;
-
-
 
 //right nav and children
 const Right = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 30%;
+  width: 40%;
 `;
 const Icons = styled.div`
   .icon {
@@ -105,16 +102,27 @@ const Profile = styled.div`
 const Login = styled.button`
   height: 3rem;
   margin-right: 1rem;
-  width: 8.5rem;
+  border: none;
+  padding: 4px 25px;
+  color: ${props => props.theme.main};
+  border-color: ${props => props.theme.main};
+  border: solid 1px;
+  font-size: 1.4rem;
+  font-weight: 600;
 `;
 
 const SignUp = styled.button`
   height: 3rem;
-  width: 8.5rem;
+  background-color: ${props => props.theme.main};
+  color: white; 
+  padding: 4px 25px;
+  border: none;
+  font-size: 1.4rem;
+  font-weight: 600;
 `;
 
 
-//center nav and children
+//bottom nav and children
 
 const NavItems = styled.div`
   display: flex;
@@ -142,8 +150,8 @@ const InputWrapper = styled.form`
   overflow: hidden;
   border-radius: 4px;
   margin-right: 4px;
-  width: 250px;
-  
+  width: 300px;
+  height: 20px;
   .searchIcon {
     font-size: 2rem;
     border-left: solid 1px;
@@ -153,8 +161,11 @@ const InputWrapper = styled.form`
 `;
 const SearchInput = styled.input`
   width: 100%;
+  height: 100%;
+  font-size: 1.2rem;
   border: none;
   box-shadow: none;
+  padding: 4px;
   :focus {
     outline: none;
   }
