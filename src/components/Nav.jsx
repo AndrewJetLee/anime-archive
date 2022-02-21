@@ -21,29 +21,39 @@ const Nav = () => {
 
   return (
     <Container>
-      <Left>
-        <Logo src="./images/aa-logo.jpg" />
-      </Left>
-      <Center>
-        <InputWrapper onSubmit={handleSearch}>
-          <SearchInput
-            onChange={(e) => {
-              setQuery(e.target.value);
-            }}
-            placeholder="Search Anime, Manga, and more..."
-          ></SearchInput>
-          <SearchIcon className="searchIcon" onClick={handleSearch} />
-        </InputWrapper>
-      </Center>
-      <Right>
-        <Icons>
-          <MenuIcon className="icon" />
-        </Icons>
-        <Profile>
-          <Login>Login</Login>
-          <SignUp>SignUp</SignUp>
-        </Profile>
-      </Right>
+      <Wrapper>
+        <Left>
+          <Logo src="./images/aa-logo.jpg" onClick={() => navigate("/")}/>
+        </Left>
+
+        <Right>
+          <Icons>
+            <MenuIcon className="icon" />
+          </Icons>
+          <Profile>
+            <Login>Login</Login>
+            <SignUp>SignUp</SignUp>
+          </Profile>
+        </Right>
+      </Wrapper>
+      <Wrapper position={"bottom"}>
+        <NavItems>
+          <Anime>Anime</Anime>
+          <Manga>Manga</Manga>
+          <List>List</List>
+        </NavItems>
+        <BottomRight>
+          <InputWrapper onSubmit={handleSearch}>
+            <SearchInput
+              onChange={(e) => {
+                setQuery(e.target.value);
+              }}
+              placeholder="Search Anime, Manga, and more..."
+            ></SearchInput>
+            <SearchIcon className="searchIcon" onClick={handleSearch} />
+          </InputWrapper>
+        </BottomRight>
+      </Wrapper>
     </Container>
   );
 };
@@ -52,8 +62,15 @@ export default Nav;
 
 const Container = styled.nav`
   display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
   justify-content: space-between;
   width: 70vw;
+  background-color: ${(props) => props.position === "bottom" ? props.theme.main : "white"};
 `;
 
 //Left nav and children
@@ -62,34 +79,16 @@ const Left = styled.div``;
 const Logo = styled.img`
   display: inline-block;
   width: 5rem;
+  cursor: pointer;
 `;
 
-//center nav and children
-const Center = styled.div`
-  display: flex;
-  align-items: center;
-`;
-const InputWrapper = styled.form`
-  display: flex;
-  align-items: center;
-  border: solid 1px;
-  border-radius: 3px;
-  .searchIcon {
-    font-size: 2rem;
-    border-left: solid 1px;
-    cursor: pointer;
-  }
-`;
-const SearchInput = styled.input`
-  width: 250px;
-  border: none;
-`;
+
 
 //right nav and children
 const Right = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 30%;
 `;
 const Icons = styled.div`
@@ -113,3 +112,52 @@ const SignUp = styled.button`
   height: 3rem;
   width: 8.5rem;
 `;
+
+
+//center nav and children
+
+const NavItems = styled.div`
+  display: flex;
+  color: white; 
+  font-size: 1.3rem;
+  font-weight: 600;
+`
+const Anime = styled.a`
+  padding: 10px;
+`
+const Manga = styled(Anime)`
+  
+`
+const List = styled(Anime)`
+`;
+
+
+const BottomRight = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const InputWrapper = styled.form`
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 4px;
+  margin-right: 4px;
+  width: 250px;
+  
+  .searchIcon {
+    font-size: 2rem;
+    border-left: solid 1px;
+    cursor: pointer;
+    background-color: ${(props) => props.theme.secondary};
+  }
+`;
+const SearchInput = styled.input`
+  width: 100%;
+  border: none;
+  box-shadow: none;
+  :focus {
+    outline: none;
+  }
+`;
+
+
