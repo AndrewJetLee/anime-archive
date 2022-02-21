@@ -1,4 +1,6 @@
 export const colors = {
-    main: "rgb(46, 81, 162)",
-    secondary: "rgb(225, 231, 245)"
+    main: "#B90B0B",
+    secondary: "#F4F4F4",
+    tertiary: "#FB9935",
+    extra: "#8C0909"
 }
