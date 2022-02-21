@@ -22,16 +22,17 @@ const Nav = () => {
   return (
     <Container>
       <Wrapper>
-        <Left>
-          <Logo src="./images/aa-logo.jpg" onClick={() => navigate("/")}/>
+        <Left onClick={() => navigate("/")}>
+          <Logo src="./images/aa-logo.jpg" />
+          <Slogan src="./images/aa-slogan.jpg" />
         </Left>
         <Right>
           <Icons>
             <MenuIcon className="icon" />
           </Icons>
           <Profile>
-            <Login>Login</Login>
-            <SignUp>SignUp</SignUp>
+            <Login onClick={() => navigate("/login")}>Login</Login>
+            <SignUp onClick={() => navigate("/register")}>Sign Up</SignUp>
           </Profile>
         </Right>
       </Wrapper>
@@ -62,7 +63,7 @@ export default Nav;
 const Container = styled.nav`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 70vw;
 `;
 
 const Wrapper = styled.div`
@@ -73,13 +74,23 @@ const Wrapper = styled.div`
 `;
 
 //Left nav and children
-const Left = styled.div``;
+const Left = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
 
 const Logo = styled.img`
   display: inline-block;
-  width: 5.5rem;
-  cursor: pointer;
+  width: 4.5rem;
+  height: 45px;
 `;
+
+const Slogan = styled.img`
+  display: inline-block;
+  height: 50px;
+  margin-left: 5px;
+`
 
 //right nav and children
 const Right = styled.div`
@@ -100,7 +111,7 @@ const Profile = styled.div`
 `;
 
 const Login = styled.button`
-  height: 3rem;
+  height: 2.5rem;
   margin-right: 1rem;
   border: none;
   padding: 4px 25px;
@@ -112,7 +123,7 @@ const Login = styled.button`
 `;
 
 const SignUp = styled.button`
-  height: 3rem;
+  height: 2.5rem;
   background-color: ${props => props.theme.main};
   color: white; 
   padding: 4px 25px;
@@ -129,9 +140,12 @@ const NavItems = styled.div`
   color: white; 
   font-size: 1.3rem;
   font-weight: 600;
+  height: 34px;
+  align-items: center;
 `
 const Anime = styled.a`
   padding: 10px;
+  cursor: pointer;
 `
 const Manga = styled(Anime)`
   

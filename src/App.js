@@ -8,6 +8,8 @@ import styled from "styled-components";
 import Home from './pages/Home';
 import Search from './pages/Search';
 import Media from './pages/Media';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
           <Route path="/" element={<Home/>}/>
           <Route path="/search" element={<Search/>}/>
           <Route path="/media" element={<Media/>}/>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/register" element={<Register/>}/>
         </Routes>
       </Router>
     </Container>
