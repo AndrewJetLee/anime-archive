@@ -10,7 +10,7 @@ const Register = () => {
       <Wrapper>
         <Nav />
         <Header>
-          <Title>Login</Title>
+          <Title>Register</Title>
         </Header>
         <Content>
           <Form>
@@ -122,7 +122,7 @@ const Label = styled.label`
 `;
 
 const CreateButton = styled.button`
-  height: 55px;
+  height: 50px;
   width: 100%;
   border: none;
   background-color: ${(props) => props.theme.main};
