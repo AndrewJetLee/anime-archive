@@ -2,9 +2,41 @@ import styled from "styled-components";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import { months, days, getYears } from "../utility/helpers";
+import { useState } from "react";
+import { publicRequest } from "../requestMethods";
 
 const Register = () => {
+
+  const [formInputs, setFormInputs] = useState({
+    email: "",
+    username: "",
+    password: "",
+    day: "",
+    month: "",
+    year: "",
+  })
   
+  const handleFormChange = (e) => {
+    let value = e.target.value; 
+    setFormInputs({
+      ...formInputs, 
+      [e.target.name]: value
+    })
+  }
+
+  const handleSubmit = async (e) => {
+    let birthday = `${formInputs.month} ${formInputs.day}, ${formInputs.year}`;
+    console.log(birthday);
+    let { day, month, year, ...others } = formInputs;  
+    let payload = {
+      ...others, 
+      birthday
+    };
+    console.log(payload);
+    const res = await publicRequest.post("/user/register", payload);
+    console.log(res);
+  }
+
   return (
     <Container>
       <Wrapper>
@@ -13,35 +45,35 @@ const Register = () => {
           <Title>Register</Title>
         </Header>
         <Content>
-          <Form>
+          <Form onChange={handleFormChange}>
             <EmailWrapper>
               <Label>Email</Label>
-              <Email />
+              <Email name="email"/>
             </EmailWrapper>
             <UsernameWrapper>
               <Label>Username</Label>
-              <Username />
+              <Username name="username" />
             </UsernameWrapper>
             <PasswordWrapper>
               <Label>Password</Label>
-              <Password />
+              <Password name="password"/>
             </PasswordWrapper>
             <BirthdayWrapper>
               <Label>Birthday</Label>
-              <Month name="" id="">
+              <Month name="month" id="">
                 {months.map((month, i) => <option key={i}>{month.short}</option>)}
               </Month>
               -
-              <Day>
+              <Day name="day">
                 {days.map((day, i) => i !== 0 && <option key={i}>{i}</option>)}
               </Day>
               -
-              <Year>
+              <Year name="year">
                 {getYears(new Date().getFullYear()).map((year, i) => <option key={i}>{year}</option>)}
               </Year>
             </BirthdayWrapper>
           </Form>
-          <CreateButton>Create Account</CreateButton>
+          <CreateButton onClick={handleSubmit}>Create Account</CreateButton>
           <span>Already have an account? <Login href="/login">Login</Login></span> 
         </Content>
       </Wrapper>
