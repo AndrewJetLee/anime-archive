@@ -6,7 +6,7 @@ const { isAuthenticated } = require("../utility/authMiddleware");
 router.post("/register", register);
 router.post(
   "/login",
-  passport.authenticate("local", { failureRedirect: "/login-failure" }),
+  passport.authenticate("local"),
   login
 );
 router.get("/list", isAuthenticated, getList);

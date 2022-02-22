@@ -14,11 +14,10 @@ module.exports = {
     },
     login: async (req, res) => {
         try {
-            res.status(200).json("Successfully logged in").redirect("/");
+            res.status(200).json(req.session);
         } catch (err) {
             res.status(500).json(err);
         }
-        res.json("Success")
     },
     getList: async (req, res) => {
         try {

@@ -1,8 +1,36 @@
 import styled from "styled-components";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
+import { useState } from "react";
+import { publicRequest } from "../requestMethods";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [formInputs, setFormInputs] = useState({
+    username: "",
+    password: "",
+  })
+
+  const handleFormChange = (e) => {
+    let value = e.target.value; 
+    setFormInputs({
+      ...formInputs,
+      [e.target.name]: value
+    })
+  }
+
+  const handleSubmit = async (e) => {
+    const res = await publicRequest.post("/user/login", formInputs);
+    console.log(res);
+    document.cookie = JSON.stringify(res.data);
+  }
+
+  const test = async (e) => {
+    const res = await publicRequest.get("/user/list");
+    console.log(res);
+  }
+
   return (
     <Container>
       <Wrapper>
@@ -11,18 +39,18 @@ const Login = () => {
           <Title>Login</Title>
         </Header>
         <Content>
-          <Form>
+          <Form onChange={handleFormChange}>
             <UsernameWrapper>
               <Label>Username</Label>
-              <Username />
+              <Username name="username"/>
             </UsernameWrapper>
             <PasswordWrapper>
               <Label>Password</Label>
-              <Password />
+              <Password name="password"/>
             </PasswordWrapper>
           </Form>
-          <LoginButton>Login</LoginButton>
-          <Forgot>Forgot your password?</Forgot>
+          <LoginButton onClick={handleSubmit}>Login</LoginButton>
+          <Forgot onClick={test}>Forgot your password?</Forgot>
           <Register>Create account</Register>
         </Content>
       </Wrapper>
@@ -105,6 +133,7 @@ const LoginButton = styled.button`
   font-weight: 600;
   border-radius: 4px;
   margin-bottom: 25px;
+  cursor: pointer;
 `;
 const Register = styled.a`
   height: 45px;
