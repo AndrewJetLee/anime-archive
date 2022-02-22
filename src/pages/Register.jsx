@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
-import { months, days, getYears } from "../utility/dummyData";
+import { months, days, getYears } from "../utility/helpers";
 
 const Register = () => {
   
@@ -27,19 +27,22 @@ const Register = () => {
               <Password />
             </PasswordWrapper>
             <BirthdayWrapper>
+              <Label>Birthday</Label>
               <Month name="" id="">
                 {months.map((month, i) => <option key={i}>{month.short}</option>)}
               </Month>
+              -
               <Day>
-                {days.map((day, i) => <option key={i}>{i}</option>)}
+                {days.map((day, i) => i !== 0 && <option key={i}>{i}</option>)}
               </Day>
+              -
               <Year>
                 {getYears(new Date().getFullYear()).map((year, i) => <option key={i}>{year}</option>)}
               </Year>
             </BirthdayWrapper>
           </Form>
           <CreateButton>Create Account</CreateButton>
-          <Forgot>Already have an account? Login</Forgot>
+          <span>Already have an account? <Login href="/login">Login</Login></span> 
         </Content>
       </Wrapper>
       <Footer />
@@ -111,14 +114,29 @@ const PasswordWrapper = styled(UsernameWrapper)`
 `;
 const Password = styled(Username)``;
 
-const BirthdayWrapper = styled.div``;
-const Month = styled.select``;
-const Day = styled.select``;
-const Year = styled.select``;
+const BirthdayWrapper = styled.div`
+  margin-bottom: 20px;
+
+`;
+const Month = styled.select`
+  border-color: ${props => props.theme.seconday};
+  height: 45px;
+  width: 70px;
+  margin-right: 5px;
+  text-align: center;
+`;
+const Day = styled(Month)`
+  width: 50px;
+  margin-left: 5px;
+`;
+const Year = styled(Month)`
+   margin-left: 5px;
+`;
 
 const Label = styled.label`
   font-size: 1.5rem;
   margin-bottom: 5px;
+  display: block;
 `;
 
 const CreateButton = styled.button`
@@ -132,7 +150,7 @@ const CreateButton = styled.button`
   margin-bottom: 25px;
 `;
 
-const Forgot = styled.a`
+const Login = styled.a`
   height: 45px;
   border: none;
   color: ${(props) => props.theme.main};

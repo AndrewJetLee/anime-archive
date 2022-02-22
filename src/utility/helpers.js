@@ -17,7 +17,7 @@ export const days = Array(32).fill(" ");
 
 export const getYears = (currentYear) => {
   let pastYears = [];
-  for (let i = currentYear - 100; i < currentYear; i++) {
+  for (let i = currentYear; i > currentYear - 100; i--) {
     pastYears.push(i);
   }
   return pastYears;
