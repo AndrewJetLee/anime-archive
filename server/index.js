@@ -13,7 +13,7 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 // mount middleware
-app.use(cors());
+app.use(cors({credentials: true, origin: "http://localhost:3000"}));
 app.use(express.json());
 app.use(
   express.urlencoded({
@@ -35,8 +35,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use((req, res, next) => {
-  console.log(req.session);
-  console.log(req.user);
+  console.log("session", req.session);
+  console.log("user", req.user);
   next();
 });
 

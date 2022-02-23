@@ -23,7 +23,6 @@ const Login = () => {
   const handleSubmit = async (e) => {
     const res = await publicRequest.post("/user/login", formInputs);
     console.log(res);
-    document.cookie = JSON.stringify(res.data);
   }
 
   const test = async (e) => {
