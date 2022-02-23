@@ -37,5 +37,15 @@ module.exports = {
         } catch (err) {
             res.status(500).json(err);
         }
+    }, 
+    addList: async (req, res) => {
+        // Todo, check the incoming req.body
+        try {
+            const updatedUser = await User.findOneAndUpdate({_id: req.session.passport.user}, {
+                $push: { list: req.body }
+            });
+        } catch (err) {
+            res.status(500).json(err);
+        }
     }
 }

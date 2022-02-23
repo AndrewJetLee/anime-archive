@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
+import { publicRequest } from "../requestMethods";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 
@@ -7,6 +8,10 @@ const Media = () => {
   const location = useLocation();
   const item = location.state;
   console.log(location.state);
+
+  const handleAddToList = async () => {
+    const res = await publicRequest.post("/user/list");
+  }
 
   return (
     <Container>
@@ -22,6 +27,9 @@ const Media = () => {
           <ImageWrapper>
             <Image src={item.attributes.posterImage.medium} />
           </ImageWrapper>
+          <AddToList >
+            Add To List
+          </AddToList>
           <Information>
             <SideBarList>
               <li>
@@ -128,10 +136,14 @@ const Left = styled.div`
   flex-direction: column;
 `;
 const ImageWrapper = styled.div``;
+
 const Image = styled.img`
   width: 100%;
   height: 100%;
 `;
+
+const AddToList = styled.a``;
+
 const Information = styled.div`
   
 `;
@@ -158,7 +170,6 @@ const Details = styled.section`
 
 const ScoreWrapper = styled.div`
  
-
 `
 const Title = styled.div`
 
