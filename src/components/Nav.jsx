@@ -50,7 +50,7 @@ const Nav = () => {
             )}
             {localStorage.getItem("user") ? (
               <User>
-                <UserImage />
+                <UserImage src="./images/placeholder-img.png"/>
                 <UserInfo>
                   {JSON.parse(localStorage.getItem("user")).username}
                 </UserInfo>
@@ -135,6 +135,7 @@ const Icons = styled.div`
 
 const Profile = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const Login = styled.button`
@@ -169,7 +170,6 @@ const User = styled.div`
 const UserImage = styled.img`
   height: 30px;
   width: 30px; 
-  border: solid;
   margin-right: 8px;
 `
 const UserInfo = styled.span`
