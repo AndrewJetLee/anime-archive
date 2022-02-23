@@ -68,7 +68,21 @@ const Media = () => {
           </Statistics>
         </Left>
         <Right>
-          <Details></Details>
+          <Details>
+            <ScoreWrapper>
+              <Title>SCORE</Title>
+              <Score>9.15</Score>
+              <Users>100,000 users</Users>
+            </ScoreWrapper>
+            <Data>
+              <ScoreData>
+
+              </ScoreData>
+              <OtherData>
+
+              </OtherData>
+            </Data>
+          </Details>
           <Synopsis>
             <h5>Synopsis</h5>
             <p>{item.attributes.synopsis}</p>
@@ -137,7 +151,34 @@ const Right = styled.div`
   margin-left: 4px;
   border-left: solid 1px rgb(190, 190, 190);
 `;
-const Details = styled.div``;
+const Details = styled.section`
+  display: flex;
+  background-color: ${props => props.theme.secondary};
+`;
+
+const ScoreWrapper = styled.div`
+ 
+
+`
+const Title = styled.div`
+
+`
+const Score = styled.h2`
+  
+`
+const Users = styled.span`
+  
+`
+
+const Data = styled.div`
+  
+`
+const ScoreData = styled.div`
+`
+const OtherData = styled.div`
+  
+`
+
 const Synopsis = styled.div`
   padding: 4px;
   h5 {

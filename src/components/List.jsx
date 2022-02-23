@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import CarouselItem from "./CarouselItem";
 
-const List = ({ items }) => {
+const List = ({ items }) => {  
   return (
     <Container>
       {items.map((item, i) => (

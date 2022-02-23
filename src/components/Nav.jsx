@@ -31,6 +31,12 @@ const Nav = () => {
     }
   }
 
+  const handleClickList = async () => {
+    const res = await publicRequest.get("/user/list");
+    console.log(res);
+    navigate("/list", { state: res.data.list });
+  }
+
   return (
     <Container>
       <Wrapper>
@@ -61,12 +67,9 @@ const Nav = () => {
       </Wrapper>
       <Wrapper position={"bottom"}>
         <NavItems>
-          <Anime onClick={async () => {
-            const res = await publicRequest.get("/user/list");
-            console.log(res);
-          }}>Anime</Anime>
+          <Anime >Anime</Anime>
           <Manga>Manga</Manga>
-          <List>List</List>
+          <List onClick={handleClickList}>List</List>
         </NavItems>
         <BottomRight>
           <InputWrapper onSubmit={handleSearch}>
