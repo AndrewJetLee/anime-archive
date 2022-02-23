@@ -19,6 +19,10 @@ const Nav = () => {
     navigate("/search", { state: result });
   };
 
+  const handleLogout = async () => {
+    console.log("clicked logout");
+  }
+
   return (
     <Container>
       <Wrapper>
@@ -31,7 +35,11 @@ const Nav = () => {
             <MenuIcon className="icon" />
           </Icons>
           <Profile>
-            <Login onClick={() => navigate("/login")}>Login</Login>
+            {localStorage.getItem("cookie") ? (
+              <Logout onClick={handleLogout}>Logout</Logout>
+            ) : (
+              <Login onClick={() => navigate("/login")}>Login</Login>
+            )}
             <SignUp onClick={() => navigate("/register")}>Sign Up</SignUp>
           </Profile>
         </Right>
@@ -70,7 +78,8 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 70vw;
-  background-color: ${(props) => props.position === "bottom" ? props.theme.main : "white"};
+  background-color: ${(props) =>
+    props.position === "bottom" ? props.theme.main : "white"};
 `;
 
 //Left nav and children
@@ -90,7 +99,7 @@ const Slogan = styled.img`
   display: inline-block;
   height: 50px;
   margin-left: 5px;
-`
+`;
 
 //right nav and children
 const Right = styled.div`
@@ -115,44 +124,41 @@ const Login = styled.button`
   margin-right: 1rem;
   border: none;
   padding: 4px 25px;
-  color: ${props => props.theme.main};
-  border-color: ${props => props.theme.main};
+  color: ${(props) => props.theme.main};
+  border-color: ${(props) => props.theme.main};
   border: solid 1px;
   font-size: 1.4rem;
   font-weight: 600;
 `;
 
+const Logout = styled(Login)``;
+
 const SignUp = styled.button`
   height: 2.5rem;
-  background-color: ${props => props.theme.main};
-  color: white; 
+  background-color: ${(props) => props.theme.main};
+  color: white;
   padding: 4px 25px;
   border: none;
   font-size: 1.4rem;
   font-weight: 600;
 `;
 
-
 //bottom nav and children
 
 const NavItems = styled.div`
   display: flex;
-  color: white; 
+  color: white;
   font-size: 1.3rem;
   font-weight: 600;
   height: 34px;
   align-items: center;
-`
+`;
 const Anime = styled.a`
   padding: 10px;
   cursor: pointer;
-`
-const Manga = styled(Anime)`
-  
-`
-const List = styled(Anime)`
 `;
-
+const Manga = styled(Anime)``;
+const List = styled(Anime)``;
 
 const BottomRight = styled.div`
   display: flex;
@@ -184,5 +190,3 @@ const SearchInput = styled.input`
     outline: none;
   }
 `;
-
-

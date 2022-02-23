@@ -21,8 +21,14 @@ const Login = () => {
   }
 
   const handleSubmit = async (e) => {
-    const res = await publicRequest.post("/user/login", formInputs);
-    console.log(res);
+    try {
+      const res = await publicRequest.post("/user/login", formInputs);
+      console.log(res);
+      localStorage.setItem("cookie", JSON.stringify(res.data.cookie));
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }    
   }
 
   const test = async (e) => {
