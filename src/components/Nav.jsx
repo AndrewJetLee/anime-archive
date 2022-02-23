@@ -43,12 +43,19 @@ const Nav = () => {
             <MenuIcon className="icon" />
           </Icons>
           <Profile>
-            {localStorage.getItem("cookie") ? (
+            {localStorage.getItem("user") ? (
               <Logout onClick={handleLogout}>Logout</Logout>
             ) : (
               <Login onClick={() => navigate("/login")}>Login</Login>
             )}
-            <SignUp onClick={() => navigate("/register")}>Sign Up</SignUp>
+            {localStorage.getItem("user") ? (
+              <User>
+                <UserImage />
+                <UserInfo>
+                  {JSON.parse(localStorage.getItem("user")).username}
+                </UserInfo>
+              </User>
+            ) : <SignUp onClick={() => navigate("/register")}>Sign Up</SignUp>}
           </Profile>
         </Right>
       </Wrapper>
@@ -154,8 +161,23 @@ const SignUp = styled.button`
   font-weight: 600;
 `;
 
-//bottom nav and children
+//WIP
+const User = styled.div`
+  display: flex;
+  align-items: center;
+`
+const UserImage = styled.img`
+  height: 30px;
+  width: 30px; 
+  border: solid;
+  margin-right: 8px;
+`
+const UserInfo = styled.span`
+  font-size: 1.4rem;
+  font-weight: 600;
+`
 
+//bottom nav and children
 const NavItems = styled.div`
   display: flex;
   color: white;

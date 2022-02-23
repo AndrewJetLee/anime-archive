@@ -14,14 +14,16 @@ module.exports = {
     },
     login: async (req, res) => {
         try {
-            res.status(200).json(req.session);
+            let username = req.user._doc.username; 
+            let payload = {username, ...req.session};
+            res.status(200).json(payload);
         } catch (err) {
             res.status(500).json(err);
         }
     },
     logout: async (req, res) => {
         try {
-            req.logout();
+            req.logOut();
             res.status(200).json("Logged out");
         } catch (err) {
             res.status(500).json(err);
