@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import { apiRequest } from "../requestMethods";
 import { useEffect, useState } from "react";
 
-const Home = () => {
+const Home = ({user}) => {
   const [trendingAnime, setTrendingAnime] = useState([]);
   const [trendingManga, setTrendingManga] = useState([]);
 
@@ -30,7 +30,7 @@ const Home = () => {
   return (
     <Container>
       <Wrapper>
-        <Nav />
+        <Nav user={user}/>
         <Carousel title={"Trending Anime"} data={trendingAnime}/>
         <Carousel title={"Trending Manga"} data={trendingManga}/>
       </Wrapper>

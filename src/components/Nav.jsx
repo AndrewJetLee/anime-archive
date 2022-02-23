@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import { apiRequest } from "../requestMethods";
+import { apiRequest, publicRequest } from "../requestMethods";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -21,6 +21,14 @@ const Nav = () => {
 
   const handleLogout = async () => {
     console.log("clicked logout");
+    try {
+      const res = await publicRequest.get("/user/logout");
+      console.log(res);
+      localStorage.clear();
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
@@ -46,7 +54,10 @@ const Nav = () => {
       </Wrapper>
       <Wrapper position={"bottom"}>
         <NavItems>
-          <Anime>Anime</Anime>
+          <Anime onClick={async () => {
+            const res = await publicRequest.get("/user/list");
+            console.log(res);
+          }}>Anime</Anime>
           <Manga>Manga</Manga>
           <List>List</List>
         </NavItems>

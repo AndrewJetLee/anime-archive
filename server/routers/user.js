@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { register, login, getList } = require("../controllers/user");
+const { register, login, logout, getList } = require("../controllers/user");
 const passport = require("passport");
 const { isAuthenticated } = require("../utility/authMiddleware");
 
@@ -10,5 +10,6 @@ router.post(
   login
 );
 router.get("/list", isAuthenticated, getList);
+router.get("/logout", logout)
 
 module.exports = router;

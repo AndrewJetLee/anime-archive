@@ -16,7 +16,7 @@ function App() {
     <Container className="App">
       <Router>
         <Routes>
-          <Route path="/" element={<Home/>}/>
+          <Route path="/" element={<Home />}/>
           <Route path="/search" element={<Search/>}/>
           <Route path="/media" element={<Media/>}/>
           <Route path="/login" element={<Login/>}/>
