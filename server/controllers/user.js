@@ -32,7 +32,7 @@ module.exports = {
   getList: async (req, res) => {
     try {
       const user = await User.findById(req.session.passport.user);
-      const { hash, salt, birthday, email,...others } = user._doc;
+      const { hash, salt, birthday, email, ...others } = user._doc;
       res.status(200).json(others);
     } catch (err) {
       res.status(500).json(err);
@@ -60,9 +60,16 @@ module.exports = {
   },
   deleteList: async (req, res) => {
     try {
-        res.status(200).json("Noice");
+      await User.findOneAndUpdate(
+        { _id: req.session.passport.user },
+        { $pull: { list: {id: req.params.id}}},
+        { multi: true }
+      );
+      const updatedUser = await User.findById(req.session.passport.user);
+      const { hash, salt, birthday, email, ...others } = updatedUser._doc;
+      res.status(200).send(others);
     } catch (err) {
-        res.status(500).json(err);
+      res.status(500).json(err);
     }
-  }
+  },
 };

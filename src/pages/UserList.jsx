@@ -1,14 +1,23 @@
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
-import List from "../components/List";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import UserListItem from "../components/UserListItem";
+import { useState } from "react";
+import { publicRequest } from "../requestMethods";
 
 const UserList = () => {
   const location = useLocation();
   const list = location.state;
-  console.log(list);
+  const [userList, setUserList] = useState(list ? list : null);
+  
+  console.log(userList);
+
+  const handleDelete = async (id) => {
+    const res = await publicRequest.delete(`/user/list/${id}`);
+    setUserList(res.data.list);
+  }
+
   return (
     <Container>
       <Wrapper>
@@ -26,8 +35,8 @@ const UserList = () => {
             <th className="type">Type</th>
             <th className="type">Edit</th>
           </TableRow>
-          {list.map((item, i) => (
-            <UserListItem item={item} key={i} number={i + 1}/>
+          {userList.map((item, i) => (
+            <UserListItem item={item} key={i} number={i + 1} handleDelete={handleDelete}/>
           ))}
           </TableBody>
         </Table>

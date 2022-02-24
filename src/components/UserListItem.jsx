@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
-const UserListItem = ({ item, number }) => {
+const UserListItem = ({ item, number, handleDelete }) => {
+
+  
+
   return (
     <Container>
       <Number>{number}</Number>
@@ -11,7 +14,9 @@ const UserListItem = ({ item, number }) => {
       <Score>{item.attributes.averageRating}</Score>
       <Type>{item.attributes.showType}</Type>
       <Edit>
-        <Delete>Delete</Delete>
+        <Delete onClick={() => {
+          handleDelete(item.id);
+        }}>Delete</Delete>
         <Change>Change</Change>
       </Edit>
     </Container>

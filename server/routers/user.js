@@ -19,6 +19,6 @@ router.post(
 router.put("/list", isAuthenticated, addList);
 
 //delete requests
-router.delete("/list", isAuthenticated, deleteList);
+router.delete("/list/:id", isAuthenticated, deleteList);
 
 module.exports = router;
