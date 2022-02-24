@@ -14,6 +14,8 @@ router.post(
   passport.authenticate("local"),
   login
 );
-router.post("/list", isAuthenticated, addList);
+
+//put requests
+router.put("/list", isAuthenticated, addList);
 
 module.exports = router;

@@ -10,7 +10,8 @@ const Media = () => {
   console.log(location.state);
 
   const handleAddToList = async () => {
-    const res = await publicRequest.post("/user/list");
+    const res = await publicRequest.put("/user/list", item);
+    console.log(res);
   }
 
   return (
@@ -27,7 +28,7 @@ const Media = () => {
           <ImageWrapper>
             <Image src={item.attributes.posterImage.medium} />
           </ImageWrapper>
-          <AddToList >
+          <AddToList onClick={handleAddToList}>
             Add To List
           </AddToList>
           <Information>
@@ -142,7 +143,9 @@ const Image = styled.img`
   height: 100%;
 `;
 
-const AddToList = styled.a``;
+const AddToList = styled.a`
+  cursor: pointer;
+`;
 
 const Information = styled.div`
   
