@@ -10,7 +10,7 @@ import Search from './pages/Search';
 import Media from './pages/Media';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import List from "./pages/List";
+import UserList from "./pages/UserList";
 
 function App() {
   return (
@@ -22,7 +22,7 @@ function App() {
           <Route path="/media" element={<Media/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
-          <Route path="/list" element={<List/>}/>
+          <Route path="/list" element={<UserList/>}/>
         </Routes>
       </Router>
     </Container>
