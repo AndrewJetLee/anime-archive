@@ -58,4 +58,11 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+  deleteList: async (req, res) => {
+    try {
+        res.status(200).json("Noice");
+    } catch (err) {
+        res.status(500).json(err);
+    }
+  }
 };
