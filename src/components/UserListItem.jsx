@@ -2,8 +2,6 @@ import styled from "styled-components";
 
 const UserListItem = ({ item, number, handleDelete }) => {
 
-  
-
   return (
     <Container>
       <Number>{number}</Number>
@@ -25,7 +23,9 @@ const UserListItem = ({ item, number, handleDelete }) => {
 
 export default UserListItem;
 
-const Container = styled.tr``;
+const Container = styled.tr`
+  font-size: 1.3rem;
+`;
 
 const Number = styled.td``;
 const Image = styled.td`
@@ -35,7 +35,10 @@ const Image = styled.td`
     object-fit: contain;
   }
 `;
-const Title = styled.td``;
+const Title = styled.td`
+  font-weight: 600;
+  color: ${props => props.theme.main};
+`;
 const Score = styled.td``;
 const Type = styled.td``;
 const Edit = styled.td`

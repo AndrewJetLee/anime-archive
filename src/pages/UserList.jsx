@@ -23,7 +23,7 @@ const UserList = () => {
       <Wrapper>
         <Nav />
         <Header>
-          All Anime
+          <h3>All Anime</h3>
         </Header>
         <Table>
           <TableBody>
@@ -65,7 +65,11 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.header`
-  
+  background-color: ${props => props.theme.main};
+  color: white;
+  h3 {
+    text-align: center;
+  }
 `
 
 const Table = styled.table``;
@@ -73,5 +77,12 @@ const Table = styled.table``;
 const TableBody = styled.tbody``;
 
 const TableRow = styled.tr`
-
+  th {
+    text-align: left;
+    font-size: 1.2rem;
+    
+  }
+  .image {
+    padding-left: 20px;
+  }
 `;
