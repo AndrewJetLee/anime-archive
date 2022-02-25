@@ -107,8 +107,9 @@ const Media = () => {
           <VideoWrapper>
               <h5>Trailer</h5>
               <iframe
+                title="trailer"
                 width="100%"
-                height="500px"
+                height="550px"
                 src={`https://www.youtube.com/embed/${item.attributes.youtubeVideoId}`}
               ></iframe>
             </VideoWrapper>
@@ -127,6 +128,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
+  border: solid 1px rgb(190, 190, 190);
 `;
 
 const Header = styled.div`
@@ -134,7 +136,9 @@ const Header = styled.div`
   width: 70vw;
   line-height: 0;
 `;
-const Titles = styled.div``;
+const Titles = styled.div`
+  border-bottom: 1px solid ${props => props.theme.main};
+`;
 const CanonTitle = styled.h3``;
 const EnglishTitle = styled.h4`
   color: #858585;
@@ -144,6 +148,8 @@ const Wrapper = styled.div`
   display: flex;
   width: 70vw;
   min-height: 100vh;
+  border-left: solid 1px ${props => props.theme.secondary};
+  border-right: solid 1px ${props => props.theme.secondary};
 `;
 
 //Left Column
@@ -160,7 +166,11 @@ const Image = styled.img`
 `;
 
 const AddToList = styled.a`
+  margin-top: 15px;
+  font-size: 1.3rem;
+  color: ${props => props.theme.main};
   cursor: pointer;
+  font-weight: 600;
 `;
 
 const Information = styled.div``;
@@ -177,7 +187,7 @@ const SideBarList = styled.ul`
 const Right = styled.div`
   flex: 4;
   margin-left: 4px;
-  border-left: solid 1px rgb(190, 190, 190);
+  border-left: solid 1px ${props => props.theme.secondary};
 `;
 const Details = styled.section`
   display: flex;
@@ -245,9 +255,13 @@ const Synopsis = styled.div`
   p {
     font-size: 1.2rem;
     line-height: 1.5;
-    margin-top: 4px;
+    margin-top: 10px;
   }
 `;
 
 
-const VideoWrapper = styled(Synopsis)``;
+const VideoWrapper = styled(Synopsis)`
+  h5 {
+    margin-bottom: 5px;
+  }
+`;
