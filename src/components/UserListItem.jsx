@@ -1,21 +1,23 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const UserListItem = ({ item, number, handleDelete }) => {
-
+  const navigate = useNavigate();
   return (
-    <Container>
+    <Container >
       <Number>{number}</Number>
       <Image>
         <img src={item.attributes.posterImage.medium} alt=""/>
       </Image>
-      <Title>{item.attributes.canonicalTitle}</Title>
+      <Title onClick={() => {
+        navigate("/media", { state: item })
+      }}>{item.attributes.canonicalTitle}</Title>
       <Score>{item.attributes.averageRating}</Score>
-      <Type>{item.attributes.showType}</Type>
+      <Type>{item.attributes.showType ? item.attributes.showType : "Manga"} </Type>
       <Edit>
         <Delete onClick={() => {
           handleDelete(item.id);
         }}>Delete</Delete>
-        <Change>Change</Change>
       </Edit>
     </Container>
   );
@@ -26,6 +28,7 @@ export default UserListItem;
 const Container = styled.tr`
   font-size: 1.3rem;
 `;
+
 
 const Number = styled.td``;
 const Image = styled.td`
@@ -38,16 +41,13 @@ const Image = styled.td`
 const Title = styled.td`
   font-weight: 600;
   color: ${props => props.theme.main};
+  cursor: pointer;
 `;
 const Score = styled.td``;
 const Type = styled.td``;
-const Edit = styled.td`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
+const Edit = styled.td``;
 
-const Delete = styled.button`
-  
+const Delete = styled.a`
+  color: red;
+  cursor: pointer;
 `;
-const Change = styled(Delete)``;

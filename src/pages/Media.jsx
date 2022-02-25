@@ -12,7 +12,7 @@ const Media = () => {
   const handleAddToList = async () => {
     const res = await publicRequest.put("/user/list", item);
     console.log(res);
-  }
+  };
 
   return (
     <Container>
@@ -28,9 +28,7 @@ const Media = () => {
           <ImageWrapper>
             <Image src={item.attributes.posterImage.medium} />
           </ImageWrapper>
-          <AddToList onClick={handleAddToList}>
-            Add To List
-          </AddToList>
+          <AddToList onClick={handleAddToList}>Add To List</AddToList>
           <Information>
             <SideBarList>
               <li>
@@ -62,8 +60,7 @@ const Media = () => {
                 <strong>Ranked:</strong> #{item.attributes.ratingRank}
               </li>
               <li>
-                <strong>Popularity: </strong>
-                #{item.attributes.popularityRank}
+                <strong>Popularity: </strong>#{item.attributes.popularityRank}
               </li>
               <li>
                 <strong>Members: </strong>
@@ -77,6 +74,7 @@ const Media = () => {
           </Statistics>
         </Left>
         <Right>
+          <h3>Details</h3>
           <Details>
             <ScoreWrapper>
               <Title>SCORE</Title>
@@ -85,10 +83,20 @@ const Media = () => {
             </ScoreWrapper>
             <Data>
               <ScoreData>
-
+                <span>
+                  Ranked <strong>#{item.attributes.ratingRank}</strong>
+                </span>
+                <span>
+                  Popularity <strong>#{item.attributes.popularityRank}</strong>
+                </span>
+                <span>
+                  Members <strong>{item.attributes.userCount}</strong>
+                </span>
               </ScoreData>
               <OtherData>
-
+                <span>Summer 2019</span>
+                <span>TV</span>
+                <span>gigity</span>
               </OtherData>
             </Data>
           </Details>
@@ -96,6 +104,14 @@ const Media = () => {
             <h5>Synopsis</h5>
             <p>{item.attributes.synopsis}</p>
           </Synopsis>
+          <VideoWrapper>
+              <h5>Trailer</h5>
+              <iframe
+                width="100%"
+                height="500px"
+                src={`https://www.youtube.com/embed/${item.attributes.youtubeVideoId}`}
+              ></iframe>
+            </VideoWrapper>
         </Right>
       </Wrapper>
       <Footer />
@@ -114,7 +130,7 @@ const Container = styled.div`
 `;
 
 const Header = styled.div`
-  background-color: ${props => props.theme.secondary};
+  background-color: ${(props) => props.theme.secondary};
   width: 70vw;
   line-height: 0;
 `;
@@ -147,9 +163,7 @@ const AddToList = styled.a`
   cursor: pointer;
 `;
 
-const Information = styled.div`
-  
-`;
+const Information = styled.div``;
 const Statistics = styled.div``;
 
 const SideBarList = styled.ul`
@@ -162,36 +176,64 @@ const SideBarList = styled.ul`
 // Right Column
 const Right = styled.div`
   flex: 4;
-  background-color: pink;
   margin-left: 4px;
   border-left: solid 1px rgb(190, 190, 190);
 `;
 const Details = styled.section`
   display: flex;
-  background-color: ${props => props.theme.secondary};
+  background-color: ${(props) => props.theme.secondary};
+  min-height: 80px;
+  margin-bottom: 20px;
 `;
 
 const ScoreWrapper = styled.div`
- 
-`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px;
+`;
 const Title = styled.div`
-
-`
+  background-color: ${props => props.theme.main};
+  color: white;
+  text-align: center;
+  font-size: 1.2rem;
+  width: 80px;
+`;
 const Score = styled.h2`
-  
-`
+  margin: 5px 0;
+`;
 const Users = styled.span`
-  
-`
+  font-size: 1.1rem;
+`;
 
 const Data = styled.div`
-  
-`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+`;
+
 const ScoreData = styled.div`
-`
+  display: flex;
+  align-items: center;
+  span {
+    margin: 0 20px;
+  }
+`;
 const OtherData = styled.div`
-  
-`
+  font-size: 1.2rem;
+  margin-left: 10px;
+  color: ${props => props.theme.main};
+  span {
+    margin: 0 10px;
+    border-right: 1px solid lightgray;
+    padding-right: 18px;
+    :last-of-type {
+      border-right: 0;
+    }
+  }
+`;
+
 
 const Synopsis = styled.div`
   padding: 4px;
@@ -206,3 +248,6 @@ const Synopsis = styled.div`
     margin-top: 4px;
   }
 `;
+
+
+const VideoWrapper = styled(Synopsis)``;

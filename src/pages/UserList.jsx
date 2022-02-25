@@ -25,7 +25,7 @@ const UserList = () => {
         <Header>
           <h3>All Anime</h3>
         </Header>
-        <Table>
+        <Table >
           <TableBody>
           <TableRow>
             <th className="number">#</th>
@@ -74,7 +74,8 @@ const Header = styled.header`
 
 const Table = styled.table``;
 
-const TableBody = styled.tbody``;
+const TableBody = styled.tbody`
+`;
 
 const TableRow = styled.tr`
   th {
