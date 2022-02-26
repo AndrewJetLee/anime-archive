@@ -1,7 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const animeRouter = require("./routers/anime");
-const mangaRouter = require("./routers/manga");
 const userRouter = require("./routers/user");
 const connectToDb = require("./db");
 const session = require("express-session");
@@ -44,8 +42,6 @@ app.use((req, res, next) => {
 });
 
 // assign routers
-app.use("/api/anime", animeRouter);
-app.use("/api/manga", mangaRouter);
 app.use("/api/user", userRouter);
 
 // connect to db
