@@ -2,6 +2,8 @@ import styled from "styled-components";
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 const Footer = () => {
   return (
@@ -9,6 +11,8 @@ const Footer = () => {
       <Center>
         <Top>
           <Socials>
+            <GitHubIcon className="icons github"/>
+            <LinkedInIcon className="icons linkedin"/>
             <InstagramIcon className="icons instagram"/>
             <TwitterIcon className="icons twitter"/>
             <FacebookIcon className="icons facebook"/>
@@ -22,7 +26,7 @@ const Footer = () => {
             <li><a href="/list">List</a></li>
           </Navigation>
           <Copyright>
-            @2021 JetLee
+            @2021 Jet Lee
           </Copyright>
         </Bottom>
       </Center>
@@ -43,23 +47,22 @@ const Container = styled.div`
 
 const Center = styled.div`
     width: 70%;
-    background-color: green;
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
 `
 
 const Top = styled.div`
     display: flex;
     flex: 1;
     justify-content: center;
-    border-bottom: 1px solid lightgrey;
-    
+    margin-top: 40px;
 `
 const Socials = styled.div`
   display: flex;
   justify-content: space-around;
-  width: 15%;
+  width: 50%;
   padding: 20px;
   .icons {
     font-size: 3.5rem;
@@ -77,6 +80,9 @@ const Bottom = styled.div`
 
 const Navigation = styled.ul`
   display: flex;
+  li {
+    margin: 0 10px;
+  }
   a {
     text-decoration: none;
   }
