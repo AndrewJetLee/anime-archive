@@ -25,6 +25,13 @@ const Footer = () => {
             <li><a href="/manga">Manga</a></li>
             <li><a href="/list">List</a></li>
           </Navigation>
+          <ProjectsWrapper>
+            <span>Personal projects:</span>
+            <Projects>
+            <Project>E-commerce</Project>
+            <Project>Secure Your Vote</Project>
+            </Projects>
+          </ProjectsWrapper>
           <Copyright>
             @2021 Jet Lee
           </Copyright>
@@ -57,13 +64,13 @@ const Top = styled.div`
     display: flex;
     flex: 1;
     justify-content: center;
-    margin-top: 40px;
+    margin-top: 30px;
 `
 const Socials = styled.div`
   display: flex;
   justify-content: space-around;
   width: 50%;
-  padding: 20px;
+  padding: 10px;
   .icons {
     font-size: 3.5rem;
   }
@@ -76,17 +83,51 @@ const Bottom = styled.div`
    font-size: 1.3rem;
    flex-direction: column;
    align-items: center;
+   justify-content: space-around;
 `
 
 const Navigation = styled.ul`
   display: flex;
+  margin: 0;
   li {
     margin: 0 10px;
+    :first-child{
+      border-right: 1px solid;
+      padding-right: 20px;
+    }
   }
   a {
     text-decoration: none;
   }
 `
+const ProjectsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 30%;
+  span {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    font-style: italic;
+  }
+`
+const Projects = styled.div`
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  margin-left: 40px;
+`
+
+const Project = styled.a`
+  padding: 8px 19px;
+  border: solid 2px white;
+  margin-right: 12px;
+  border-radius: 4px;
+  font-weight: 500;
+`
+
 const Copyright = styled.div`
   
 `
+
