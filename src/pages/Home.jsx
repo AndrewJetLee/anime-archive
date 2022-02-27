@@ -6,6 +6,7 @@ import { apiRequest } from "../requestMethods";
 import { useEffect, useState } from "react";
 
 const Home = ({user}) => {
+  const [seasonalAnime, setSeasonalAnime] = useState([]);
   const [trendingAnime, setTrendingAnime] = useState([]);
   const [trendingManga, setTrendingManga] = useState([]);
 
@@ -13,12 +14,21 @@ const Home = ({user}) => {
      getAllMedia()
   }, [])
 
+  const getSeason = (date) => {
+    return Math.floor((date.getMonth() / 12 * 4)) % 4;
+  }
+
   const getAllMedia = async () => {
     try {
+      const currentSeason = ['winter', 'spring', 'summer', 'autumn'][getSeason(new Date())];
+      const currentYear = new Date().getFullYear();
+      const seasonalAnime = await apiRequest.get(`/anime?filter[season]=${currentSeason}&filter[seasonYear]=${currentYear}`);
       const trendingAnime = await apiRequest.get("/trending/anime");
       const trendingManga = await apiRequest.get("/trending/manga");
+      console.log(seasonalAnime.data);
       console.log(trendingAnime.data);
       console.log(trendingManga.data);
+      setSeasonalAnime(seasonalAnime.data.data);
       setTrendingAnime(trendingAnime.data.data);
       setTrendingManga(trendingManga.data.data);
     } catch (err) {
@@ -33,6 +43,7 @@ const Home = ({user}) => {
         <Nav user={user}/>
         <Carousel title={"Trending Anime"} data={trendingAnime}/>
         <Carousel title={"Trending Manga"} data={trendingManga}/>
+        <Carousel title={"Seasonal Anime"} data={seasonalAnime}/>
       </Wrapper>
       <Footer />
     </Container>

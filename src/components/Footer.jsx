@@ -50,6 +50,7 @@ const Container = styled.div`
     color: white;
     display: flex;
     justify-content: center;
+    overflow: hidden;
 `
 
 const Center = styled.div`
