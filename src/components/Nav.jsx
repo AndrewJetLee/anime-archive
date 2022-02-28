@@ -31,11 +31,24 @@ const Nav = () => {
     }
   }
 
-  const handleClickList = async () => {
-    const res = await publicRequest.get("/user/list");
-    console.log(res);
-    navigate("/list", { state: res.data.list });
+  const handleClick = async (type) => {
+    try {
+      if (type === "list") {
+        const res = await publicRequest.get("/user/list");
+        console.log(res);
+        navigate("/list", { state: res.data.list });
+      } else {
+        const res = await apiRequest.get(`/${type}`)
+        console.log(res);
+        navigate("/search", { state: res.data.data });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    
   }
+
+
 
   return (
     <Container>
@@ -67,9 +80,9 @@ const Nav = () => {
       </Wrapper>
       <Wrapper position={"bottom"}>
         <NavItems>
-          <Anime >Anime</Anime>
-          <Manga>Manga</Manga>
-          <List onClick={handleClickList}>List</List>
+          <Anime onClick={() => handleClick("anime")}>Anime</Anime>
+          <Manga onClick={() => handleClick("manga")}>Manga</Manga>
+          <List onClick={() => handleClick("list")}>List</List>
         </NavItems>
         <BottomRight>
           <InputWrapper onSubmit={handleSearch}>
