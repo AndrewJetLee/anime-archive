@@ -38,7 +38,7 @@ const Nav = () => {
         console.log(res);
         navigate("/list", { state: res.data.list });
       } else {
-        const res = await apiRequest.get(`/${type}`)
+        const res = await apiRequest.get(`/${type}?page[limit]=20`)
         console.log(res);
         navigate("/search", { state: res.data.data });
       }
