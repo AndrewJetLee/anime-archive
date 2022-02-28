@@ -5,7 +5,7 @@ const List = ({ items }) => {
   return (
     <Container>
       {items.map((item, i) => (
-        <CarouselItem item={item}/>
+        <CarouselItem item={item} key={i}/>
       ))}
     </Container>
   );
