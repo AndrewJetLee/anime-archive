@@ -31,7 +31,6 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   display: flex;
-  border: solid;
   width: 70vw;
   flex-direction: column;
   min-height: 100vh;
