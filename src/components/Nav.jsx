@@ -139,10 +139,13 @@ const Slogan = styled.img`
 const Right = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   width: 40%;
 `;
 const Icons = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
   .icon {
     font-size: 2.6rem;
     cursor: pointer;
