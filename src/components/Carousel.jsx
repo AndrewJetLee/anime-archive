@@ -15,7 +15,7 @@ const Carousel = ({title, data}) => {
         navigation={true}
         modules={[Navigation]}
         spaceBetween={10}
-        slidesPerView={6}
+        slidesPerView={8}
         onSlideChange={() => console.log("slide change")}
         onSwiper={(swiper) => console.log(swiper)}
       >
@@ -36,5 +36,7 @@ const Container = styled.div`
 `
 
 const Title = styled.h2`
-  
+  font-size: 1.8rem;
+  padding-bottom: 5px;
+  border-bottom: solid 1px lightgrey;
 `
