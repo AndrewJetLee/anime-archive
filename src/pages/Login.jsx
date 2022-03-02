@@ -10,15 +10,15 @@ const Login = () => {
   const [formInputs, setFormInputs] = useState({
     username: "",
     password: "",
-  })
+  });
 
   const handleFormChange = (e) => {
-    let value = e.target.value; 
+    let value = e.target.value;
     setFormInputs({
       ...formInputs,
-      [e.target.name]: value
-    })
-  }
+      [e.target.name]: value,
+    });
+  };
 
   const handleSubmit = async (e) => {
     try {
@@ -28,13 +28,13 @@ const Login = () => {
       navigate("/");
     } catch (err) {
       console.log(err);
-    }    
-  }
+    }
+  };
 
   const test = async (e) => {
     const res = await publicRequest.get("/user/list");
     console.log(res);
-  }
+  };
 
   return (
     <Container>
@@ -47,14 +47,14 @@ const Login = () => {
           <Form onChange={handleFormChange}>
             <UsernameWrapper>
               <Label>Username</Label>
-              <Username name="username"/>
+              <Username name="username" />
             </UsernameWrapper>
             <PasswordWrapper>
               <Label>Password</Label>
-              <Password name="password"/>
+              <Password name="password" type="password"/>
             </PasswordWrapper>
+            <LoginButton onClick={handleSubmit}>Login</LoginButton>
           </Form>
-          <LoginButton onClick={handleSubmit}>Login</LoginButton>
           <Forgot onClick={test}>Forgot your password?</Forgot>
           <Register>Create account</Register>
         </Content>
@@ -117,7 +117,7 @@ const Username = styled.input`
   width: 100%;
   border: solid 1px grey;
   border-radius: 4px;
-  font-size: 2.0rem;
+  font-size: 2rem;
 `;
 const PasswordWrapper = styled(UsernameWrapper)`
   margin-bottom: 30px;
@@ -146,6 +146,4 @@ const Register = styled.a`
   color: ${(props) => props.theme.main};
 `;
 
-const Forgot = styled(Register)`
- 
-`
+const Forgot = styled(Register)``;

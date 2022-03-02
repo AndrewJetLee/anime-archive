@@ -56,7 +56,7 @@ const Register = () => {
             </UsernameWrapper>
             <PasswordWrapper>
               <Label>Password</Label>
-              <Password name="password"/>
+              <Password type="password" name="password"/>
             </PasswordWrapper>
             <BirthdayWrapper>
               <Label>Birthday</Label>
