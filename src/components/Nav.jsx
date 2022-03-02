@@ -167,6 +167,7 @@ const Login = styled.button`
   border: solid 1px;
   font-size: 1.4rem;
   font-weight: 600;
+  cursor: pointer;
 `;
 
 const Logout = styled(Login)``;
@@ -179,6 +180,7 @@ const SignUp = styled.button`
   border: none;
   font-size: 1.4rem;
   font-weight: 600;
+  cursor: pointer;
 `;
 
 //WIP
