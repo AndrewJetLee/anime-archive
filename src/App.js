@@ -11,6 +11,7 @@ import Media from './pages/Media';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import UserList from "./pages/UserList";
+import Browse from "./pages/Browse";
 
 function App() {
   return (
@@ -19,10 +20,12 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/search" element={<Search/>}/>
+          <Route path="/browse" element={<Browse/>}/>
           <Route path="/media" element={<Media/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
           <Route path="/list" element={<UserList/>}/>
+          
         </Routes>
       </Router>
     </Container>

@@ -14,9 +14,12 @@ const Nav = () => {
     console.log(query);
     let animeResult = await apiRequest.get(`anime/?filter[text]=${query}`);
     let mangaResult = await apiRequest.get(`manga/?filter[text]=${query}`);
+    console.log(animeResult);
     let result = [...animeResult.data.data, ...mangaResult.data.data];
     console.log(result);
-    navigate("/search", { state: result });
+    navigate("/search", {
+      state: { anime: animeResult.data, manga: mangaResult.data },
+    });
   };
 
   const handleLogout = async () => {
@@ -29,7 +32,7 @@ const Nav = () => {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   const handleClick = async (type) => {
     try {
@@ -38,16 +41,14 @@ const Nav = () => {
         console.log(res);
         navigate("/list", { state: res.data.list });
       } else {
-        const res = await apiRequest.get(`/${type}?page[limit]=18`)
+        const res = await apiRequest.get(`/${type}?page[limit]=18`);
         console.log(res);
-        navigate("/search", { state: res.data });
+        navigate("/browse", { state: res.data });
       }
     } catch (err) {
       console.log(err);
     }
-  }
-
-
+  };
 
   return (
     <Container>
@@ -68,12 +69,14 @@ const Nav = () => {
             )}
             {localStorage.getItem("user") ? (
               <User>
-                <UserImage src="./images/placeholder-img.png"/>
+                <UserImage src="./images/placeholder-img.png" />
                 <UserInfo>
                   {JSON.parse(localStorage.getItem("user")).username}
                 </UserInfo>
               </User>
-            ) : <SignUp onClick={() => navigate("/register")}>Sign Up</SignUp>}
+            ) : (
+              <SignUp onClick={() => navigate("/register")}>Sign Up</SignUp>
+            )}
           </Profile>
         </Right>
       </Wrapper>
@@ -186,16 +189,16 @@ const SignUp = styled.button`
 const User = styled.div`
   display: flex;
   align-items: center;
-`
+`;
 const UserImage = styled.img`
   height: 30px;
-  width: 30px; 
+  width: 30px;
   margin-right: 8px;
-`
+`;
 const UserInfo = styled.span`
   font-size: 1.4rem;
   font-weight: 600;
-`
+`;
 
 //bottom nav and children
 const NavItems = styled.div`

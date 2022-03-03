@@ -7,24 +7,22 @@ import { Title, Header } from "./Login";
 import { useState, useEffect } from "react";
 import { apiRequest } from "../requestMethods";
 
-const Search = () => {
+const Browse = () => {
   let location = useLocation();
   console.log(location.state);
-
-  const [animeMetaData, setAnimeMetaData] = useState(location.state.anime);
-  const [mangaMetaData, setMangaMetaData] = useState(location.state.manga);
-  const [animes, setAnimes] = useState(location.state.anime.data);
-  const [mangas, setMangas] = useState(location.state.manga.data);
+  
+  const [metaData, setMetaData] = useState(location.state);
+  const [items, setItems] = useState(location.state.data);
 
 
   useEffect(() => {
-    setAnimes(location.state.anime.data);
+    setItems(location.state.data);
   }, [location.state])
 
   const handleClick = async () => {
-    const res = await apiRequest.get(animeMetaData.links.next);
-    setAnimeMetaData(res.data);
-    setAnimes([...animes, ...res.data.data])
+    const res = await apiRequest.get(metaData.links.next);
+    setMetaData(res.data);
+    setItems([...items, ...res.data.data])
   }
 
   return (
@@ -34,7 +32,7 @@ const Search = () => {
         <Header >
           <Title>Browse</Title>
         </Header>
-        <List items={animes}/>
+        <List items={items}/>
         <More onClick={handleClick}>More</More>
       </Wrapper>
       <Footer />
@@ -42,7 +40,7 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default Browse;
 
 const Container = styled.div`
   display: flex;
