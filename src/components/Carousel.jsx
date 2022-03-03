@@ -32,7 +32,7 @@ const Carousel = ({title, data}) => {
 export default Carousel
 
 const Container = styled.div`
-
+  margin-bottom: 20px;
 `
 
 const Title = styled.h2`
