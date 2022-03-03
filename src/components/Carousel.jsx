@@ -36,7 +36,10 @@ const Container = styled.div`
 `
 
 const Title = styled.h2`
-  font-size: 1.8rem;
+  text-transform: uppercase;
+  font-size: 1.5rem;
   padding-bottom: 5px;
-  border-bottom: solid 1px lightgrey;
+  background-color: ${props => props.theme.secondary};
+  padding: 12px;
+  border-left: 3px solid ${props => props.theme.tertiary};
 `

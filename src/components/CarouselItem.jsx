@@ -48,6 +48,9 @@ const Title = styled.span`
   z-index: 1000;
   bottom: 0;
   color: white;
+  font-size: 1.4rem;
+  text-align: center;
+  padding: 5px;
 `;
 
 const Background = styled.div`
@@ -56,5 +59,5 @@ const Background = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to bottom, transparent 0%, black 200%);
+  background: linear-gradient(to bottom, transparent 0%, black 250%);
 `;
