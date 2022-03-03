@@ -2,7 +2,7 @@ import Nav from "../components/Nav";
 import styled from "styled-components";
 import Carousel from "../components/Carousel";
 import Footer from "../components/Footer";
-import { apiRequest, jikanRequest } from "../requestMethods";
+import { jikanRequest } from "../requestMethods";
 import { useEffect, useState } from "react";
 import Hero from "../components/Hero";
 
@@ -11,7 +11,7 @@ const Home = ({ user }) => {
   const [upcomingAnime, setUpcomingAnime] = useState([]);
   const [trendingAnime, setTrendingAnime] = useState([]);
   const [trendingManga, setTrendingManga] = useState([]);
-  
+
   useEffect(() => {
     getAllMedia();
   }, []);

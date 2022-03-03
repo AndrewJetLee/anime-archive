@@ -30,7 +30,28 @@ const Media = () => {
           <ImageWrapper>
             <Image src={item.images.jpg.image_url} />
           </ImageWrapper>
-          <AddToList onClick={handleAddToList}>Add To List</AddToList>
+          <AddToListWrapper>
+            <StatusWrapper>
+              <label for="status">Status: </label>
+              <StatusDropdown name="status">
+                <option value="">Plan to Watch</option>
+                <option value="">Completed</option>
+                <option value="">Currently Watching</option>
+                <option value="">On Hold</option>
+                <option value="">Dropped</option>
+              </StatusDropdown>
+            </StatusWrapper>
+            <RatingWrapper>
+              <label for="rating">Rating: </label>
+              <RatingDropdown name="rating">
+                
+              </RatingDropdown>
+            </RatingWrapper>
+            <Inputs>
+              <AddButton></AddButton>
+              
+            </Inputs>
+          </AddToListWrapper>
           <Information>
             <SideBarList>
               <li>
@@ -49,7 +70,12 @@ const Media = () => {
                   {item.aired.string}
                 </li>
               ) : null}
-
+              <li>
+                <strong>Genres: </strong>
+                {item.genres.map((genre) => (
+                  <a href="#">{genre.name} </a>
+                ))}
+              </li>
               <li>
                 <strong>Rating: </strong>
                 {item.rating}
@@ -83,8 +109,8 @@ const Media = () => {
           <Details>
             <ScoreWrapper>
               <Title>SCORE</Title>
-              <Score>9.15</Score>
-              <Users>100,000 users</Users>
+              <Score>{item.score}</Score>
+              <Users>{item.scored_by} users</Users>
             </ScoreWrapper>
             <Data>
               <ScoreData>
@@ -99,9 +125,11 @@ const Media = () => {
                 </span>
               </ScoreData>
               <OtherData>
-                <span>Summer 2019</span>
-                <span>TV</span>
-                <span>gigity</span>
+                <span>
+                  {item.season} {item.year}
+                </span>
+                <span>{item.type}</span>
+                <span>{item.studios[0].name}</span>
               </OtherData>
             </Data>
           </Details>
@@ -164,6 +192,7 @@ const Left = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  padding: 4px;
 `;
 const ImageWrapper = styled.div``;
 
@@ -172,13 +201,27 @@ const Image = styled.img`
   height: 100%;
 `;
 
-const AddToList = styled.a`
+const AddToListWrapper = styled.form`
   margin-top: 15px;
   font-size: 1.3rem;
   color: ${(props) => props.theme.main};
   cursor: pointer;
   font-weight: 600;
 `;
+
+const StatusWrapper = styled.div`
+  display: flex;
+`
+
+const StatusDropdown = styled.select``;
+
+const RatingWrapper = styled(StatusWrapper)``;
+const RatingDropdown = styled.select``;
+
+const Inputs = styled.div``;
+const AddButton = styled.a``;
+
+
 
 const Information = styled.div``;
 const Statistics = styled.div``;
@@ -245,6 +288,9 @@ const OtherData = styled.div`
     margin: 0 10px;
     border-right: 1px solid lightgray;
     padding-right: 18px;
+    :first-child {
+      text-transform: capitalize;
+    }
     :last-of-type {
       border-right: 0;
     }
