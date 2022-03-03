@@ -94,6 +94,7 @@ export const HeaderTitle = styled.span`
   display: inline-block;
   font-weight: 600;
   padding: 8px;
+  margin-left: 20px;
 `;
 
 const Content = styled.div`

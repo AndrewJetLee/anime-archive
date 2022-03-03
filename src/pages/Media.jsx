@@ -19,56 +19,56 @@ const Media = () => {
       <Nav />
       <Header>
         <Titles>
-          <CanonTitle>{item.attributes.canonicalTitle}</CanonTitle>
-          <EnglishTitle>{item.attributes.titles.en}</EnglishTitle>
+          <CanonTitle>{item.title}</CanonTitle>
+          <EnglishTitle>{item.title_english}</EnglishTitle>
         </Titles>
       </Header>
       <Wrapper>
         <Left>
           <ImageWrapper>
-            <Image src={item.attributes.posterImage.medium} />
+            <Image src={item.images.jpg.image_url} />
           </ImageWrapper>
           <AddToList onClick={handleAddToList}>Add To List</AddToList>
           <Information>
             <SideBarList>
               <li>
-                <strong>Type:</strong> {item.attributes.showType}
+                <strong>Type:</strong> {item.type}
               </li>
               <li>
-                <strong>Episodes:</strong> {item.attributes.episodeCount}
+                <strong>Episodes:</strong> {item.episodes}
               </li>
               <li>
                 <strong>Status: </strong>
-                {item.attributes.status}
+                {item.status}
               </li>
               <li>
                 <strong>Aired: </strong>
-                {item.attributes.startDate} to {item.attributes.endDate}
+                {item.aired.string}
               </li>
               <li>
                 <strong>Rating: </strong>
-                {item.attributes.ageRating} - {item.attributes.ageRatingGuide}
+                {item.rating}
               </li>
             </SideBarList>
           </Information>
           <Statistics>
             <SideBarList>
               <li>
-                <strong>Score:</strong> {item.attributes.averageRating}
+                <strong>Score:</strong> {item.score}
               </li>
               <li>
-                <strong>Ranked:</strong> #{item.attributes.ratingRank}
+                <strong>Ranked:</strong> #{item.rank}
               </li>
               <li>
-                <strong>Popularity: </strong>#{item.attributes.popularityRank}
+                <strong>Popularity: </strong>#{item.popularity}
               </li>
               <li>
                 <strong>Members: </strong>
-                {item.attributes.userCount}
+                {item.members}
               </li>
               <li>
                 <strong>Favorites: </strong>
-                {item.attributes.favoritesCount}
+                {item.favorites}
               </li>
             </SideBarList>
           </Statistics>
@@ -84,13 +84,13 @@ const Media = () => {
             <Data>
               <ScoreData>
                 <span>
-                  Ranked <strong>#{item.attributes.ratingRank}</strong>
+                  Ranked <strong>#{item.rank}</strong>
                 </span>
                 <span>
-                  Popularity <strong>#{item.attributes.popularityRank}</strong>
+                  Popularity <strong>#{item.popularity}</strong>
                 </span>
                 <span>
-                  Members <strong>{item.attributes.userCount}</strong>
+                  Members <strong>{item.members}</strong>
                 </span>
               </ScoreData>
               <OtherData>
@@ -102,7 +102,7 @@ const Media = () => {
           </Details>
           <Synopsis>
             <h5>Synopsis</h5>
-            <p>{item.attributes.synopsis}</p>
+            <p>{item.synopsis}</p>
           </Synopsis>
           <VideoWrapper>
               <h5>Trailer</h5>
@@ -110,7 +110,7 @@ const Media = () => {
                 title="trailer"
                 width="100%"
                 height="550px"
-                src={`https://www.youtube.com/embed/${item.attributes.youtubeVideoId}`}
+                src={`https://www.youtube.com/embed/${item.trailer.youtube_id}`}
               ></iframe>
             </VideoWrapper>
         </Right>

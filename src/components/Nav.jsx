@@ -113,8 +113,8 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding-right: 50px;
-  padding-left: 25px;
+  padding-right: 40px;
+  padding-left: 20px;
   background-color: ${(props) =>
     props.position === "bottom" ? props.theme.main : "white"};
 `;

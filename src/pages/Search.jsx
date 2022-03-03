@@ -35,7 +35,7 @@ const Search = () => {
     <Container>
       <Nav />
       <Header>
-        <HeaderTitle>Browse</HeaderTitle>
+        <HeaderTitle>Search</HeaderTitle>
       </Header>
       <Wrapper>
         <Title>Anime</Title>
