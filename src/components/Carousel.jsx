@@ -35,7 +35,7 @@ const Container = styled.div`
   margin-bottom: 20px;
 `
 
-const Title = styled.h2`
+export const Title = styled.h2`
   text-transform: uppercase;
   font-size: 1.5rem;
   padding-bottom: 5px;

@@ -11,16 +11,10 @@ const Home = ({ user }) => {
   const [upcomingAnime, setUpcomingAnime] = useState([]);
   const [trendingAnime, setTrendingAnime] = useState([]);
   const [trendingManga, setTrendingManga] = useState([]);
-
+  
   useEffect(() => {
     getAllMedia();
   }, []);
-
-  const getSeason = (date) => {
-    return Math.floor((date.getMonth() / 12) * 4) % 4;
-  };
-
-  //https://kitsu.io/api/edge/site-announcements
 
   const getAllMedia = async () => {
     try {

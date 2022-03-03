@@ -3,9 +3,10 @@ import styled from "styled-components";
 import List from "../components/List";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
-import { Title, Header } from "./Login";
+import { HeaderTitle, Header } from "./Login";
 import { useState, useEffect } from "react";
 import { jikanRequest } from "../requestMethods";
+import { Title } from "../components/Carousel";
 
 const Search = () => {
   let location = useLocation();
@@ -34,12 +35,12 @@ const Search = () => {
     <Container>
       <Nav />
       <Header>
-        <Title>Browse</Title>
+        <HeaderTitle>Browse</HeaderTitle>
       </Header>
       <Wrapper>
-        <Label>Anime</Label>
+        <Title>Anime</Title>
         <List items={animes} />
-        <Label>Manga</Label>
+        <Title>Manga</Title>
         <List items={mangas} />
         <More onClick={handleClick}>More</More>
       </Wrapper>
@@ -67,5 +68,3 @@ const Wrapper = styled.div`
 `;
 
 const More = styled.button``;
-
-const Label = styled.h3``;

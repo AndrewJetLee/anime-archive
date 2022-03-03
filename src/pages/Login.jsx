@@ -42,7 +42,7 @@ const Login = () => {
       <Wrapper>
         <Nav />
         <Header>
-          <Title>Login</Title>
+          <HeaderTitle>Login</HeaderTitle>
         </Header>
         <Content>
           <Form onChange={handleFormChange}>
@@ -90,7 +90,7 @@ export const Header = styled.header`
   margin-bottom: 10px;
 `;
 
-export const Title = styled.span`
+export const HeaderTitle = styled.span`
   display: inline-block;
   font-weight: 600;
   padding: 8px;

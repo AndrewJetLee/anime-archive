@@ -3,7 +3,7 @@ import styled from "styled-components";
 import List from "../components/List";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
-import { Title, Header } from "./Login";
+import { HeaderTitle, Header } from "./Login";
 import { useState, useEffect } from "react";
 import { apiRequest } from "../requestMethods";
 
@@ -30,7 +30,7 @@ const Browse = () => {
       <Wrapper>
         <Nav />
         <Header >
-          <Title>Browse</Title>
+          <HeaderTitle>Browse</HeaderTitle>
         </Header>
         <List items={items}/>
         <More onClick={handleClick}>More</More>

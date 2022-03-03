@@ -14,7 +14,8 @@ const Nav = () => {
     console.log(query);
     let animeResult = await jikanRequest.get(`/anime?q=${query}`);
     let mangaResult = await jikanRequest.get(`/manga?q=${query}`);
-    console.log(animeResult);
+    console.log(mangaResult);
+    debugger;
     navigate("/search", {
       state: { anime: animeResult.data, manga: mangaResult.data },
     });
