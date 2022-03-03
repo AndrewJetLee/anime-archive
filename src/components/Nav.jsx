@@ -114,7 +114,8 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding-right: 20px;
+  padding-right: 50px;
+  padding-left: 25px;
   background-color: ${(props) =>
     props.position === "bottom" ? props.theme.main : "white"};
 `;
