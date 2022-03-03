@@ -20,7 +20,9 @@ const Media = () => {
       <Header>
         <Titles>
           <CanonTitle>{item.title}</CanonTitle>
-          <EnglishTitle>{item.title_english}</EnglishTitle>
+          {item.title !== item.title_english ? (
+            <EnglishTitle>{item.title_english}</EnglishTitle>
+          ) : null}
         </Titles>
       </Header>
       <Wrapper>
@@ -41,10 +43,13 @@ const Media = () => {
                 <strong>Status: </strong>
                 {item.status}
               </li>
-              <li>
-                <strong>Aired: </strong>
-                {item.aired.string}
-              </li>
+              {item.aired.string ? (
+                <li>
+                  <strong>Aired: </strong>
+                  {item.aired.string}
+                </li>
+              ) : null}
+
               <li>
                 <strong>Rating: </strong>
                 {item.rating}
@@ -104,7 +109,8 @@ const Media = () => {
             <h5>Synopsis</h5>
             <p>{item.synopsis}</p>
           </Synopsis>
-          <VideoWrapper>
+          {item.trailer ? (
+            <VideoWrapper>
               <h5>Trailer</h5>
               <iframe
                 title="trailer"
@@ -113,6 +119,7 @@ const Media = () => {
                 src={`https://www.youtube.com/embed/${item.trailer.youtube_id}`}
               ></iframe>
             </VideoWrapper>
+          ) : null}
         </Right>
       </Wrapper>
       <Footer />
@@ -137,7 +144,7 @@ const Header = styled.div`
   line-height: 0;
 `;
 const Titles = styled.div`
-  border-bottom: 1px solid ${props => props.theme.main};
+  border-bottom: 1px solid ${(props) => props.theme.main};
 `;
 const CanonTitle = styled.h3``;
 const EnglishTitle = styled.h4`
@@ -148,8 +155,8 @@ const Wrapper = styled.div`
   display: flex;
   width: 70vw;
   min-height: 100vh;
-  border-left: solid 1px ${props => props.theme.secondary};
-  border-right: solid 1px ${props => props.theme.secondary};
+  border-left: solid 1px ${(props) => props.theme.secondary};
+  border-right: solid 1px ${(props) => props.theme.secondary};
 `;
 
 //Left Column
@@ -168,7 +175,7 @@ const Image = styled.img`
 const AddToList = styled.a`
   margin-top: 15px;
   font-size: 1.3rem;
-  color: ${props => props.theme.main};
+  color: ${(props) => props.theme.main};
   cursor: pointer;
   font-weight: 600;
 `;
@@ -187,7 +194,7 @@ const SideBarList = styled.ul`
 const Right = styled.div`
   flex: 4;
   margin-left: 4px;
-  border-left: solid 1px ${props => props.theme.secondary};
+  border-left: solid 1px ${(props) => props.theme.secondary};
 `;
 const Details = styled.section`
   display: flex;
@@ -204,7 +211,7 @@ const ScoreWrapper = styled.div`
   padding: 10px;
 `;
 const Title = styled.div`
-  background-color: ${props => props.theme.main};
+  background-color: ${(props) => props.theme.main};
   color: white;
   text-align: center;
   font-size: 1.2rem;
@@ -233,7 +240,7 @@ const ScoreData = styled.div`
 const OtherData = styled.div`
   font-size: 1.2rem;
   margin-left: 10px;
-  color: ${props => props.theme.main};
+  color: ${(props) => props.theme.main};
   span {
     margin: 0 10px;
     border-right: 1px solid lightgray;
@@ -243,7 +250,6 @@ const OtherData = styled.div`
     }
   }
 `;
-
 
 const Synopsis = styled.div`
   padding: 4px;
@@ -258,7 +264,6 @@ const Synopsis = styled.div`
     margin-top: 10px;
   }
 `;
-
 
 const VideoWrapper = styled(Synopsis)`
   h5 {
