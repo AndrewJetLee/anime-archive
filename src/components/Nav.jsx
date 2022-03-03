@@ -38,14 +38,13 @@ const Nav = () => {
         console.log(res);
         navigate("/list", { state: res.data.list });
       } else {
-        const res = await apiRequest.get(`/${type}?page[limit]=20`)
+        const res = await apiRequest.get(`/${type}?page[limit]=18`)
         console.log(res);
-        navigate("/search", { state: res.data.data });
+        navigate("/search", { state: res.data });
       }
     } catch (err) {
       console.log(err);
     }
-    
   }
 
 

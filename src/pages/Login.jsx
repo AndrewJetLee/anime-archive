@@ -21,6 +21,7 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       const res = await publicRequest.post("/user/login", formInputs);
       console.log(res);
@@ -82,12 +83,14 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const Header = styled.header`
+export const Header = styled.header`
   background-color: ${(props) => props.theme.secondary};
   border-bottom: 1px solid ${(props) => props.theme.main};
   width: 100%;
+  margin-bottom: 10px;
 `;
-const Title = styled.span`
+
+export const Title = styled.span`
   display: inline-block;
   font-weight: 600;
   padding: 8px;
@@ -122,6 +125,7 @@ const Username = styled.input`
 const PasswordWrapper = styled(UsernameWrapper)`
   margin-bottom: 30px;
 `;
+
 const Password = styled(Username)``;
 
 const Label = styled.label`
