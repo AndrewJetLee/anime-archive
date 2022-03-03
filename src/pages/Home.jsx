@@ -4,6 +4,7 @@ import Carousel from "../components/Carousel";
 import Footer from "../components/Footer";
 import { apiRequest } from "../requestMethods";
 import { useEffect, useState } from "react";
+import Announcements from "../components/Announcements";
 
 const Home = ({user}) => {
   const [seasonalAnime, setSeasonalAnime] = useState([]);
@@ -17,6 +18,8 @@ const Home = ({user}) => {
   const getSeason = (date) => {
     return Math.floor((date.getMonth() / 12 * 4)) % 4;
   }
+
+  //https://kitsu.io/api/edge/site-announcements
 
   const getAllMedia = async () => {
     try {
@@ -41,6 +44,7 @@ const Home = ({user}) => {
     <Container>
       <Wrapper>
         <Nav user={user}/>
+        <Announcements></Announcements>
         <Carousel title={"Trending Anime"} data={trendingAnime}/>
         <Carousel title={"Trending Manga"} data={trendingManga}/>
         <Carousel title={"Seasonal Anime"} data={seasonalAnime}/>
