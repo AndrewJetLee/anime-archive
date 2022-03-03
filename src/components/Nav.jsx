@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import { apiRequest, publicRequest } from "../requestMethods";
+import { apiRequest, publicRequest, jikanRequest } from "../requestMethods";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -12,11 +12,9 @@ const Nav = () => {
   const handleSearch = async (e) => {
     e.preventDefault();
     console.log(query);
-    let animeResult = await apiRequest.get(`anime/?filter[text]=${query}`);
-    let mangaResult = await apiRequest.get(`manga/?filter[text]=${query}`);
+    let animeResult = await jikanRequest.get(`/anime?q=${query}`);
+    let mangaResult = await jikanRequest.get(`/manga?q=${query}`);
     console.log(animeResult);
-    let result = [...animeResult.data.data, ...mangaResult.data.data];
-    console.log(result);
     navigate("/search", {
       state: { anime: animeResult.data, manga: mangaResult.data },
     });

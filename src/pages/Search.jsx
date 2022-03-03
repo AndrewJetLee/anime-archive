@@ -5,7 +5,7 @@ import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import { Title, Header } from "./Login";
 import { useState, useEffect } from "react";
-import { apiRequest } from "../requestMethods";
+import { jikanRequest } from "../requestMethods";
 
 const Search = () => {
   let location = useLocation();
@@ -16,25 +16,31 @@ const Search = () => {
   const [animes, setAnimes] = useState(location.state.anime.data);
   const [mangas, setMangas] = useState(location.state.manga.data);
 
-
   useEffect(() => {
     setAnimes(location.state.anime.data);
-  }, [location.state])
+    setMangas(location.state.manga.data);
+  }, [location.state]);
 
   const handleClick = async () => {
-    const res = await apiRequest.get(animeMetaData.links.next);
-    setAnimeMetaData(res.data);
-    setAnimes([...animes, ...res.data.data])
-  }
+    const loadedAnime = await jikanRequest.get(animeMetaData.links.next);
+    const loadedManga = await jikanRequest.get(mangaMetaData.links.next);
+    setAnimeMetaData(loadedAnime.data);
+    setAnimes([...animes, ...loadedAnime.data.data]);
+    setMangaMetaData(loadedAnime.data);
+    setMangas([...mangas, ...loadedManga.data.data]);
+  };
 
   return (
     <Container>
+      <Nav />
+      <Header>
+        <Title>Browse</Title>
+      </Header>
       <Wrapper>
-        <Nav />
-        <Header >
-          <Title>Browse</Title>
-        </Header>
-        <List items={animes}/>
+        <Label>Anime</Label>
+        <List items={animes} />
+        <Label>Manga</Label>
+        <List items={mangas} />
         <More onClick={handleClick}>More</More>
       </Wrapper>
       <Footer />
@@ -60,5 +66,6 @@ const Wrapper = styled.div`
   min-height: 100vh;
 `;
 
-const More = styled.button`
-`
+const More = styled.button``;
+
+const Label = styled.h3``;

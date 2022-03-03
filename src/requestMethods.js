@@ -16,4 +16,9 @@ export const apiRequest = axios.create({
 
 export const jikanRequest = axios.create({
     baseURL: JIKAN_API,
+    // headers: {
+    //     "Access-Control-Allow-Origin": "*",
+    //     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+    //     'Content-Type': 'application/json'
+    // }
 })
