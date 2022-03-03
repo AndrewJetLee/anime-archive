@@ -12,8 +12,8 @@ const CarouselItem = ({ item }) => {
 
   return (
     <Container onClick={handleClick}>
-      <Image src={item.attributes.posterImage.medium} className="animeImage" />
-      <Title>{item.attributes.canonicalTitle}</Title>
+      <Image src={item.images.jpg.image_url} className="animeImage" />
+      <Title>{item.title}</Title>
       <Background></Background>
     </Container>
   );
@@ -28,6 +28,7 @@ const Container = styled.div`
   transition-property: opacity;
   transition-duration: 0.16s;
   position: relative;
+  height: 220px;
   cursor: pointer;
   :hover {
     opacity: 0.5;

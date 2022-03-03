@@ -9,7 +9,7 @@ const Hero = () => {
         <span>
           Sign up to get full site functionality and create your own archive!
         </span>
-        <Register>REGISTER</Register>
+        <Register href="/register">REGISTER</Register>
       </Left>
       <Right>
         <Image src="./images/aa-hero-image.png" alt="" />
