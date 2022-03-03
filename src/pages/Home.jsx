@@ -4,7 +4,7 @@ import Carousel from "../components/Carousel";
 import Footer from "../components/Footer";
 import { apiRequest } from "../requestMethods";
 import { useEffect, useState } from "react";
-import Announcements from "../components/Announcements";
+import Announcements from "../components/Hero";
 
 const Home = ({user}) => {
   const [seasonalAnime, setSeasonalAnime] = useState([]);
@@ -42,8 +42,9 @@ const Home = ({user}) => {
 
   return (
     <Container>
+       <Nav user={user}/>
       <Wrapper>
-        <Nav user={user}/>
+       
         <Announcements></Announcements>
         <Carousel title={"Trending Anime"} data={trendingAnime}/>
         <Carousel title={"Trending Manga"} data={trendingManga}/>
@@ -67,7 +68,7 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   display: flex;
-  width: 70vw;
+  width: 70%;
   flex-direction: column;
   min-height: 100vh;
 `;

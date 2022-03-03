@@ -107,13 +107,14 @@ export default Nav;
 const Container = styled.nav`
   display: flex;
   flex-direction: column;
-  width: 70vw;
+  width: 100vw;
 `;
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 70vw;
+  width: 100%;
+  padding-right: 20px;
   background-color: ${(props) =>
     props.position === "bottom" ? props.theme.main : "white"};
 `;
