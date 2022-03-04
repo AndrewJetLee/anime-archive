@@ -7,7 +7,7 @@ const CarouselItem = ({ item }) => {
 
   const handleClick = async (e) => {
     const response = await jikanRequest.get(`/${item.demographics[0].type}/${item.mal_id}`);
-    navigate("/media", { state: response.data.data });
+    navigate(`/${item.demographics[0].type}/${item.mal_id}`, { state: response.data.data });
   };
 
   return (

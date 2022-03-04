@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { publicRequest } from "../requestMethods";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
-import {Title} from "../components/Carousel";
+import { Title } from "../components/Carousel";
 
 const Media = () => {
   const location = useLocation();
@@ -222,6 +222,10 @@ const AddToListWrapper = styled.form`
 
 const AddToListTitle = styled.span`
   color: ${props => props.theme.main};
+  font-size: 1.3rem;
+  font-weight: 600;
+  padding-bottom: 5px;
+  border-bottom: 1px solid lightgrey;
 `
 
 const StatusWrapper = styled.div`
