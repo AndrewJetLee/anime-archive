@@ -1,20 +1,38 @@
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { publicRequest } from "../requestMethods";
+import { publicRequest, jikanRequest } from "../requestMethods";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
+import Review from "../components/Review"
 import { Title } from "../components/Carousel";
 
 const Media = () => {
   const location = useLocation();
-  const { type } = useParams();
+  const { type, id } = useParams();
   const item = location.state;
   console.log(location.state);
+
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    getReviews();
+  }, [])
 
   const handleAddToList = async () => {
     const res = await publicRequest.put("/user/list", item);
     console.log(res);
   };
+
+  const getReviews = async () => {
+    try {
+      const res = await jikanRequest.get(`/anime/${id}/reviews`);
+      console.log(res); 
+      setReviews(res.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <Container>
@@ -212,6 +230,10 @@ const Media = () => {
               ></iframe>
             </VideoWrapper>
           ) : null}
+          <Reviews>
+            <h5>Reviews</h5>
+            {reviews.map((review, i) => <Review review={review} key={i}></Review>)}
+          </Reviews>
         </Right>
       </Wrapper>
       <Footer />
@@ -315,8 +337,6 @@ const AddButton = styled.a`
 
 const Information = styled.div``;
 
-const InformationTitle = styled.h3``;
-
 const Statistics = styled.div``;
 
 const SideBarList = styled.ul`
@@ -411,3 +431,7 @@ const VideoWrapper = styled(Synopsis)`
     margin-bottom: 5px;
   }
 `;
+
+const Reviews = styled(Synopsis)`
+
+`
