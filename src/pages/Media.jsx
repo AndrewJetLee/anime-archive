@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { publicRequest } from "../requestMethods";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
@@ -7,6 +7,7 @@ import { Title } from "../components/Carousel";
 
 const Media = () => {
   const location = useLocation();
+  const { type } = useParams();
   const item = location.state;
   console.log(location.state);
 
@@ -47,7 +48,9 @@ const Media = () => {
               <label for="rating">Rating: </label>
               <RatingDropdown name="rating">
                 <option value="">Select</option>
-                {new Array(10).fill("").map((item, i) => <option>{i + 1}</option>)} 
+                {new Array(10).fill("").map((item, i) => (
+                  <option>{i + 1}</option>
+                ))}
               </RatingDropdown>
             </RatingWrapper>
             <Inputs>
@@ -55,41 +58,82 @@ const Media = () => {
             </Inputs>
           </AddToListWrapper>
           <Information>
-            <Title size="1.3rem" padding="9px">Information</Title>
-            <SideBarList>
-              <li>
-                <strong>Type:</strong> {item.type}
-              </li>
-              <li>
-                <strong>Episodes:</strong> {item.episodes}
-              </li>
-              <li>
-                <strong>Status: </strong>
-                {item.status}
-              </li>
-              {item.aired ? (
+            <Title size="1.3rem" padding="9px">
+              Information
+            </Title>
+            {/* Anime */}
+            {type === "anime" ? (
+              <SideBarList>
                 <li>
-                  <strong>Aired: </strong>
-                  {item.aired.string}
+                  <strong>Type:</strong> {item?.type}
                 </li>
-              ) : null}
-              <li>
-                <strong>Genres: </strong>
-                {item.genres.map((genre) => (
-                  <a href="#">{genre.name} </a>
-                ))}
-              </li>
-              <li>
-                <strong>Rating: </strong>
-                {item.rating}
-              </li>
-            </SideBarList>
+
+                <li>
+                  <strong>Episodes:</strong> {item.episodes}
+                </li>
+
+                <li>
+                  <strong>Status: </strong>
+                  {item.status}
+                </li>
+                {item.aired ? (
+                  <li>
+                    <strong>Aired: </strong>
+                    {item.aired.string}
+                  </li>
+                ) : null}
+                <li>
+                  <strong>Genres: </strong>
+                  {item.genres.map((genre) => (
+                    <a href="#">{genre.name} </a>
+                  ))}
+                </li>
+                {
+                  <li>
+                    <strong>Rating: </strong>
+                    {item.rating ? item.rating : item.scored}
+                  </li>
+                }
+              </SideBarList>
+            ) : (
+              // Manga
+              <SideBarList>
+                <li>
+                  <strong>Type:</strong> {item?.type}
+                </li>
+
+                <li>
+                  <strong>Chapters:</strong> {item.chapters}
+                </li>
+
+                <li>
+                  <strong>Status: </strong>
+                  {item.status}
+                </li>
+               
+                <li>
+                  <strong>Genres: </strong>
+                  {item.genres.map((genre) => (
+                    <a href="#">{genre.name} </a>
+                  ))}
+                </li>
+                {
+                  <li>
+                    <strong>Rating: </strong>
+                    {item.scored}
+                  </li>
+                }
+              </SideBarList>
+            )}
           </Information>
           <Statistics>
-            <Title size="1.3rem" padding="9px">Statistics</Title>
+            <Title size="1.3rem" padding="9px">
+              Statistics
+            </Title>
             <SideBarList>
+
               <li>
-                <strong>Score:</strong> {item.score}
+                <strong>Score:</strong> {item.score ? item.score : item.scored}
               </li>
               <li>
                 <strong>Ranked:</strong> #{item.rank}
@@ -128,13 +172,21 @@ const Media = () => {
                   Members <strong>{item.members}</strong>
                 </span>
               </ScoreData>
-              <OtherData>
-                <span>
-                  {item.season} {item.year}
-                </span>
-                <span>{item.type}</span>
-                <span>{item.studios ? item.studios[0].name : item.authors[0].name}</span>
-              </OtherData>
+              {type === "anime" ? (
+                <OtherData>
+                  <span>
+                    {item.season} {item.year}
+                  </span>
+                  <span>{item?.type}</span>
+                  <span>{item.studios[0]?.name}</span>
+                </OtherData>
+              ) : (
+                <OtherData>
+                  <span>{item?.type}</span>
+                  <span>{item.serializations[0]?.name}</span>
+                  <span>{item.authors[0]?.name}</span>
+                </OtherData>
+              )}
             </Data>
           </Details>
           <Synopsis>
@@ -143,7 +195,11 @@ const Media = () => {
           </Synopsis>
           <Background>
             <h5>Background</h5>
-            <p>{item.background ? item.background : "No background has been provided for this series."}</p>
+            <p>
+              {item.background
+                ? item.background
+                : "No background has been provided for this series."}
+            </p>
           </Background>
           {item.trailer ? (
             <VideoWrapper>
@@ -221,18 +277,17 @@ const AddToListWrapper = styled.form`
 `;
 
 const AddToListTitle = styled.span`
-  color: ${props => props.theme.main};
+  color: ${(props) => props.theme.main};
   font-size: 1.3rem;
   font-weight: 600;
   padding-bottom: 5px;
   border-bottom: 1px solid lightgrey;
-`
+`;
 
 const StatusWrapper = styled.div`
   display: flex;
   align-items: center;
-  
-`
+`;
 
 const StatusDropdown = styled.select`
   margin-left: 20px;
@@ -248,7 +303,7 @@ const Inputs = styled.div`
   justify-content: center;
 `;
 const AddButton = styled.a`
-  background-color: ${props => props.theme.tertiary};
+  background-color: ${(props) => props.theme.tertiary};
   color: white;
   padding: 8px 18px;
   width: 100%;
@@ -257,8 +312,6 @@ const AddButton = styled.a`
   text-align: center;
   cursor: pointer;
 `;
-
-
 
 const Information = styled.div``;
 
@@ -351,7 +404,7 @@ const Synopsis = styled.section`
   }
 `;
 
-const Background = styled(Synopsis)``
+const Background = styled(Synopsis)``;
 
 const VideoWrapper = styled(Synopsis)`
   h5 {

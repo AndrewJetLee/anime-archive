@@ -4,10 +4,15 @@ import { useNavigate } from "react-router-dom";
 
 const CarouselItem = ({ item }) => {
   const navigate = useNavigate();
+  
 
   const handleClick = async (e) => {
-    const response = await jikanRequest.get(`/${item.demographics[0].type}/${item.mal_id}`);
-    navigate(`/${item.demographics[0].type}/${item.mal_id}`, { state: response.data.data });
+    let type = item.demographics.length > 0 ? item.demographics[0].type : item.genres[0].type;
+    const response = await jikanRequest.get(`/${type}/${item.mal_id}`);
+    if (type === "anime" || type === "manga") {
+      navigate(`/${type}/${item.mal_id}`, { state: response.data.data });
+    }
+    
   };
 
   return (
