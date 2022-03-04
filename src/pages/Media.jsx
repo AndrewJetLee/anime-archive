@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { publicRequest } from "../requestMethods";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
+import {Title} from "../components/Carousel";
 
 const Media = () => {
   const location = useLocation();
@@ -31,6 +32,7 @@ const Media = () => {
             <Image src={item.images.jpg.image_url} />
           </ImageWrapper>
           <AddToListWrapper>
+            <AddToListTitle>Add to My List</AddToListTitle>
             <StatusWrapper>
               <label for="status">Status: </label>
               <StatusDropdown name="status">
@@ -44,15 +46,16 @@ const Media = () => {
             <RatingWrapper>
               <label for="rating">Rating: </label>
               <RatingDropdown name="rating">
-                
+                <option value="">Select</option>
+                {new Array(10).fill("").map((item, i) => <option>{i + 1}</option>)} 
               </RatingDropdown>
             </RatingWrapper>
             <Inputs>
-              <AddButton></AddButton>
-              
+              <AddButton onClick={handleAddToList}>Add To List</AddButton>
             </Inputs>
           </AddToListWrapper>
           <Information>
+            <Title size="1.3rem" padding="9px">Information</Title>
             <SideBarList>
               <li>
                 <strong>Type:</strong> {item.type}
@@ -83,6 +86,7 @@ const Media = () => {
             </SideBarList>
           </Information>
           <Statistics>
+            <Title size="1.3rem" padding="9px">Statistics</Title>
             <SideBarList>
               <li>
                 <strong>Score:</strong> {item.score}
@@ -105,10 +109,10 @@ const Media = () => {
           </Statistics>
         </Left>
         <Right>
-          <h3>Details</h3>
+          <Title>Details</Title>
           <Details>
             <ScoreWrapper>
-              <Title>SCORE</Title>
+              <ScoreTitle>SCORE</ScoreTitle>
               <Score>{item.score}</Score>
               <Users>{item.scored_by} users</Users>
             </ScoreWrapper>
@@ -137,6 +141,10 @@ const Media = () => {
             <h5>Synopsis</h5>
             <p>{item.synopsis}</p>
           </Synopsis>
+          <Background>
+            <h5>Background</h5>
+            <p>{item.background ? item.background : "No background has been provided for this series."}</p>
+          </Background>
           {item.trailer ? (
             <VideoWrapper>
               <h5>Trailer</h5>
@@ -204,26 +212,54 @@ const Image = styled.img`
 const AddToListWrapper = styled.form`
   margin-top: 15px;
   font-size: 1.3rem;
-  color: ${(props) => props.theme.main};
-  cursor: pointer;
-  font-weight: 600;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 150px;
+  padding: 5px;
 `;
+
+const AddToListTitle = styled.span`
+  color: ${props => props.theme.main};
+`
 
 const StatusWrapper = styled.div`
   display: flex;
+  align-items: center;
+  
 `
 
-const StatusDropdown = styled.select``;
+const StatusDropdown = styled.select`
+  margin-left: 20px;
+  height: 30px;
+  border: #cecece 1px solid;
+`;
 
 const RatingWrapper = styled(StatusWrapper)``;
-const RatingDropdown = styled.select``;
+const RatingDropdown = styled(StatusDropdown)``;
 
-const Inputs = styled.div``;
-const AddButton = styled.a``;
+const Inputs = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+const AddButton = styled.a`
+  background-color: ${props => props.theme.tertiary};
+  color: white;
+  padding: 8px 18px;
+  width: 100%;
+  font-weight: 500;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+`;
 
 
 
 const Information = styled.div``;
+
+const InformationTitle = styled.h3``;
+
 const Statistics = styled.div``;
 
 const SideBarList = styled.ul`
@@ -253,8 +289,8 @@ const ScoreWrapper = styled.div`
   justify-content: space-around;
   padding: 10px;
 `;
-const Title = styled.div`
-  background-color: ${(props) => props.theme.main};
+const ScoreTitle = styled.div`
+  background-color: ${(props) => props.theme.tertiary};
   color: white;
   text-align: center;
   font-size: 1.2rem;
@@ -297,7 +333,7 @@ const OtherData = styled.div`
   }
 `;
 
-const Synopsis = styled.div`
+const Synopsis = styled.section`
   padding: 4px;
   h5 {
     margin: 0;
@@ -310,6 +346,8 @@ const Synopsis = styled.div`
     margin-top: 10px;
   }
 `;
+
+const Background = styled(Synopsis)``
 
 const VideoWrapper = styled(Synopsis)`
   h5 {

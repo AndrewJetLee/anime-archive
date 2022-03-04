@@ -37,9 +37,9 @@ const Container = styled.div`
 
 export const Title = styled.h2`
   text-transform: uppercase;
-  font-size: 1.5rem;
+  font-size: ${(props) => props.size ? props.size : "1.5rem"};
   padding-bottom: 5px;
   background-color: ${props => props.theme.secondary};
-  padding: 12px;
+  padding:  ${(props) => props.padding ? props.padding : "12px"};
   border-left: 3px solid ${props => props.theme.tertiary};
 `

@@ -1,13 +1,11 @@
 import styled from "styled-components";
-import { apiRequest, jikanRequest } from "../requestMethods";
+import { jikanRequest } from "../requestMethods";
 import { useNavigate } from "react-router-dom";
 
 const CarouselItem = ({ item }) => {
   const navigate = useNavigate();
 
   const handleClick = async (e) => {
-    // const path = item.url.slice(23);
-    // const type = path.includes("anime") ? "anime" : "manga";
     const response = await jikanRequest.get(`/${item.demographics[0].type}/${item.mal_id}`);
     navigate("/media", { state: response.data.data });
   };
