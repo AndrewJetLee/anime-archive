@@ -53,8 +53,8 @@ const Nav = () => {
     <Container>
       <Wrapper>
         <Left onClick={() => navigate("/")}>
-          <Logo src="./images/aa-logo.jpg" />
-          <Slogan src="./images/aa-slogan.jpg" />
+          <Logo src="/images/aa-logo.jpg" />
+          <Slogan src="/images/aa-slogan.jpg" />
         </Left>
         <Right>
           <Icons>

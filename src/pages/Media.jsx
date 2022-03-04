@@ -67,7 +67,7 @@ const Media = () => {
                 <strong>Status: </strong>
                 {item.status}
               </li>
-              {item.aired.string ? (
+              {item.aired ? (
                 <li>
                   <strong>Aired: </strong>
                   {item.aired.string}
@@ -113,7 +113,7 @@ const Media = () => {
           <Details>
             <ScoreWrapper>
               <ScoreTitle>SCORE</ScoreTitle>
-              <Score>{item.score}</Score>
+              <Score>{item.scored ? item.scored : item.score}</Score>
               <Users>{item.scored_by} users</Users>
             </ScoreWrapper>
             <Data>
@@ -133,7 +133,7 @@ const Media = () => {
                   {item.season} {item.year}
                 </span>
                 <span>{item.type}</span>
-                <span>{item.studios[0].name}</span>
+                <span>{item.studios ? item.studios[0].name : item.authors[0].name}</span>
               </OtherData>
             </Data>
           </Details>
