@@ -20,8 +20,9 @@ const UserList = () => {
 
   return (
     <Container>
+      <Nav />
       <Wrapper>
-        <Nav />
+        
         <Header>
           <h3>All Anime</h3>
         </Header>

@@ -7,13 +7,13 @@ const UserListItem = ({ item, number, handleDelete }) => {
     <Container >
       <Number>{number}</Number>
       <Image>
-        <img src={item.attributes.posterImage.medium} alt=""/>
+        <img src={item.images.jpg.image_url} alt=""/>
       </Image>
       <Title onClick={() => {
         navigate("/media", { state: item })
-      }}>{item.attributes.canonicalTitle}</Title>
-      <Score>{item.attributes.averageRating}</Score>
-      <Type>{item.attributes.showType ? item.attributes.showType : "Manga"} </Type>
+      }}>{item.title}</Title>
+      <Score>{item.rating}</Score>
+      {/* <Type>{item.attributes.showType ? item.attributes.showType : "Manga"} </Type> */}
       <Edit>
         <Delete onClick={() => {
           handleDelete(item.id);
