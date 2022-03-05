@@ -1,8 +1,11 @@
 import { useState } from "react";
 import styled from "styled-components";
+import moment from "moment";
 
 const Review = ({ review }) => {
   const [readMore, toggleReadMore] = useState(false);
+
+
 
   return (
     <Container>
@@ -19,11 +22,12 @@ const Review = ({ review }) => {
             <EpisodesSeen>
               Episodes watched: {review.episodes_watched}
             </EpisodesSeen>
+            <ReviewDate>{moment(review.date).format('MMMM Do YYYY')}</ReviewDate>
           </UserInfo>
         </UserWrapper>
         <ReviewInfo>
-          <ReviewDate>{review.date}</ReviewDate>
           <ReviewScores>
+              <ReviewScoresTitle>Rating</ReviewScoresTitle>
               <Score>Animation: {review.scores.animation}</Score>
               <Score>Sound: {review.scores.sound}</Score>
               <Score>Story: {review.scores.story}</Score>
@@ -59,12 +63,12 @@ const Header = styled.div`
   display: flex;
   font-size: 1.3rem;
   justify-content: space-between;
-  height: 90px;
+  height: 100px;
   padding: 4px 2px;
 `;
 const UserImageWrapper = styled.div`
   height: 100%;
-  width: 60px;
+  width: 80px;
   display: flex;
   border: solid 1px lightgrey;
 `;
@@ -72,7 +76,7 @@ const UserImageWrapper = styled.div`
 const UserImage = styled.img`
   height: 100%;
   width: 100%;
-  object-fit: cover;
+  object-fit: fill;
 `;
 const UserWrapper = styled.div`
   display: flex;
@@ -85,22 +89,50 @@ const UserInfo = styled.div`
   flex-direction: column;
   justify-content: space-around;
   font-size: 1.2rem;
+  padding: 4px;
 `;
 
-const Username = styled.a``;
-const HelpfulCount = styled.span``;
-const EpisodesSeen = styled.span``;
+const Username = styled.a`
+    color: ${props => props.theme.main};
+`;
+const HelpfulCount = styled.span`
+    color: gray;
+`;
+const EpisodesSeen = styled.span`
+    
+`;
 
 const ReviewInfo = styled.div`
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
-const ReviewDate = styled.span``;
-const ReviewScores = styled.ul`
+const ReviewDate = styled.span`
     
+`;
+const ReviewScores = styled.ul`
+    height: 100%;
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     margin: 0;
 `;
-const Score = styled.li``;
+const ReviewScoresTitle = styled.div`
+    border-bottom: 1px solid lightgrey;
+    background-color: ${props => props.theme.tertiary};
+    color: white;
+    text-align: center;
+    padding: 2px;
+`
+
+const Score = styled.li`
+    :last-child {
+        color: ${props => props.theme.main};
+    }
+`;
 
 // Bottom
 const Body = styled.div`
