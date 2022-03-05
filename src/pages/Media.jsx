@@ -4,7 +4,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { publicRequest, jikanRequest } from "../requestMethods";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
-import Review from "../components/Review"
+import Review from "../components/Review";
 import { Title } from "../components/Carousel";
 
 const Media = () => {
@@ -17,7 +17,7 @@ const Media = () => {
 
   useEffect(() => {
     getReviews();
-  }, [])
+  }, []);
 
   const handleAddToList = async () => {
     const res = await publicRequest.put("/user/list", item);
@@ -27,12 +27,12 @@ const Media = () => {
   const getReviews = async () => {
     try {
       const res = await jikanRequest.get(`/anime/${id}/reviews`);
-      console.log(res); 
+      console.log(res);
       setReviews(res.data.data);
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   return (
     <Container>
@@ -94,24 +94,56 @@ const Media = () => {
                   <strong>Status: </strong>
                   {item.status}
                 </li>
-                {item.aired ? (
-                  <li>
-                    <strong>Aired: </strong>
-                    {item.aired.string}
-                  </li>
-                ) : null}
+
+                <li>
+                  <strong>Aired: </strong>
+                  {item.aired.string}
+                </li>
+
                 <li>
                   <strong>Genres: </strong>
-                  {item.genres.map((genre) => (
+                  {item.genres.map((genre, i) => i === item.genres.length - 1 ? (
                     <a href="#">{genre.name} </a>
-                  ))}
+                  ) : <a href="#">{genre.name}, </a>)}
                 </li>
-                {
-                  <li>
-                    <strong>Rating: </strong>
-                    {item.rating ? item.rating : item.scored}
-                  </li>
-                }
+                <li>
+                  <strong>Themes: </strong>
+                  {item.themes.map((theme, i) => i === item.themes.length - 1 ? (
+                    <a href="#">{theme.name} </a>
+                  ) : <a href="#">{theme.name}, </a>)}
+                </li>
+                <li>
+                  <strong>Demographics: </strong>
+                  {item.demographics.map((demographic, i) => i === item.demographics.length - 1 ? (
+                    <a href="#">{demographic.name} </a>
+                  ) : <a href="#">{demographic.name}, </a>)}
+                </li>
+                <li>
+                  <strong>Rating: </strong>
+                  {item.rating ? item.rating : item.scored}
+                </li>
+
+                <li>
+                  <strong>Premiered: </strong>
+                  {item.season} {item.year}
+                </li>
+
+                <li>
+                  <strong>Producers: </strong>
+                  {item.producers.map((producer, i) => i === item.producers.length - 1 ? (
+                    <a href="#">{producer.name} </a>
+                  ) : <a href="#">{producer.name}, </a>)}
+                </li>
+
+                <li>
+                  <strong>Studios: </strong>
+                  {item.studios[0].name}
+                </li>
+                <li>
+                  <strong>Source: </strong>
+                  {item.source}
+                </li>
+                
               </SideBarList>
             ) : (
               // Manga
@@ -128,7 +160,7 @@ const Media = () => {
                   <strong>Status: </strong>
                   {item.status}
                 </li>
-               
+
                 <li>
                   <strong>Genres: </strong>
                   {item.genres.map((genre) => (
@@ -149,7 +181,6 @@ const Media = () => {
               Statistics
             </Title>
             <SideBarList>
-
               <li>
                 <strong>Score:</strong> {item.score ? item.score : item.scored}
               </li>
@@ -232,7 +263,9 @@ const Media = () => {
           ) : null}
           <Reviews>
             <h5>Reviews</h5>
-            {reviews.map((review, i) => <Review review={review} key={i}></Review>)}
+            {reviews.map((review, i) => (
+              <Review review={review} key={i}></Review>
+            ))}
           </Reviews>
         </Right>
       </Wrapper>
@@ -343,6 +376,7 @@ const SideBarList = styled.ul`
   font-size: 1.2rem;
   li {
     margin-top: 8px;
+    line-height: 1.3;
   }
 `;
 
@@ -432,6 +466,4 @@ const VideoWrapper = styled(Synopsis)`
   }
 `;
 
-const Reviews = styled(Synopsis)`
-
-`
+const Reviews = styled(Synopsis)``;
