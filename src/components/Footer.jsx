@@ -8,7 +8,11 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 const Footer = () => {
   return (
     <Container>
-      <Center>
+      <LinksWrapper>
+        Links
+    
+      </LinksWrapper>
+      <Content>
         <Top>
           <Socials>
             <GitHubIcon className="icons github"/>
@@ -36,7 +40,7 @@ const Footer = () => {
             @2021 Jet Lee
           </Copyright>
         </Bottom>
-      </Center>
+      </Content>
     </Container>
   )
 }
@@ -54,7 +58,14 @@ const Container = styled.div`
     overflow: hidden;
 `
 
-const Center = styled.div`
+const LinksWrapper = styled.section`
+  background-color: ${props => props.theme.main};
+`
+const Links = styled.div`
+  
+`
+
+const Content = styled.section`
     width: 70%;
     height: 100%;
     display: flex;
