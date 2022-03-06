@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 const Nav = () => {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user);
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -35,9 +37,13 @@ const Nav = () => {
   const handleClick = async (type) => {
     try {
       if (type === "list") {
-        const res = await publicRequest.get("/user/list");
-        console.log(res);
-        navigate("/list", { state: res.data.list });
+        if (user) {
+          const res = await publicRequest.get("/user/list");
+          console.log(res);
+          navigate("/list", { state: res.data.list });
+        } else {
+          console.log("gigity");
+        }
       } else {
         const res = await apiRequest.get(`/${type}?page[limit]=18`);
         console.log(res);

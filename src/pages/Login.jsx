@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [forgot, toggleForgot] = useState(false);
   const [formInputs, setFormInputs] = useState({
     username: "",
     password: "",
@@ -32,10 +33,11 @@ const Login = () => {
     }
   };
 
-  const test = async (e) => {
-    const res = await publicRequest.get("/user/list");
-    console.log(res);
+  const handleForgotPassword = async () => {
+    toggleForgot(!forgot);
+    console.log("In development");
   };
+
 
   return (
     <Container>
@@ -44,21 +46,38 @@ const Login = () => {
         <Header>
           <HeaderTitle>Login</HeaderTitle>
         </Header>
-        <Content>
-          <Form onChange={handleFormChange}>
-            <UsernameWrapper>
-              <Label>Username</Label>
-              <Username name="username" />
-            </UsernameWrapper>
-            <PasswordWrapper>
-              <Label>Password</Label>
-              <Password name="password" type="password"/>
-            </PasswordWrapper>
-            <LoginButton onClick={handleSubmit}>Login</LoginButton>
-          </Form>
-          <Forgot onClick={test}>Forgot your password?</Forgot>
-          <Register>Create account</Register>
-        </Content>
+        {forgot ? (
+          <Content>
+            <Form >
+              <ForgotFormHeader>
+                <ForgotFormTitle>Forgot your password?</ForgotFormTitle>
+                <ForgotFormDescription>Enter your email to retrieve your password</ForgotFormDescription>
+              </ForgotFormHeader>
+              <EmailWrapper>
+                <Label>Email</Label>
+                <Username name="username" />
+              </EmailWrapper>
+              <ResetPassword onSubmit={handleForgotPassword}>Reset Your Password</ResetPassword>
+              <Forgot onClick={handleForgotPassword}>Back to Sign In</Forgot>
+            </Form>
+          </Content>
+        ) : (
+          <Content>
+            <Form onChange={handleFormChange}>
+              <UsernameWrapper>
+                <Label>Username</Label>
+                <Username name="username" />
+              </UsernameWrapper>
+              <PasswordWrapper>
+                <Label>Password</Label>
+                <Password name="password" type="password" />
+              </PasswordWrapper>
+              <LoginButton onClick={handleSubmit}>Login</LoginButton>
+            </Form>
+            <Forgot onClick={handleForgotPassword}>Forgot your password?</Forgot>
+            <Register>Create account</Register>
+          </Content>
+        )}
       </Wrapper>
       <Footer />
     </Container>
@@ -151,4 +170,21 @@ const Register = styled.a`
   color: ${(props) => props.theme.main};
 `;
 
+
+
 const Forgot = styled(Register)``;
+
+// Forget password form
+
+const ForgotFormHeader = styled.div`
+`
+const ForgotFormTitle = styled.h3``
+
+const ForgotFormDescription = styled.span``
+
+const ResetPassword = styled(LoginButton)`
+
+`
+const EmailWrapper = styled(UsernameWrapper)`
+  
+`
