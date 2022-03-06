@@ -50,16 +50,21 @@ export default Footer
 const Container = styled.div`
     margin-top: 50px;
     width: 100%;
-    height: 250px;
+    height: 400px;
     background-color: ${props => props.theme.main};
     color: white;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     overflow: hidden;
+
 `
 
 const LinksWrapper = styled.section`
-  background-color: ${props => props.theme.main};
+  background-color: ${props => props.theme.secondary};
+  width: 100%;
+  flex: 1;
 `
 const Links = styled.div`
   
@@ -71,6 +76,7 @@ const Content = styled.section`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    flex: 2;
 `
 
 const Top = styled.div`
