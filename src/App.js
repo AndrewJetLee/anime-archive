@@ -12,6 +12,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import UserList from "./pages/UserList";
 import Browse from "./pages/Browse";
+import Genres from './pages/Genres';
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
           <Route path="/list" element={<UserList/>}/>
-          
+          <Route path="/anime/genres" element={<Genres/>}/>
         </Routes>
       </Router>
     </Container>

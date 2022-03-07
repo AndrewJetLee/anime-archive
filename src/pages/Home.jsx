@@ -49,7 +49,7 @@ const Home = ({ user }) => {
 
 export default Home;
 
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
   width: 100vw;
   flex-direction: column;
@@ -57,7 +57,7 @@ const Container = styled.div`
   min-height: 100vh;
 `;
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   display: flex;
   width: 70%;
   flex-direction: column;

@@ -10,9 +10,9 @@ const NavItem = ({ title }) => {
   const handleClickAnimeItem = async (e) => {
     let type = e.target.getAttribute("name");
     if (type === "top") {
-      const res = await jikanRequest.get("/top/anime");
-      console.log(res);
       navigate(`/top/anime`);
+    } else if (type === "genres") {
+      navigate(`/anime/genres`)
     }
   }
 
@@ -41,6 +41,7 @@ const Container = styled.div`
   cursor: pointer;
   background-color: ${(props) => props.theme.main};
   position: relative;
+  z-index: 1000;
 `;
 
 const Link = styled.a``;
