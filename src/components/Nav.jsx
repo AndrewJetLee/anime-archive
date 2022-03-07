@@ -4,7 +4,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { apiRequest, publicRequest, jikanRequest } from "../requestMethods";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ErrorOutlinedIcon from '@mui/icons-material/ErrorOutlined';
+import ErrorOutlinedIcon from "@mui/icons-material/ErrorOutlined";
 import NavItem from "./NavItem";
 
 const Nav = () => {
@@ -90,10 +90,11 @@ const Nav = () => {
       </Wrapper>
       <Wrapper position={"bottom"}>
         <NavItems>
-          <NavItem title="Anime">
-            </NavItem>
+          <NavItem title="Anime"></NavItem>
           <NavItem title="Manga"></NavItem>
-          <NavItem title="List" onClick={() => handleClick("list")}>List</NavItem>
+          <NavItem title="List" onClick={() => handleClick("list")}>
+            List
+          </NavItem>
         </NavItems>
         <BottomRight>
           <InputWrapper onSubmit={handleSearch}>
@@ -107,7 +108,12 @@ const Nav = () => {
           </InputWrapper>
         </BottomRight>
       </Wrapper>
-      {error ? <Error><ErrorOutlinedIcon className="errorIcon"/> Please log in to create and edit your list</Error> : null}
+      {error ? (
+        <Error>
+          <ErrorOutlinedIcon className="errorIcon" /> Please log in to create
+          and edit your list
+        </Error>
+      ) : null}
     </Container>
   );
 };
@@ -129,7 +135,7 @@ export const fadeIn = keyframes`
     opacity: 1;
     transform: translateY(0px);
   }
-`
+`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -264,21 +270,18 @@ const SearchInput = styled.input`
   }
 `;
 
-
-
-
 export const Error = styled.div`
   display: flex;
   align-items: center;
   position: absolute;
   right: 40px;
   top: 100px;
-  background-color: ${props => props.theme.tertiary};
+  background-color: ${(props) => props.theme.tertiary};
   color: white;
   padding: 4px 12px;
-  animation: ${fadeIn} 0.3s ease-in; 
+  animation: ${fadeIn} 0.3s ease-in;
   .errorIcon {
     font-size: 30px;
     margin-right: 10px;
   }
-`
+`;
