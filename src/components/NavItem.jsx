@@ -5,9 +5,17 @@ const NavItem = ({ title }) => {
   const [open, toggleOpen] = useState(false);
 
   return (
-    <Container onClick={() => toggleOpen(!open)}>
-      <Link >{title}</Link>
-       <Content open={open}>Dropdown Content</Content>
+    <Container onMouseEnter={() => toggleOpen(true)} onMouseLeave={() => toggleOpen(false)}>
+      <Link>{title}</Link>
+      {title === "Anime" ? (
+        <Content open={open}>
+          <ContentItem>Top Anime</ContentItem>
+        </Content>
+      ) : (
+        <Content open={open}>
+          <ContentItem>Top Manga</ContentItem>
+        </Content>
+      )}
     </Container>
   );
 };
@@ -29,12 +37,17 @@ const Content = styled.div`
   top: 100%;
   background-color: ${(props) => props.theme.main};
   padding: 0.75rem;
-  transition-property: opacity; 
-  transition-duration: .167s;
+  transition-property: opacity;
+  transition-duration: 0.167s;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
-  ${ props => props.open ? css`
-    opacity: 1;
-  ` : css`
-    opacity: 0;
-  `}
+  ${(props) =>
+    props.open
+      ? css`
+          opacity: 1;
+        `
+      : css`
+          opacity: 0;
+        `}
 `;
+
+const ContentItem = styled.a``;
