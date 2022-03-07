@@ -8,10 +8,15 @@ import { useState, useEffect } from "react";
 import { jikanRequest } from "../requestMethods";
 
 const Browse = () => {
-  let { filter, type } = useParams();
+  const { filter, type } = useParams();
 
   const [list, setList] = useState([]);
   const [metaData, setMetaData] = useState({});
+
+  useEffect(() => {
+    getList();
+  }, [])
+
 
   const getList = async () => {
     const res = await jikanRequest.get(`/${filter}/${type}`);
@@ -20,10 +25,7 @@ const Browse = () => {
     setMetaData(res.data.meta);
   }
 
-  useEffect(() => {
-    getList();
-  }, [])
-
+ 
   return (
     <Container>
       <Wrapper>
