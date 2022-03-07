@@ -1,19 +1,27 @@
 import styled, { css } from "styled-components";
+import { jikanRequest } from "../requestMethods";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const NavItem = ({ title }) => {
+  const navigate = useNavigate(); 
   const [open, toggleOpen] = useState(false);
   
-  const handleClickAnimeItem = (e) => {
-    console.log(e.target.getAttribute("name"));
+  const handleClickAnimeItem = async (e) => {
+    let type = e.target.getAttribute("name");
+    if (type === "top") {
+      const res = await jikanRequest.get("/top/anime");
+      console.log(res);
+      navigate(`/top/anime`);
+    }
   }
 
   return (
     <Container onMouseEnter={() => toggleOpen(true)} onMouseLeave={() => toggleOpen(false)}>
       <Link>{title}</Link>
       {title === "Anime" ? (
-        <Content open={open}>
-          <ContentItem name="top" onClick={handleClickAnimeItem}>Top {title}</ContentItem>
+        <Content open={open} onClick={handleClickAnimeItem}>
+          <ContentItem name="top">Top {title}</ContentItem>
           <ContentItem name="seasonal">Seasonal {title}</ContentItem>
           <ContentItem name="genres">Genres</ContentItem>
         </Content>

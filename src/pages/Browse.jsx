@@ -1,29 +1,28 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import List from "../components/List";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import { HeaderTitle, Header } from "./Login";
 import { useState, useEffect } from "react";
-import { apiRequest } from "../requestMethods";
+import { jikanRequest } from "../requestMethods";
 
 const Browse = () => {
-  let location = useLocation();
-  console.log(location.state);
-  
-  const [metaData, setMetaData] = useState(location.state);
-  const [items, setItems] = useState(location.state.data);
+  let { filter, type } = useParams();
 
+  const [list, setList] = useState([]);
+  const [metaData, setMetaData] = useState({});
+
+  const getList = async () => {
+    const res = await jikanRequest.get(`/${filter}/${type}`);
+    console.log(res);
+    setList(res.data.data)
+    setMetaData(res.data.meta);
+  }
 
   useEffect(() => {
-    setItems(location.state.data);
-  }, [location.state])
-
-  const handleClick = async () => {
-    const res = await apiRequest.get(metaData.links.next);
-    setMetaData(res.data);
-    setItems([...items, ...res.data.data])
-  }
+    getList();
+  }, [])
 
   return (
     <Container>
@@ -32,8 +31,8 @@ const Browse = () => {
         <Header >
           <HeaderTitle>Browse</HeaderTitle>
         </Header>
-        <List items={items}/>
-        <More onClick={handleClick}>More</More>
+        <List items={list}/>
+        {/* <More onClick={handleClick}>More</More> */}
       </Wrapper>
       <Footer />
     </Container>
