@@ -5,6 +5,7 @@ import { apiRequest, publicRequest, jikanRequest } from "../requestMethods";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorOutlinedIcon from '@mui/icons-material/ErrorOutlined';
+import NavItem from "./NavItem";
 
 const Nav = () => {
   const navigate = useNavigate();
@@ -89,9 +90,10 @@ const Nav = () => {
       </Wrapper>
       <Wrapper position={"bottom"}>
         <NavItems>
-          <Anime onClick={() => handleClick("anime")}>Anime</Anime>
-          <Manga onClick={() => handleClick("manga")}>Manga</Manga>
-          <List onClick={() => handleClick("list")}>List</List>
+          <NavItem title="Anime">
+            </NavItem>
+          <NavItem title="Manga"></NavItem>
+          <NavItem title="List" onClick={() => handleClick("list")}>List</NavItem>
         </NavItems>
         <BottomRight>
           <InputWrapper onSubmit={handleSearch}>
@@ -117,6 +119,17 @@ const Container = styled.nav`
   flex-direction: column;
   width: 100vw;
 `;
+
+export const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+`
 
 const Wrapper = styled.div`
   display: flex;
@@ -219,12 +232,6 @@ const NavItems = styled.div`
   height: 34px;
   align-items: center;
 `;
-const Anime = styled.a`
-  padding: 10px;
-  cursor: pointer;
-`;
-const Manga = styled(Anime)``;
-const List = styled(Anime)``;
 
 const BottomRight = styled.div`
   display: flex;
@@ -258,16 +265,7 @@ const SearchInput = styled.input`
 `;
 
 
-export const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-`
+
 
 export const Error = styled.div`
   display: flex;
