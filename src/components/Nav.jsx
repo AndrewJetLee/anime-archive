@@ -1,13 +1,16 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { apiRequest, publicRequest, jikanRequest } from "../requestMethods";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 
 const Nav = () => {
-  const [query, setQuery] = useState("");
   const navigate = useNavigate();
+  const [query, setQuery] = useState("");
+  const [error, toggleError] = useState(false);
+
   const user = JSON.parse(localStorage.getItem("user"));
   console.log(user);
 
@@ -42,7 +45,7 @@ const Nav = () => {
           console.log(res);
           navigate("/list", { state: res.data.list });
         } else {
-          console.log("gigity");
+          toggleError(!error);
         }
       } else {
         const res = await apiRequest.get(`/${type}?page[limit]=18`);
@@ -102,6 +105,7 @@ const Nav = () => {
           </InputWrapper>
         </BottomRight>
       </Wrapper>
+      {error ? <Error><ErrorOutlineOutlinedIcon/> Please log in to create and edit your list</Error> : null}
     </Container>
   );
 };
@@ -252,3 +256,25 @@ const SearchInput = styled.input`
     outline: none;
   }
 `;
+
+
+export const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+`
+
+export const Error = styled.div`
+  position: absolute;
+  right: 40px;
+  top: 100px;
+  background-color: ${props => props.theme.tertiary};
+  color: white;
+  padding: 4px 12px;
+  animation: ${fadeIn} 0.3s ease-in; 
+`
