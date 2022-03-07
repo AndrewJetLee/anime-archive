@@ -4,7 +4,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { apiRequest, publicRequest, jikanRequest } from "../requestMethods";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
+import ErrorOutlinedIcon from '@mui/icons-material/ErrorOutlined';
 
 const Nav = () => {
   const navigate = useNavigate();
@@ -105,7 +105,7 @@ const Nav = () => {
           </InputWrapper>
         </BottomRight>
       </Wrapper>
-      {error ? <Error><ErrorOutlineOutlinedIcon/> Please log in to create and edit your list</Error> : null}
+      {error ? <Error><ErrorOutlinedIcon className="errorIcon"/> Please log in to create and edit your list</Error> : null}
     </Container>
   );
 };
@@ -270,6 +270,8 @@ export const fadeIn = keyframes`
 `
 
 export const Error = styled.div`
+  display: flex;
+  align-items: center;
   position: absolute;
   right: 40px;
   top: 100px;
@@ -277,4 +279,8 @@ export const Error = styled.div`
   color: white;
   padding: 4px 12px;
   animation: ${fadeIn} 0.3s ease-in; 
+  .errorIcon {
+    font-size: 30px;
+    margin-right: 10px;
+  }
 `
