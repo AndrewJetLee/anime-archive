@@ -92,9 +92,9 @@ const Nav = () => {
         <NavItems>
           <NavItem title="Anime"></NavItem>
           <NavItem title="Manga"></NavItem>
-          <NavItem title="List" onClick={() => handleClick("list")}>
+          <ListLink onClick={() => handleClick("list")}>
             List
-          </NavItem>
+          </ListLink>
         </NavItems>
         <BottomRight>
           <InputWrapper onSubmit={handleSearch}>
@@ -129,7 +129,7 @@ const Container = styled.nav`
 export const fadeIn = keyframes`
   from {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(-10px);
   }
   to {
     opacity: 1;
@@ -238,6 +238,14 @@ const NavItems = styled.div`
   height: 34px;
   align-items: center;
 `;
+
+const ListLink = styled.a`
+  padding: 10px;
+  cursor: pointer;
+  background-color: ${(props) => props.theme.main};
+  position: relative;
+`
+
 
 const BottomRight = styled.div`
   display: flex;
