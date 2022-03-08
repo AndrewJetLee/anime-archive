@@ -10,7 +10,7 @@ const NavItem = ({ title }) => {
   const handleClickAnimeItem = async (e) => {
     let type = e.target.getAttribute("name");
     if (type === "top") {
-      navigate(`/top/anime`);
+      navigate(`browse/top/anime`);
     } else if (type === "genres") {
       navigate(`/anime/genres`)
     }

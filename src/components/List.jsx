@@ -4,7 +4,7 @@ import CarouselItem from "./CarouselItem";
 const List = ({ items }) => {  
   return (
     <Container>
-      {items.map((item, i) => (
+      {items?.map((item, i) => (
         <CarouselItem item={item} key={i}/>
       ))}
     </Container>

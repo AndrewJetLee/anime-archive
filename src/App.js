@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}/>
           <Route path="/search" element={<Search/>}/>
-          <Route path="/:filter/:type" element={<Browse/>}/>
+          <Route path="/browse/:filter/:type" element={<Browse/>}/>
           <Route path="/:type/:id" element={<Media/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
