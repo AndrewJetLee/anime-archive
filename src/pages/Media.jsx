@@ -102,21 +102,33 @@ const Media = () => {
 
                 <li>
                   <strong>Genres: </strong>
-                  {item.genres.map((genre, i) => i === item.genres.length - 1 ? (
-                    <a href="#">{genre.name} </a>
-                  ) : <a href="#">{genre.name}, </a>)}
+                  {item.genres.map((genre, i) =>
+                    i === item.genres.length - 1 ? (
+                      <a href="#">{genre.name} </a>
+                    ) : (
+                      <a href="#">{genre.name}, </a>
+                    )
+                  )}
                 </li>
                 <li>
                   <strong>Themes: </strong>
-                  {item.themes.map((theme, i) => i === item.themes.length - 1 ? (
-                    <a href="#">{theme.name} </a>
-                  ) : <a href="#">{theme.name}, </a>)}
+                  {item.themes.map((theme, i) =>
+                    i === item.themes.length - 1 ? (
+                      <a href="#">{theme.name} </a>
+                    ) : (
+                      <a href="#">{theme.name}, </a>
+                    )
+                  )}
                 </li>
                 <li>
                   <strong>Demographics: </strong>
-                  {item.demographics.map((demographic, i) => i === item.demographics.length - 1 ? (
-                    <a href="#">{demographic.name} </a>
-                  ) : <a href="#">{demographic.name}, </a>)}
+                  {item.demographics.map((demographic, i) =>
+                    i === item.demographics.length - 1 ? (
+                      <a href="#">{demographic.name} </a>
+                    ) : (
+                      <a href="#">{demographic.name}, </a>
+                    )
+                  )}
                 </li>
                 <li>
                   <strong>Rating: </strong>
@@ -130,9 +142,13 @@ const Media = () => {
 
                 <li>
                   <strong>Producers: </strong>
-                  {item.producers.map((producer, i) => i === item.producers.length - 1 ? (
-                    <a href="#">{producer.name} </a>
-                  ) : <a href="#">{producer.name}, </a>)}
+                  {item.producers.map((producer, i) =>
+                    i === item.producers.length - 1 ? (
+                      <a href="#">{producer.name} </a>
+                    ) : (
+                      <a href="#">{producer.name}, </a>
+                    )
+                  )}
                 </li>
 
                 <li>
@@ -143,9 +159,8 @@ const Media = () => {
                   <strong>Source: </strong>
                   {item.source}
                 </li>
-                
               </SideBarList>
-            ) : (
+            ) : type === "manga" ? (
               // Manga
               <SideBarList>
                 <li>
@@ -174,100 +189,113 @@ const Media = () => {
                   </li>
                 }
               </SideBarList>
+            ) : (
+              // Characters
+              <SideBarList>
+                {/* {item.animeography.map((info, i) => (
+                  <li>{info.name}</li>
+                ))} */}
+                hello
+              </SideBarList>
             )}
           </Information>
-          <Statistics>
-            <Title size="1.3rem" padding="9px">
-              Statistics
-            </Title>
-            <SideBarList>
-              <li>
-                <strong>Score:</strong> {item.score ? item.score : item.scored}
-              </li>
-              <li>
-                <strong>Ranked:</strong> #{item.rank}
-              </li>
-              <li>
-                <strong>Popularity: </strong>#{item.popularity}
-              </li>
-              <li>
-                <strong>Members: </strong>
-                {item.members}
-              </li>
-              <li>
-                <strong>Favorites: </strong>
-                {item.favorites}
-              </li>
-            </SideBarList>
-          </Statistics>
+          {type === "characters" ? null : (
+            <Statistics>
+              <Title size="1.3rem" padding="9px">
+                Statistics
+              </Title>
+              <SideBarList>
+                <li>
+                  <strong>Score:</strong>{" "}
+                  {item.score ? item.score : item.scored}
+                </li>
+                <li>
+                  <strong>Ranked:</strong> #{item.rank}
+                </li>
+                <li>
+                  <strong>Popularity: </strong>#{item.popularity}
+                </li>
+                <li>
+                  <strong>Members: </strong>
+                  {item.members}
+                </li>
+                <li>
+                  <strong>Favorites: </strong>
+                  {item.favorites}
+                </li>
+              </SideBarList>
+            </Statistics>
+          )}
         </Left>
-        <Right>
-          <Title>Details</Title>
-          <Details>
-            <ScoreWrapper>
-              <ScoreTitle>SCORE</ScoreTitle>
-              <Score>{item.scored ? item.scored : item.score}</Score>
-              <Users>{item.scored_by} users</Users>
-            </ScoreWrapper>
-            <Data>
-              <ScoreData>
-                <span>
-                  Ranked <strong>#{item.rank}</strong>
-                </span>
-                <span>
-                  Popularity <strong>#{item.popularity}</strong>
-                </span>
-                <span>
-                  Members <strong>{item.members}</strong>
-                </span>
-              </ScoreData>
-              {type === "anime" ? (
-                <OtherData>
+        {type === "characters" ? null : (
+          <Right>
+            <Title>Details</Title>
+            <Details>
+              <ScoreWrapper>
+                <ScoreTitle>SCORE</ScoreTitle>
+                <Score>{item.scored ? item.scored : item.score}</Score>
+                <Users>{item.scored_by} users</Users>
+              </ScoreWrapper>
+              <Data>
+                <ScoreData>
                   <span>
-                    {item.season} {item.year}
+                    Ranked <strong>#{item.rank}</strong>
                   </span>
-                  <span>{item?.type}</span>
-                  <span>{item.studios[0]?.name}</span>
-                </OtherData>
-              ) : (
-                <OtherData>
-                  <span>{item?.type}</span>
-                  <span>{item.serializations[0]?.name}</span>
-                  <span>{item.authors[0]?.name}</span>
-                </OtherData>
-              )}
-            </Data>
-          </Details>
-          <Synopsis>
-            <h5>Synopsis</h5>
-            <p>{item.synopsis}</p>
-          </Synopsis>
-          <Background>
-            <h5>Background</h5>
-            <p>
-              {item.background
-                ? item.background
-                : "No background has been provided for this series."}
-            </p>
-          </Background>
-          {item.trailer ? (
-            <VideoWrapper>
-              <h5>Trailer</h5>
-              <iframe
-                title="trailer"
-                width="100%"
-                height="550px"
-                src={`https://www.youtube.com/embed/${item.trailer.youtube_id}`}
-              ></iframe>
-            </VideoWrapper>
-          ) : null}
-          <Reviews>
-            <h5>Reviews</h5>
-            {reviews.map((review, i) => (
-              <Review review={review} key={i}></Review>
-            ))}
-          </Reviews>
-        </Right>
+                  <span>
+                    Popularity <strong>#{item.popularity}</strong>
+                  </span>
+                  <span>
+                    Members <strong>{item.members}</strong>
+                  </span>
+                </ScoreData>
+                {type === "anime" ? (
+                  <OtherData>
+                    <span>
+                      {item.season} {item.year}
+                    </span>
+                    <span>{item?.type}</span>
+                    <span>{item.studios[0]?.name}</span>
+                  </OtherData>
+                ) : (
+                  <OtherData>
+                    <span>{item?.type}</span>
+                    <span>{item.serializations[0]?.name}</span>
+                    <span>{item.authors[0]?.name}</span>
+                  </OtherData>
+                )}
+              </Data>
+            </Details>
+            <Synopsis>
+              <h5>Synopsis</h5>
+              <p>{item.synopsis}</p>
+            </Synopsis>
+            <Background>
+              <h5>Background</h5>
+              <p>
+                {item.background
+                  ? item.background
+                  : "No background has been provided for this series."}
+              </p>
+            </Background>
+            {item.trailer ? (
+              <VideoWrapper>
+                <h5>Trailer</h5>
+                <iframe
+                  title="trailer"
+                  width="100%"
+                  height="550px"
+                  src={`https://www.youtube.com/embed/${item.trailer.youtube_id}`}
+                ></iframe>
+              </VideoWrapper>
+            ) : null}
+            <Reviews>
+              <h5>Reviews</h5>
+              {reviews.map((review, i) => (
+                <Review review={review} key={i}></Review>
+              ))}
+            </Reviews>
+          </Right>
+        )}
       </Wrapper>
       <Footer />
     </Container>

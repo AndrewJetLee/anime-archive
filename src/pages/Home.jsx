@@ -20,14 +20,14 @@ const Home = ({ user }) => {
     try {
       const seasonalAnime = await jikanRequest.get("/seasons/now");
       const upcomingAnime = await jikanRequest.get("/seasons/upcoming");
+      const trendingAnime = await jikanRequest.get("/top/anime");
       setTimeout(async () => {
-        const trendingAnime = await jikanRequest.get("/top/anime");
         const trendingManga = await jikanRequest.get("/top/manga");
-        setTrendingAnime(trendingAnime.data.data);
         setTrendingManga(trendingManga.data.data);
       }, 1000);
       setSeasonalAnime(seasonalAnime.data.data);
       setUpcomingAnime(upcomingAnime.data.data);
+      setTrendingAnime(trendingAnime.data.data);
     } catch (err) {
       console.log(err);
     }
@@ -43,7 +43,7 @@ const Home = ({ user }) => {
         <Carousel title={"Popular Anime"} data={trendingAnime} />
         <Carousel title={"Popular Manga"} data={trendingManga} />
       </Wrapper>
-      <Footer trendingAnime={trendingAnime} trendingManga={trendingManga} />
+      <Footer/>
     </Container>
   );
 };

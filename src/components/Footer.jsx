@@ -6,8 +6,10 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { jikanRequest } from "../requestMethods";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const navigate = useNavigate();
   const [topAnime, setTopAnime] = useState([]);
   const [topManga, setTopManga] = useState([]);
   const [topCharacters, setTopCharacters] = useState([]);
@@ -25,10 +27,27 @@ const Footer = () => {
         setTopAnime(anime.data.data.slice(0, 5));
         setTopManga(manga.data.data.slice(0, 5));
         setTopCharacters(characters.data.data.slice(0, 5));
-      }, 3000);
+      }, 2500);
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleClick = async (item) => {
+    debugger;
+    let type;
+    if (item.demographics) {
+      if (item.demographics.length > 0) 
+      type = item.demographics[0].type;
+    } else if (item.genres) {
+      if (item.genres.length > 0)
+      type = item.genres[0].type;
+    } else {
+      debugger;
+      type = "characters";
+    }
+    const response = await jikanRequest.get(`/${type}/${item.mal_id}`);
+    navigate(`/${type}/${item.mal_id}`, { state: response.data.data });
   };
 
   return (
@@ -39,7 +58,7 @@ const Footer = () => {
             <LinkTitle>Top Anime</LinkTitle>
             <LinkList>
               {topAnime.map((anime, i) => (
-                <LinkListItem key={i} anime={anime}>{i + 1}. {anime.title}</LinkListItem>
+                <LinkListItem key={i} anime={anime} onClick={() => handleClick(anime)}>{i + 1}. {anime.title}</LinkListItem>
               ))}
             </LinkList>
           </TopAnime>
@@ -47,7 +66,7 @@ const Footer = () => {
             <LinkTitle>Top Manga</LinkTitle>
             <LinkList>
               {topManga.map((manga, i) => (
-                <LinkListItem key={i} manga={manga}>{i + 1}. {manga.title}</LinkListItem>
+                <LinkListItem key={i} onClick={() => handleClick(manga)}>{i + 1}. {manga.title}</LinkListItem>
               ))}
             </LinkList>
           </TopManga>
@@ -55,7 +74,7 @@ const Footer = () => {
             <LinkTitle>Most Popular Characters</LinkTitle>
             <LinkList>
               {topCharacters.map((character, i) => (
-                <LinkListItem key={i} character={character}>{i + 1}. {character.name}</LinkListItem>
+                <LinkListItem key={i} onClick={() => handleClick(character)}>{i + 1}. {character.name}</LinkListItem>
               ))}
             </LinkList>
           </PopularCharacters>
@@ -154,6 +173,7 @@ const LinkList = styled.ul`
 const LinkListItem = styled.li`
   color: ${(props) => props.theme.main};
   margin-bottom: 15px;
+  cursor: pointer;
 `;
 
 const Content = styled.section`
