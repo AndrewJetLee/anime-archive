@@ -13,8 +13,11 @@ import Register from './pages/Register';
 import UserList from "./pages/UserList";
 import Browse from "./pages/Browse";
 import Genres from './pages/Genres';
+import { jikanRequest } from "./requestMethods";
 
 function App() {
+
+
   return (
     <Container className="App">
       <Router>
