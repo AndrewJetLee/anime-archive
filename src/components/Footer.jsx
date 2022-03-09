@@ -8,28 +8,28 @@ import { jikanRequest } from "../requestMethods";
 import { useState, useEffect } from "react";
 
 const Footer = () => {
-
   const [topAnime, setTopAnime] = useState([]);
   const [topManga, setTopManga] = useState([]);
+  const [topCharacters, setTopCharacters] = useState([]);
 
   useEffect(() => {
     getAllItems();
-  }, [])
+  }, []);
 
   const getAllItems = async () => {
     try {
       setTimeout(async () => {
         const anime = await jikanRequest.get("/top/anime");
-        const slicedAnime = anime.data.data.slice(0, 5);
-        setTopAnime(slicedAnime);
         const manga = await jikanRequest.get("/top/manga");
-        const slicedManga = manga.data.data.slice(0, 5);
-        setTopManga(slicedManga);
-     }, 1000)
+        const characters = await jikanRequest.get("/top/characters");
+        setTopAnime(anime.data.data.slice(0, 5));
+        setTopManga(manga.data.data.slice(0, 5));
+        setTopCharacters(characters.data.data.slice(0, 5));
+      }, 3000);
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   return (
     <Container>
@@ -38,21 +38,25 @@ const Footer = () => {
           <TopAnime>
             <LinkTitle>Top Anime</LinkTitle>
             <LinkList>
-              {topAnime.map((anime, i) => <LinkListItem>{anime.title}</LinkListItem>)}
+              {topAnime.map((anime, i) => (
+                <LinkListItem key={i} anime={anime}>{i + 1}. {anime.title}</LinkListItem>
+              ))}
             </LinkList>
           </TopAnime>
           <TopManga>
             <LinkTitle>Top Manga</LinkTitle>
             <LinkList>
-              {topManga.map((manga, i) => <LinkListItem>{manga.title}</LinkListItem>)}
+              {topManga.map((manga, i) => (
+                <LinkListItem key={i} manga={manga}>{i + 1}. {manga.title}</LinkListItem>
+              ))}
             </LinkList>
           </TopManga>
           <PopularCharacters>
             <LinkTitle>Most Popular Characters</LinkTitle>
             <LinkList>
-              <LinkListItem>item</LinkListItem>
-              <LinkListItem>item</LinkListItem>
-              <LinkListItem>item</LinkListItem>
+              {topCharacters.map((character, i) => (
+                <LinkListItem key={i} character={character}>{i + 1}. {character.name}</LinkListItem>
+              ))}
             </LinkList>
           </PopularCharacters>
         </Links>
@@ -101,7 +105,7 @@ export default Footer;
 const Container = styled.div`
   margin-top: 50px;
   width: 100%;
-  height: 400px;
+  height: 500px;
   background-color: ${(props) => props.theme.main};
   color: white;
   display: flex;
