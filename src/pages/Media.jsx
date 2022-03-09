@@ -26,7 +26,7 @@ const Media = () => {
 
   const getReviews = async () => {
     try {
-      const res = await jikanRequest.get(`/anime/${id}/reviews`);
+      const res = await jikanRequest.get(`/${type}/${id}/reviews`);
       console.log(res);
       setReviews(res.data.data);
     } catch (err) {

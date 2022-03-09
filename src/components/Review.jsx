@@ -5,8 +5,6 @@ import moment from "moment";
 const Review = ({ review }) => {
   const [readMore, toggleReadMore] = useState(false);
 
-
-
   return (
     <Container>
       <Header>
@@ -22,17 +20,27 @@ const Review = ({ review }) => {
             <EpisodesSeen>
               Episodes watched: {review.episodes_watched}
             </EpisodesSeen>
-            <ReviewDate>{moment(review.date).format('MMMM Do YYYY')}</ReviewDate>
+            <ReviewDate>
+              {moment(review.date).format("MMMM Do YYYY")}
+            </ReviewDate>
           </UserInfo>
         </UserWrapper>
         <ReviewInfo>
           <ReviewScores>
-              <ReviewScoresTitle>Rating</ReviewScoresTitle>
+            <ReviewScoresTitle>Rating</ReviewScoresTitle>
+            {review.scores.animation ? (
               <Score>Animation: {review.scores.animation}</Score>
+            ) : (
+              <Score>Art: {review.scores.art}</Score>
+            )}
+            <Score>Story: {review.scores.story}</Score>
+            <Score>Characters: {review.scores.character}</Score>
+            {review.scores.sound ? (
               <Score>Sound: {review.scores.sound}</Score>
-              <Score>Story: {review.scores.story}</Score>
-              <Score>Characters: {review.scores.character}</Score>
-              <Score>Overall: {review.scores.overall}</Score>
+            ) : (
+              <Score>Enjoyment: {review.scores.enjoyment}</Score>
+            )}
+            <Score>Overall: {review.scores.overall}</Score>
           </ReviewScores>
         </ReviewInfo>
       </Header>
@@ -93,14 +101,12 @@ const UserInfo = styled.div`
 `;
 
 const Username = styled.a`
-    color: ${props => props.theme.main};
+  color: ${(props) => props.theme.main};
 `;
 const HelpfulCount = styled.span`
-    color: gray;
+  color: gray;
 `;
-const EpisodesSeen = styled.span`
-    
-`;
+const EpisodesSeen = styled.span``;
 
 const ReviewInfo = styled.div`
   font-size: 1.1rem;
@@ -109,29 +115,27 @@ const ReviewInfo = styled.div`
   justify-content: space-between;
 `;
 
-const ReviewDate = styled.span`
-    
-`;
+const ReviewDate = styled.span``;
 const ReviewScores = styled.ul`
-    height: 100%;
-    width: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin: 0;
+  height: 100%;
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0;
 `;
 const ReviewScoresTitle = styled.div`
-    border-bottom: 1px solid lightgrey;
-    background-color: ${props => props.theme.tertiary};
-    color: white;
-    text-align: center;
-    padding: 2px;
-`
+  border-bottom: 1px solid lightgrey;
+  background-color: ${(props) => props.theme.tertiary};
+  color: white;
+  text-align: center;
+  padding: 2px;
+`;
 
 const Score = styled.li`
-    :last-child {
-        color: ${props => props.theme.main};
-    }
+  :last-child {
+    color: ${(props) => props.theme.main};
+  }
 `;
 
 // Bottom
