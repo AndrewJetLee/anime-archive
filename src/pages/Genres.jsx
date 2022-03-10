@@ -5,8 +5,10 @@ import { Wrapper, Container } from "./Home";
 import Footer from "../components/Footer";
 import { jikanRequest } from "../requestMethods";
 import { HeaderTitle, Header } from "./Login";
+import { useNavigate } from "react-router-dom";
 
 const Genres = () => {
+  const navigate = useNavigate()
   const [genres, setGenres] = useState([]);
 
   useEffect(() => {
@@ -19,10 +21,10 @@ const Genres = () => {
     setGenres(res.data.data);
   };
 
-  const handleClickGenre = async (id) => {
+  const handleClickGenre = async (id, name) => {
     const res = await jikanRequest.get(`/anime?genres=${id}`);
     console.log(res);
-    
+    navigate(`/anime/genres/${id}/${name}`);
   };
 
   return (
@@ -36,8 +38,7 @@ const Genres = () => {
           {genres.map((genre, i) => (
             <Genre
               key={i}
-              info={genre}
-              onClick={() => handleClickGenre(genre.mal_id)}
+              onClick={() => handleClickGenre(genre.mal_id, genre.name)}
             >
               {genre.name}
             </Genre>

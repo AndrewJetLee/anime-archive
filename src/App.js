@@ -13,7 +13,8 @@ import Register from './pages/Register';
 import UserList from "./pages/UserList";
 import Browse from "./pages/Browse";
 import Genres from './pages/Genres';
-import { jikanRequest } from "./requestMethods";
+import Genre from "./pages/Genre";
+
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
           <Route path="/list" element={<UserList/>}/>
           <Route path="/:type/:id" element={<Media/>}/>
           <Route path="/anime/genres" element={<Genres/>}/>
+          <Route path="/anime/genres/:id/:name" element={<Genre/>}/>
           <Route path="/browse/:filter/:type" element={<Browse/>}/>
         </Routes>
       </Router>
