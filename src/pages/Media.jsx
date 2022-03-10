@@ -227,7 +227,12 @@ const Media = () => {
             </Statistics>
           )}
         </Left>
-        {type === "characters" ? null : (
+        {type === "characters" ? <Right>
+          <Title>Details</Title>
+          <Synopsis>
+            <p>{item.about}</p>
+          </Synopsis>
+        </Right> : (
           <Right>
             <Title>Details</Title>
             <Details>
@@ -483,10 +488,13 @@ const Synopsis = styled.section`
     font-size: 1.2rem;
     line-height: 1.5;
     margin-top: 10px;
+    white-space: pre-wrap;
   }
 `;
 
-const Background = styled(Synopsis)``;
+const Background = styled(Synopsis)`
+
+`;
 
 const VideoWrapper = styled(Synopsis)`
   h5 {

@@ -147,6 +147,7 @@ const Body = styled.div`
 
 const ReviewContent = styled.p`
   margin-bottom: 0;
+  white-space: pre-wrap;
 `;
 
 const ReadMore = styled.span`
