@@ -17,7 +17,7 @@ const NavItem = ({ title }) => {
   }
 
   return (
-    <Container onMouseEnter={() => toggleOpen(true)} onMouseLeave={() => toggleOpen(false)}>
+    <Container open={open} onMouseEnter={() => toggleOpen(true)} onMouseLeave={() => toggleOpen(false)}>
       <Link>{title}</Link>
       {title === "Anime" ? (
         <Content open={open} onClick={handleClickAnimeItem}>
@@ -39,9 +39,10 @@ export default NavItem;
 const Container = styled.div`
   padding: 10px;
   cursor: pointer;
-  background-color: ${(props) => props.theme.main};
   position: relative;
   z-index: 1000;
+  background-color: ${props => props.open && props.theme.secondary};
+  color: ${props => props.open ? "black" : "white"};
 `;
 
 const Link = styled.a``;
@@ -53,8 +54,7 @@ const Content = styled.div`
   left: 0;
   top: 100%;
   width: 140px;
-  background-color: ${(props) => props.theme.main};
-  padding: 0.75rem;
+  background-color: inherit;
   transition: opacity .167s ease-in-out, transform .167s ease-in-out;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
   ${(props) =>
@@ -69,4 +69,12 @@ const Content = styled.div`
         `}
 `;
 
-const ContentItem = styled.a``;
+const ContentItem = styled.a`
+  width: 100%;
+  padding: 8px 12px;
+  font-weight: 400;
+  :hover {
+     background-color: ${(props) => props.theme.main};
+     color: ${(props => "white")};
+  }
+`;

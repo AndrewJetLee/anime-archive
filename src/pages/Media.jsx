@@ -31,7 +31,6 @@ const Media = () => {
 
   const getReviews = async () => {
     try {
-      debugger;
       const res = await jikanRequest.get(`/${type}/${id}/reviews`);
       console.log(res);
       setReviews(res.data.data);
