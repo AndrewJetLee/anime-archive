@@ -14,10 +14,15 @@ const Media = () => {
   console.log(location.state);
 
   const [reviews, setReviews] = useState([]);
+  const [voiceActors, setVoiceActors] = useState([]);
 
   useEffect(() => {
-    getReviews();
-  }, []);
+    if (type === "characters") {
+      getVoiceActors();
+    } else {
+      getReviews();
+    }
+  }, [type, id]);
 
   const handleAddToList = async () => {
     const res = await publicRequest.put("/user/list", item);
@@ -26,9 +31,20 @@ const Media = () => {
 
   const getReviews = async () => {
     try {
+      debugger;
       const res = await jikanRequest.get(`/${type}/${id}/reviews`);
       console.log(res);
       setReviews(res.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getVoiceActors = async () => {
+    try {
+      const res = await jikanRequest.get(`/${type}/${id}/voices`);
+      setVoiceActors(res.data.data);
+      console.log(res);
     } catch (err) {
       console.log(err);
     }
@@ -50,31 +66,34 @@ const Media = () => {
           <ImageWrapper>
             <Image src={item.images.jpg.image_url} />
           </ImageWrapper>
-          <AddToListWrapper>
-            <AddToListTitle>Add to My List</AddToListTitle>
-            <StatusWrapper>
-              <label for="status">Status: </label>
-              <StatusDropdown name="status">
-                <option value="">Plan to Watch</option>
-                <option value="">Completed</option>
-                <option value="">Currently Watching</option>
-                <option value="">On Hold</option>
-                <option value="">Dropped</option>
-              </StatusDropdown>
-            </StatusWrapper>
-            <RatingWrapper>
-              <label for="rating">Rating: </label>
-              <RatingDropdown name="rating">
-                <option value="">Select</option>
-                {new Array(10).fill("").map((item, i) => (
-                  <option>{i + 1}</option>
-                ))}
-              </RatingDropdown>
-            </RatingWrapper>
-            <Inputs>
-              <AddButton onClick={handleAddToList}>Add To List</AddButton>
-            </Inputs>
-          </AddToListWrapper>
+          {type !== "characters" && (
+            <AddToListWrapper>
+              <AddToListTitle>Add to My List</AddToListTitle>
+              <StatusWrapper>
+                <label for="status">Status: </label>
+                <StatusDropdown name="status">
+                  <option value="">Plan to Watch</option>
+                  <option value="">Completed</option>
+                  <option value="">Currently Watching</option>
+                  <option value="">On Hold</option>
+                  <option value="">Dropped</option>
+                </StatusDropdown>
+              </StatusWrapper>
+              <RatingWrapper>
+                <label for="rating">Rating: </label>
+                <RatingDropdown name="rating">
+                  <option value="">Select</option>
+                  {new Array(10).fill("").map((item, i) => (
+                    <option>{i + 1}</option>
+                  ))}
+                </RatingDropdown>
+              </RatingWrapper>
+              <Inputs>
+                <AddButton onClick={handleAddToList}>Add To List</AddButton>
+              </Inputs>
+            </AddToListWrapper>
+          )}
+
           <Information>
             <Title size="1.3rem" padding="9px">
               Information
@@ -192,10 +211,18 @@ const Media = () => {
             ) : (
               // Characters
               <SideBarList>
-                {/* {item.animeography.map((info, i) => (
-                  <li>{info.name}</li>
-                ))} */}
-                hello
+                <li>
+                  <strong>Name: </strong>
+                  {item.name}
+                </li>
+                <li>
+                  <strong>Kanji: </strong>
+                  {item.name_kanji}
+                </li>
+                <li>
+                  <strong>Other names: </strong>
+                  {item.nicknames.join(", ")}
+                </li>
               </SideBarList>
             )}
           </Information>
@@ -227,12 +254,28 @@ const Media = () => {
             </Statistics>
           )}
         </Left>
-        {type === "characters" ? <Right>
-          <Title>Details</Title>
-          <Synopsis>
-            <p>{item.about}</p>
-          </Synopsis>
-        </Right> : (
+        {type === "characters" ? (
+          <Right>
+            <Title>Details</Title>
+            <Synopsis>
+              <p>{item.about}</p>
+            </Synopsis>
+            <VoiceActors>
+              <Title>Voice Actors</Title>
+
+              {voiceActors.map((va, i) => (
+                <VoiceActor key={i}>
+                  <VAPicture src={va.person.images.jpg.image_url} alt="" />
+
+                  <VAInfo>
+                    <VAName>{va.person.name}</VAName>
+                    <VALanguage>{va.language}</VALanguage>
+                  </VAInfo>
+                </VoiceActor>
+              ))}
+            </VoiceActors>
+          </Right>
+        ) : (
           <Right>
             <Title>Details</Title>
             <Details>
@@ -492,9 +535,37 @@ const Synopsis = styled.section`
   }
 `;
 
-const Background = styled(Synopsis)`
+//Voice Actor
+const VoiceActors = styled(Synopsis)``;
 
+const VoiceActor = styled.div`
+  display: flex;
+  padding: 5px;
+  border-top: 1px solid ${props => props.theme.secondary};
 `;
+
+const VAPicture = styled.img`
+  width: 100px;
+  
+`;
+
+const VAInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 5px;
+  span {
+    padding-bottom: 5px;
+    font-size: 1.4rem;
+  }
+`;
+
+const VAName = styled.span`
+  color: ${props => props.theme.main};
+`;
+
+const VALanguage = styled.span``;
+
+const Background = styled(Synopsis)``;
 
 const VideoWrapper = styled(Synopsis)`
   h5 {
