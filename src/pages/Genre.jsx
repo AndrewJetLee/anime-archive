@@ -6,6 +6,7 @@ import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import { jikanRequest } from "../requestMethods";
 import List from "../components/List"; 
+import styled from "styled-components";
 
 const Genre = () => {
   const { name, id } = useParams();
@@ -30,6 +31,9 @@ const Genre = () => {
             <HeaderTitle>{name}</HeaderTitle>
         </Header>
         <List items={anime}/>
+        <MoreWrapper>
+            <MoreButton>More</MoreButton>
+        </MoreWrapper>
       </Wrapper>
       <Footer />
     </Container>
@@ -37,3 +41,18 @@ const Genre = () => {
 };
 
 export default Genre;
+
+const MoreWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+`
+
+const MoreButton = styled.a`
+    padding: 14px 40px;
+    background-color: ${props => props.theme.main};
+    color: white;
+    width: auto;
+    text-align: center;
+    width: 100%;
+    cursor: pointer;
+`
