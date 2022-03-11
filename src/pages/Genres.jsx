@@ -8,6 +8,7 @@ import { HeaderTitle, Header } from "./Login";
 import { useNavigate } from "react-router-dom";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import SearchIcon from "@mui/icons-material/Search";
+import { Checkbox } from "@mui/material";
 
 const Genres = () => {
   const navigate = useNavigate();
@@ -170,12 +171,12 @@ const Genres = () => {
               Rating: 
               <Rating name="rating" onChange={handleChange}>
                 <option value="">Select</option>
-                <option value="g">G - All Ages</option>
-                <option value="pg">PG - Children</option>
-                <option value="pg13">PG-13 - Teens 13 or older</option>
-                <option value="r17">R - 17+ - Violence and Profanity</option>
-                <option value="r">R+ - Mild Nudity</option>
-                <option value="rx">Rx - Hentai</option>
+                <option value="g">G</option>
+                <option value="pg">PG</option>
+                <option value="pg13">PG-13</option>
+                <option value="r17">R - 17+</option>
+                <option value="r">R+</option>
+                <option value="rx">Rx</option>
               </Rating>
             </Filter>
           </FiltersWrapper>
@@ -195,9 +196,15 @@ const Genres = () => {
               {!clickedFilter ? (
                 <ArrowForwardIosIcon />
               ) : (
-                <GenreCheckbox
-                  type="checkbox"
+                <Checkbox
                   value={genre.mal_id}
+                  sx={{ 
+                    backgroundColor: "#FB9935",
+                    color: "white",
+                    '&.Mui-checked': {
+                      color: "white"
+                    }, 
+                    '& .MuiSvgIcon-root': { fontSize: 24 } }}
                   onChange={(e) =>
                     !genreFilter.includes(e.target.value)
                       ? toggleGenreFilter([...genreFilter, e.target.value])
@@ -291,7 +298,13 @@ const AdvancedSearch = styled.span`
 
 const FiltersWrapper = styled.section``;
 
-const FiltersTitle = styled.h3``;
+const FiltersTitle = styled.h3`
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 5px;
+  margin: 0;
+  font-size: 1.4rem;
+  margin-bottom: 5px;
+`;
 
 const Filter = styled.div`
   width: 40%;
@@ -299,14 +312,13 @@ const Filter = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 4px;
+  font-size: 1.4rem;
 `;
 
 const Type = styled.select`
   justify-self: start;
   height: 35px;
-  option {
-    width: 100px;
-  }
+  width: 100px;
 `;
 
 const Status = styled(Type)``;
@@ -315,4 +327,11 @@ const OrderBy = styled(Type)``;
 
 const Rating = styled(Type)``;
 
-const GenreCheckbox = styled.input``;
+const GenreCheckbox = styled.input`
+  appearance: none;
+  height: 20px;
+  width: 20px;
+  background-color: white;
+  border-radius: 5px;
+  cursor: pointer;
+`;
