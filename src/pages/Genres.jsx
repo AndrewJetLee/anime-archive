@@ -20,7 +20,7 @@ const Genres = () => {
     type: "",
     status: "",
     orderBy: "",
-    rating: ""
+    rating: "",
   });
 
   useEffect(() => {
@@ -80,11 +80,13 @@ const Genres = () => {
       const manga = await jikanRequest.get(`/manga${searchQuery}`);
       console.log(anime);
       console.log(manga);
-      navigate(`/search${searchQuery}`, { state: {
-        anime: anime.data,
-        manga: null,
-        type: "animeSearch"
-      }})
+      navigate(`/search${searchQuery}`, {
+        state: {
+          anime: anime.data,
+          manga: null,
+          type: "animeSearch",
+        },
+      });
     } catch (err) {
       console.log(err);
     }
@@ -103,7 +105,7 @@ const Genres = () => {
       type: "",
       status: "",
       orderBy: "",
-      rating: ""
+      rating: "",
     });
   };
 
@@ -120,19 +122,21 @@ const Genres = () => {
               placeholder="Search Anime"
               onChange={(e) => setQuery(e.target.value)}
             />
-            <SearchIcon className="searchIcon" onClick={handleSearch}/>
+            <SearchIcon className="searchIcon" onClick={handleSearch} />
           </SearchInputWrapper>
-        </SearchBar> 
-        <AdvancedSearch
-          onClick={() => {
-            if (clickedFilter) {
-              clearState();
-            }
-            toggleClickedFilter(!clickedFilter);
-          }}
-        >
-          Advanced Search
-        </AdvancedSearch>
+        </SearchBar>
+        <AdvancedSearchWrapper>
+          <AdvancedSearch
+            onClick={() => {
+              if (clickedFilter) {
+                clearState();
+              }
+              toggleClickedFilter(!clickedFilter);
+            }}
+          >
+            Advanced Search
+          </AdvancedSearch>
+        </AdvancedSearchWrapper>
         {clickedFilter && (
           <FiltersWrapper>
             <FiltersTitle>Filters</FiltersTitle>
@@ -149,7 +153,7 @@ const Genres = () => {
               </Type>
             </Filter>
             <Filter>
-              Status: 
+              Status:
               <Status name="status" onChange={handleChange}>
                 <option value="">Select</option>
                 <option value="airing">Airing</option>
@@ -158,7 +162,7 @@ const Genres = () => {
               </Status>
             </Filter>
             <Filter>
-              Order By: 
+              Order By:
               <OrderBy name="orderBy" onChange={handleChange}>
                 <option value="">Select</option>
                 <option value="score">Score</option>
@@ -168,7 +172,7 @@ const Genres = () => {
               </OrderBy>
             </Filter>
             <Filter>
-              Rating: 
+              Rating:
               <Rating name="rating" onChange={handleChange}>
                 <option value="">Select</option>
                 <option value="g">G</option>
@@ -198,13 +202,14 @@ const Genres = () => {
               ) : (
                 <Checkbox
                   value={genre.mal_id}
-                  sx={{ 
+                  sx={{
                     backgroundColor: "#FB9935",
                     color: "white",
-                    '&.Mui-checked': {
-                      color: "white"
-                    }, 
-                    '& .MuiSvgIcon-root': { fontSize: 24 } }}
+                    "&.Mui-checked": {
+                      color: "white",
+                    },
+                    "& .MuiSvgIcon-root": { fontSize: 24 },
+                  }}
                   onChange={(e) =>
                     !genreFilter.includes(e.target.value)
                       ? toggleGenreFilter([...genreFilter, e.target.value])
@@ -272,6 +277,11 @@ const SearchInputWrapper = styled.div`
     padding: 8px;
     color: gray;
     cursor: pointer;
+    transition: all .167s ease;
+    :hover {
+      background-color: #f3f3f3;
+      color: #797979;
+    }
   }
 `;
 
@@ -283,9 +293,14 @@ const SearchInput = styled.input`
   outline: none;
 `;
 
+const AdvancedSearchWrapper = styled.div`
+  width: 90%;
+  display: flex;
+  justify-content: flex-end;
+`;
+
 const AdvancedSearch = styled.span`
-  margin-left: auto;
-  margin-right: 135px;
+  display: inline-block;
   text-align: center;
   margin-top: 8px;
   font-size: 1.4rem;
