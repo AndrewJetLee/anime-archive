@@ -1,7 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import { apiRequest, publicRequest, jikanRequest } from "../requestMethods";
+import { publicRequest, jikanRequest } from "../requestMethods";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorOutlinedIcon from "@mui/icons-material/ErrorOutlined";
@@ -48,11 +48,7 @@ const Nav = () => {
         } else {
           toggleError(!error);
         }
-      } else {
-        const res = await apiRequest.get(`/${type}?page[limit]=18`);
-        console.log(res);
-        navigate("/browse", { state: res.data });
-      }
+      } 
     } catch (err) {
       console.log(err);
     }

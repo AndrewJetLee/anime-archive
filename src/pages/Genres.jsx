@@ -12,6 +12,7 @@ import SearchIcon from "@mui/icons-material/Search";
 const Genres = () => {
   const navigate = useNavigate()
   const [genres, setGenres] = useState([]);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     getAnimeGenres();
@@ -28,6 +29,12 @@ const Genres = () => {
     console.log(res);
     navigate(`/anime/genres/${id}/${name}`);
   };
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    console.log(query);
+
+  }
 
   return (
     <Container>
@@ -121,4 +128,16 @@ const SearchInput = styled.input`
   outline: none;
 `
 
-const AdvancedSearch = styled.a``
+
+const AdvancedSearch = styled.span`
+  margin-left: auto;
+  margin-right: 135px;
+  text-align: center;
+  margin-top: 8px;
+  font-size: 1.4rem;
+  color: ${props => props.theme.main};
+  :hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+`
