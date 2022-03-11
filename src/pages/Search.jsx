@@ -15,12 +15,12 @@ const Search = () => {
   const [animeMetaData, setAnimeMetaData] = useState(location.state.anime);
   const [mangaMetaData, setMangaMetaData] = useState(location.state.manga);
   const [animes, setAnimes] = useState(location.state.anime.data);
-  const [mangas, setMangas] = useState(location.state.manga.data);
+  const [mangas, setMangas] = useState(location.state.manga?.data);
   const [type, setType] = useState(location.state.type);
 
   useEffect(() => {
     setAnimes(location.state.anime.data);
-    setMangas(location.state.manga.data);
+    setMangas(location.state.manga?.data);
     setType(location.state.type);
   }, [location.state]);
 

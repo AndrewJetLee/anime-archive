@@ -81,7 +81,7 @@ const Genres = () => {
       console.log(manga);
       navigate(`/search${searchQuery}`, { state: {
         anime: anime.data,
-        manga: manga.data,
+        manga: null,
         type: "animeSearch"
       }})
     } catch (err) {
