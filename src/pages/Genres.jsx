@@ -12,13 +12,13 @@ import SearchIcon from "@mui/icons-material/Search";
 const Genres = () => {
   const navigate = useNavigate();
   const [genres, setGenres] = useState([]);
-  const [query, setQuery] = useState("");
   const [clickedFilter, toggleClickedFilter] = useState(false);
+  const [query, setQuery] = useState("");
+  const [genreFilter, toggleGenreFilter] = useState([]);
   const [filters, setFilters] = useState({
     type: "",
     status: "",
   });
-  const [genreFilter, toggleGenreFilter] = useState([]);
 
   useEffect(() => {
     getAnimeGenres();
@@ -39,12 +39,44 @@ const Genres = () => {
   const handleSearch = async (e) => {
     e.preventDefault();
     console.log(query);
+    let searchQuery = "";
+    if (query.length > 0) {
+      searchQuery += `?q=${query}`;
+    }
+    if (filters.type.length > 0 && searchQuery.length > 0) {
+      searchQuery += `&type=${filters.type}`;
+    } else if (filters.type.length > 0) {
+      searchQuery += `?type=${filters.type}`;
+    }
+    if (genreFilter.length > 0 && searchQuery.length > 0) {
+      let genreString = genreFilter.join(",");
+      console.log(genreString);
+      searchQuery += `&genres=${genreString}`;
+    } else if (genreFilter.length > 0) {
+      let genreString = genreFilter.join(",");
+      searchQuery += `?genres=${genreString}`;
+    }
+    console.log(searchQuery);
+    try {
+      const res = await jikanRequest.get(`/anime${searchQuery}`);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleChange = (e) => {
     setFilters({
       ...filters,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  const clearState = () => {
+    toggleGenreFilter([]);
+    setFilters({
+      type: "",
+      status: "",
     });
   };
 
@@ -55,14 +87,23 @@ const Genres = () => {
         <Header>
           <HeaderTitle>Genres</HeaderTitle>
         </Header>
-        <SearchBar>
+        <SearchBar onSubmit={handleSearch}>
           <SearchInputWrapper>
-            <SearchInput placeholder="Search Anime" />
-
+            <SearchInput
+              placeholder="Search Anime"
+              onChange={(e) => setQuery(e.target.value)}
+            />
             <SearchIcon className="searchIcon" />
           </SearchInputWrapper>
         </SearchBar>
-        <AdvancedSearch onClick={() => toggleClickedFilter(!clickedFilter)}>
+        <AdvancedSearch
+          onClick={() => {
+            if (clickedFilter) {
+              clearState();
+            }
+            toggleClickedFilter(!clickedFilter);
+          }}
+        >
           Advanced Search
         </AdvancedSearch>
         {clickedFilter && (
@@ -71,7 +112,7 @@ const Genres = () => {
             <Filter>
               Type:
               <Type name="type" onChange={handleChange}>
-                <option value="select">Select type</option>
+                <option value="">Select type</option>
                 <option value="tv">TV</option>
                 <option value="ova">OVA</option>
               </Type>
