@@ -16,10 +16,12 @@ const Search = () => {
   const [mangaMetaData, setMangaMetaData] = useState(location.state.manga);
   const [animes, setAnimes] = useState(location.state.anime.data);
   const [mangas, setMangas] = useState(location.state.manga.data);
+  const [type, setType] = useState(location.state.type);
 
   useEffect(() => {
     setAnimes(location.state.anime.data);
     setMangas(location.state.manga.data);
+    setType(location.state.type);
   }, [location.state]);
 
   const handleClick = async () => {
@@ -40,9 +42,13 @@ const Search = () => {
       <Wrapper>
         <Title>Anime</Title>
         <List items={animes} />
-        <Title>Manga</Title>
-        <List items={mangas} />
-        <More onClick={handleClick}>More</More>
+        {(type === "mangaSearch" || type === "all") && (
+          <>
+            <Title>Manga</Title>
+            <List items={mangas} />
+            <More onClick={handleClick}>More</More>
+          </>
+        )}
       </Wrapper>
       <Footer />
     </Container>

@@ -18,6 +18,8 @@ const Genres = () => {
   const [filters, setFilters] = useState({
     type: "",
     status: "",
+    orderBy: "",
+    rating: ""
   });
 
   useEffect(() => {
@@ -53,6 +55,16 @@ const Genres = () => {
     } else if (filters.type.length > 0) {
       searchQuery += `?status=${filters.status}`;
     }
+    if (filters.orderBy.length > 0 && searchQuery.length > 0) {
+      searchQuery += `&order_by=${filters.orderBy}`;
+    } else if (filters.orderBy.length > 0) {
+      searchQuery += `?order_by=${filters.orderBy}`;
+    }
+    if (filters.rating.length > 0 && searchQuery.length > 0) {
+      searchQuery += `&rating=${filters.rating}`;
+    } else if (filters.orderBy.length > 0) {
+      searchQuery += `?rating=${filters.rating}`;
+    }
     if (genreFilter.length > 0 && searchQuery.length > 0) {
       let genreString = genreFilter.join(",");
       console.log(genreString);
@@ -63,8 +75,15 @@ const Genres = () => {
     }
     console.log(searchQuery);
     try {
-      const res = await jikanRequest.get(`/anime${searchQuery}`);
-      console.log(res);
+      const anime = await jikanRequest.get(`/anime${searchQuery}`);
+      const manga = await jikanRequest.get(`/manga${searchQuery}`);
+      console.log(anime);
+      console.log(manga);
+      navigate(`/search${searchQuery}`, { state: {
+        anime: anime.data,
+        manga: manga.data,
+        type: "animeSearch"
+      }})
     } catch (err) {
       console.log(err);
     }
@@ -82,6 +101,8 @@ const Genres = () => {
     setFilters({
       type: "",
       status: "",
+      orderBy: "",
+      rating: ""
     });
   };
 
@@ -100,7 +121,7 @@ const Genres = () => {
             />
             <SearchIcon className="searchIcon" onClick={handleSearch}/>
           </SearchInputWrapper>
-        </SearchBar>
+        </SearchBar> 
         <AdvancedSearch
           onClick={() => {
             if (clickedFilter) {
@@ -117,7 +138,7 @@ const Genres = () => {
             <Filter>
               Type:
               <Type name="type" onChange={handleChange}>
-                <option value="">Select type</option>
+                <option value="">Select</option>
                 <option value="tv">TV</option>
                 <option value="movie">Movie</option>
                 <option value="ova">OVA</option>
@@ -129,13 +150,34 @@ const Genres = () => {
             <Filter>
               Status: 
               <Status name="status" onChange={handleChange}>
-                <option value="">Select status</option>
+                <option value="">Select</option>
                 <option value="airing">Airing</option>
                 <option value="complete">Complete</option>
                 <option value="upcoming">Upcoming</option>
               </Status>
             </Filter>
-
+            <Filter>
+              Order By: 
+              <OrderBy name="orderBy" onChange={handleChange}>
+                <option value="">Select</option>
+                <option value="score">Score</option>
+                <option value="popularity">Popularity</option>
+                <option value="title">Title</option>
+                <option value="rank">Rank</option>
+              </OrderBy>
+            </Filter>
+            <Filter>
+              Rating: 
+              <Rating name="rating" onChange={handleChange}>
+                <option value="">Select</option>
+                <option value="g">G - All Ages</option>
+                <option value="pg">PG - Children</option>
+                <option value="pg13">PG-13 - Teens 13 or older</option>
+                <option value="r17">R - 17+ - Violence and Profanity</option>
+                <option value="r">R+ - Mild Nudity</option>
+                <option value="rx">Rx - Hentai</option>
+              </Rating>
+            </Filter>
           </FiltersWrapper>
         )}
 
@@ -251,10 +293,26 @@ const FiltersWrapper = styled.section``;
 
 const FiltersTitle = styled.h3``;
 
-const Filter = styled.div``;
+const Filter = styled.div`
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px;
+`;
 
-const Type = styled.select``;
+const Type = styled.select`
+  justify-self: start;
+  height: 35px;
+  option {
+    width: 100px;
+  }
+`;
 
 const Status = styled(Type)``;
+
+const OrderBy = styled(Type)``;
+
+const Rating = styled(Type)``;
 
 const GenreCheckbox = styled.input``;
