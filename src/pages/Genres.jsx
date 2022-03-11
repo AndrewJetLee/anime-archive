@@ -6,13 +6,19 @@ import Footer from "../components/Footer";
 import { jikanRequest } from "../requestMethods";
 import { HeaderTitle, Header } from "./Login";
 import { useNavigate } from "react-router-dom";
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import SearchIcon from "@mui/icons-material/Search";
 
 const Genres = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [genres, setGenres] = useState([]);
   const [query, setQuery] = useState("");
+  const [clickedFilter, toggleClickedFilter] = useState(false);
+  const [filters, setFilters] = useState({
+    type: "",
+    status: "",
+  });
+  const [genreFilter, toggleGenreFilter] = useState([]);
 
   useEffect(() => {
     getAnimeGenres();
@@ -33,8 +39,14 @@ const Genres = () => {
   const handleSearch = async (e) => {
     e.preventDefault();
     console.log(query);
+  };
 
-  }
+  const handleChange = (e) => {
+    setFilters({
+      ...filters,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   return (
     <Container>
@@ -45,23 +57,56 @@ const Genres = () => {
         </Header>
         <SearchBar>
           <SearchInputWrapper>
-            <SearchInput placeholder="Search Anime"/>
+            <SearchInput placeholder="Search Anime" />
 
-            <SearchIcon className="searchIcon"/>
+            <SearchIcon className="searchIcon" />
           </SearchInputWrapper>
         </SearchBar>
-        <AdvancedSearch>
+        <AdvancedSearch onClick={() => toggleClickedFilter(!clickedFilter)}>
           Advanced Search
         </AdvancedSearch>
+        {clickedFilter && (
+          <FiltersWrapper>
+            <FiltersTitle>Filters</FiltersTitle>
+            <Filter>
+              Type:
+              <Type name="type" onChange={handleChange}>
+                <option value="select">Select type</option>
+                <option value="tv">TV</option>
+                <option value="ova">OVA</option>
+              </Type>
+            </Filter>
+          </FiltersWrapper>
+        )}
+
         <GenresListWrapper>
           {genres.map((genre, i) => (
             <Genre
               key={i}
-              onClick={() => handleClickGenre(genre.mal_id, genre.name)}
+              onClick={
+                !clickedFilter
+                  ? () => handleClickGenre(genre.mal_id, genre.name)
+                  : (e) => console.log(e.target.value)
+              }
             >
-              {`${genre.name} `}
-              ({genre.count})
-              <ArrowForwardIosIcon/>
+              {`${genre.name} `}({genre.count})
+              {!clickedFilter ? (
+                <ArrowForwardIosIcon />
+              ) : (
+                <GenreCheckbox
+                  type="checkbox"
+                  value={genre.mal_id}
+                  onChange={(e) =>
+                    !genreFilter.includes(e.target.value)
+                      ? toggleGenreFilter([...genreFilter, e.target.value])
+                      : toggleGenreFilter([
+                          ...genreFilter.filter(
+                            (value) => value !== e.target.value
+                          ),
+                        ])
+                  }
+                />
+              )}
             </Genre>
           ))}
         </GenresListWrapper>
@@ -88,16 +133,16 @@ const Genre = styled.div`
   background-color: ${(props) => props.theme.tertiary};
   color: white;
   cursor: pointer;
-  transition: opacity .167s ease-in-out;
+  transition: opacity 0.167s ease-in-out;
   :hover {
-    opacity: .8;
+    opacity: 0.8;
   }
 `;
 
 const SearchBar = styled.form`
   display: flex;
   justify-content: center;
-`
+`;
 
 const SearchInputWrapper = styled.div`
   width: 80%;
@@ -118,7 +163,7 @@ const SearchInputWrapper = styled.div`
     padding: 8px;
     color: gray;
   }
-`
+`;
 
 const SearchInput = styled.input`
   width: 100%;
@@ -126,8 +171,7 @@ const SearchInput = styled.input`
   border: none;
   padding-left: 10px;
   outline: none;
-`
-
+`;
 
 const AdvancedSearch = styled.span`
   margin-left: auto;
@@ -135,9 +179,19 @@ const AdvancedSearch = styled.span`
   text-align: center;
   margin-top: 8px;
   font-size: 1.4rem;
-  color: ${props => props.theme.main};
+  color: ${(props) => props.theme.main};
   :hover {
     text-decoration: underline;
     cursor: pointer;
   }
-`
+`;
+
+const FiltersWrapper = styled.section``;
+
+const FiltersTitle = styled.h3``;
+
+const Filter = styled.div``;
+
+const Type = styled.select``;
+
+const GenreCheckbox = styled.input``;
