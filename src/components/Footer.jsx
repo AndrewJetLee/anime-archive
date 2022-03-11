@@ -27,14 +27,13 @@ const Footer = () => {
         setTopAnime(anime.data.data.slice(0, 5));
         setTopManga(manga.data.data.slice(0, 5));
         setTopCharacters(characters.data.data.slice(0, 5));
-      }, 2500);
+      }, 4000);
     } catch (err) {
       console.log(err);
     }
   };
 
   const handleClick = async (item) => {
-    debugger;
     let type;
     if (item.demographics) {
       if (item.demographics.length > 0) 
@@ -43,7 +42,6 @@ const Footer = () => {
       if (item.genres.length > 0)
       type = item.genres[0].type;
     } else {
-      debugger;
       type = "characters";
     }
     const response = await jikanRequest.get(`/${type}/${item.mal_id}`);

@@ -24,7 +24,7 @@ const Home = ({ user }) => {
       setTimeout(async () => {
         const trendingManga = await jikanRequest.get("/top/manga");
         setTrendingManga(trendingManga.data.data);
-      }, 1000);
+      }, 2000);
       setSeasonalAnime(seasonalAnime.data.data);
       setUpcomingAnime(upcomingAnime.data.data);
       setTrendingAnime(trendingAnime.data.data);
