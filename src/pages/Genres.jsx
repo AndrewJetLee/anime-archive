@@ -7,6 +7,7 @@ import { jikanRequest } from "../requestMethods";
 import { HeaderTitle, Header } from "./Login";
 import { useNavigate } from "react-router-dom";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import SearchIcon from "@mui/icons-material/Search";
 
 const Genres = () => {
   const navigate = useNavigate()
@@ -37,7 +38,9 @@ const Genres = () => {
         </Header>
         <SearchBar>
           <SearchInputWrapper>
-            <SearchInput />
+            <SearchInput placeholder="Search Anime"/>
+
+            <SearchIcon className="searchIcon"/>
           </SearchInputWrapper>
         </SearchBar>
         <AdvancedSearch>
@@ -84,10 +87,38 @@ const Genre = styled.div`
   }
 `;
 
-const SearchBar = styled.form``
+const SearchBar = styled.form`
+  display: flex;
+  justify-content: center;
+`
 
-const SearchInputWrapper = styled.div``
+const SearchInputWrapper = styled.div`
+  width: 80%;
+  height: 45px;
+  overflow: hidden;
+  border: solid 1px gray;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  :focus-within {
+    outline: solid 1px black;
+  }
+  .searchIcon {
+    font-size: 24px;
+    border-left: solid 1px gray;
+    height: 100%;
+    width: 50px;
+    padding: 8px;
+    color: gray;
+  }
+`
 
-const SearchInput = styled.input``
+const SearchInput = styled.input`
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding-left: 10px;
+  outline: none;
+`
 
 const AdvancedSearch = styled.a``
