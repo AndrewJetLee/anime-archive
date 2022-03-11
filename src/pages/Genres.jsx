@@ -48,6 +48,11 @@ const Genres = () => {
     } else if (filters.type.length > 0) {
       searchQuery += `?type=${filters.type}`;
     }
+    if (filters.status.length > 0 && searchQuery.length > 0) {
+      searchQuery += `&status=${filters.status}`;
+    } else if (filters.type.length > 0) {
+      searchQuery += `?status=${filters.status}`;
+    }
     if (genreFilter.length > 0 && searchQuery.length > 0) {
       let genreString = genreFilter.join(",");
       console.log(genreString);
@@ -93,7 +98,7 @@ const Genres = () => {
               placeholder="Search Anime"
               onChange={(e) => setQuery(e.target.value)}
             />
-            <SearchIcon className="searchIcon" />
+            <SearchIcon className="searchIcon" onClick={handleSearch}/>
           </SearchInputWrapper>
         </SearchBar>
         <AdvancedSearch
@@ -114,9 +119,23 @@ const Genres = () => {
               <Type name="type" onChange={handleChange}>
                 <option value="">Select type</option>
                 <option value="tv">TV</option>
+                <option value="movie">Movie</option>
                 <option value="ova">OVA</option>
+                <option value="special">Special</option>
+                <option value="ona">ONA</option>
+                <option value="music">Music</option>
               </Type>
             </Filter>
+            <Filter>
+              Status: 
+              <Status name="status" onChange={handleChange}>
+                <option value="">Select status</option>
+                <option value="airing">Airing</option>
+                <option value="complete">Complete</option>
+                <option value="upcoming">Upcoming</option>
+              </Status>
+            </Filter>
+
           </FiltersWrapper>
         )}
 
@@ -203,6 +222,7 @@ const SearchInputWrapper = styled.div`
     width: 50px;
     padding: 8px;
     color: gray;
+    cursor: pointer;
   }
 `;
 
@@ -234,5 +254,7 @@ const FiltersTitle = styled.h3``;
 const Filter = styled.div``;
 
 const Type = styled.select``;
+
+const Status = styled(Type)``;
 
 const GenreCheckbox = styled.input``;
