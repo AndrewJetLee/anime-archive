@@ -31,6 +31,8 @@ function App() {
           <Route path="/:type/:id" element={<Media/>}/>
           <Route path="/anime/genres" element={<Genres/>}/>
           <Route path="/anime/genres/:id/:name" element={<Genre/>}/>
+          <Route path="/manga/genres" element={<Genres/>}/>
+          <Route path="/manga/genres/:id/:name" element={<Genre/>}/>
           <Route path="/browse/:filter/:type" element={<Browse/>}/>
         </Routes>
       </Router>

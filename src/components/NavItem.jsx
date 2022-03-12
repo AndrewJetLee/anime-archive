@@ -16,6 +16,15 @@ const NavItem = ({ title }) => {
     }
   }
 
+  const handleClickMangaItem = async (e) => {
+    let type = e.target.getAttribute("name");
+    if (type === "top") {
+      navigate(`browse/top/manga`);
+    } else if (type === "genres") {
+      navigate(`/manga/genres`)
+    }
+  }
+
   return (
     <Container open={open} onMouseEnter={() => toggleOpen(true)} onMouseLeave={() => toggleOpen(false)}>
       <Link>{title}</Link>
@@ -26,8 +35,9 @@ const NavItem = ({ title }) => {
           <ContentItem name="genres">Genres</ContentItem>
         </Content>
       ) : (
-        <Content open={open}>
-          <ContentItem>Top {title}</ContentItem>
+        <Content open={open} onClick={handleClickMangaItem}>
+          <ContentItem name="top">Top {title}</ContentItem>
+          <ContentItem name="genres">Genres</ContentItem>
         </Content>
       )}
     </Container>

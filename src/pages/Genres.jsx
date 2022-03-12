@@ -5,14 +5,16 @@ import { Wrapper, Container } from "./Home";
 import Footer from "../components/Footer";
 import { jikanRequest } from "../requestMethods";
 import { HeaderTitle, Header } from "./Login";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import SearchIcon from "@mui/icons-material/Search";
 import { Checkbox } from "@mui/material";
 
 const Genres = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [genres, setGenres] = useState([]);
+  const [type, setType] = useState("");
   const [clickedFilter, toggleClickedFilter] = useState(false);
   const [query, setQuery] = useState("");
   const [genreFilter, toggleGenreFilter] = useState([]);
@@ -24,11 +26,23 @@ const Genres = () => {
   });
 
   useEffect(() => {
-    getAnimeGenres();
+    if (location.pathname.includes("manga")) {
+      setType("manga")
+      getMangaGenres()
+    } else {
+      setType("anime")
+      getAnimeGenres();
+    } 
   }, []);
 
   const getAnimeGenres = async () => {
     const res = await jikanRequest.get("/genres/anime");
+    console.log(res);
+    setGenres(res.data.data);
+  };
+
+  const getMangaGenres = async () => {
+    const res = await jikanRequest.get("/genres/manga");
     console.log(res);
     setGenres(res.data.data);
   };
@@ -80,13 +94,24 @@ const Genres = () => {
       const manga = await jikanRequest.get(`/manga${searchQuery}`);
       console.log(anime);
       console.log(manga);
-      navigate(`/search${searchQuery}`, {
-        state: {
-          anime: anime.data,
-          manga: null,
-          type: "animeSearch",
-        },
-      });
+      if (type === "anime") {
+        navigate(`/search${searchQuery}`, {
+          state: {
+            anime: anime.data,
+            manga: null,
+            type: "animeSearch",
+          },
+        });
+      } else {
+        navigate(`/search${searchQuery}`, {
+          state: {
+            anime: null,
+            manga: manga.data,
+            type: "mangaSearch",
+          },
+        });
+      }
+      
     } catch (err) {
       console.log(err);
     }
@@ -119,7 +144,7 @@ const Genres = () => {
         <SearchBar onSubmit={handleSearch}>
           <SearchInputWrapper>
             <SearchInput
-              placeholder="Search Anime"
+              placeholder={type === "anime" ? "Search Anime" : "Search Manga"}
               onChange={(e) => setQuery(e.target.value)}
             />
             <SearchIcon className="searchIcon" onClick={handleSearch} />
@@ -140,6 +165,7 @@ const Genres = () => {
         {clickedFilter && (
           <FiltersWrapper>
             <FiltersTitle>Filters</FiltersTitle>
+            { type === "anime" ? <>
             <Filter>
               Type:
               <Type name="type" onChange={handleChange}>
@@ -162,16 +188,6 @@ const Genres = () => {
               </Status>
             </Filter>
             <Filter>
-              Order By:
-              <OrderBy name="orderBy" onChange={handleChange}>
-                <option value="">Select</option>
-                <option value="score">Score</option>
-                <option value="popularity">Popularity</option>
-                <option value="title">Title</option>
-                <option value="rank">Rank</option>
-              </OrderBy>
-            </Filter>
-            <Filter>
               Rating:
               <Rating name="rating" onChange={handleChange}>
                 <option value="">Select</option>
@@ -183,6 +199,44 @@ const Genres = () => {
                 <option value="rx">Rx</option>
               </Rating>
             </Filter>
+            </> : <>
+            <Filter>
+              Type:
+              <Type name="type" onChange={handleChange}>
+                <option value="">Select</option>
+                <option value="manga">Manga</option>
+                <option value="novel">Novel</option>
+                <option value="lightnovel">Lightnovel</option>
+                <option value="oneshot">Oneshot</option>
+                <option value="doujin">Doujin</option>
+                <option value="manhwa">Manhwa</option>
+                <option value="manhua">Manhua</option>
+              </Type>
+            </Filter>
+            <Filter>
+              Status:
+              <Status name="status" onChange={handleChange}>
+                <option value="">Select</option>
+                <option value="publishing">Publishing</option>
+                <option value="complete">Complete</option>
+                <option value="hiatus">Hiatus</option>
+                <option value="discontinued">Discontinued</option>
+                <option value="upcoming">Upcoming</option>
+              </Status>
+            </Filter>
+            </>}
+            
+            <Filter>
+              Order By:
+              <OrderBy name="orderBy" onChange={handleChange}>
+                <option value="">Select</option>
+                <option value="score">Score</option>
+                <option value="popularity">Popularity</option>
+                <option value="title">Title</option>
+                <option value="rank">Rank</option>
+              </OrderBy>
+            </Filter>
+           
           </FiltersWrapper>
         )}
 
@@ -341,12 +395,3 @@ const Status = styled(Type)``;
 const OrderBy = styled(Type)``;
 
 const Rating = styled(Type)``;
-
-const GenreCheckbox = styled.input`
-  appearance: none;
-  height: 20px;
-  width: 20px;
-  background-color: white;
-  border-radius: 5px;
-  cursor: pointer;
-`;
