@@ -13,14 +13,17 @@ const Search = () => {
   console.log(location.state);
 
   const [animeMetaData, setAnimeMetaData] = useState(location.state.anime);
+  const [charactersMetaData, setCharactersMetaData] = useState(location.state.characters);
   const [mangaMetaData, setMangaMetaData] = useState(location.state.manga);
   const [animes, setAnimes] = useState(location.state.anime?.data);
+  const [characters, setCharacters] = useState(location.state.characters?.data);
   const [mangas, setMangas] = useState(location.state.manga?.data);
   const [type, setType] = useState(location.state.type);
 
   useEffect(() => {
     setAnimes(location.state.anime?.data);
     setMangas(location.state.manga?.data);
+    setCharacters(location.state.characters?.data);
     setType(location.state.type);
   }, [location.state]);
 
@@ -52,6 +55,14 @@ const Search = () => {
           <>
             <Title>Manga</Title>
             <List items={mangas} />
+            <More onClick={handleClick}>More</More>
+          </>
+        )}
+
+          {(type === "all") && (
+          <>
+            <Title>Characters</Title>
+            <List items={characters} />
             <More onClick={handleClick}>More</More>
           </>
         )}

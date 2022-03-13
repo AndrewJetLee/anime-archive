@@ -17,7 +17,7 @@ const CarouselItem = ({ item }) => {
   return (
     <Container onClick={handleClick}>
       <Image src={item.images.jpg.image_url} className="animeImage" />
-      <Title>{item.title}</Title>
+      <Title>{item.name ? item.name : item.title}</Title>
       <Background></Background>
     </Container>
   );

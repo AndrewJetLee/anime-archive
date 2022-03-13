@@ -20,9 +20,15 @@ const Nav = () => {
     console.log(query);
     let animeResult = await jikanRequest.get(`/anime?q=${query}`);
     let mangaResult = await jikanRequest.get(`/manga?q=${query}`);
+    let characterResult = await jikanRequest.get(`/characters?q=${query}`);
     console.log(mangaResult);
     navigate(`/search?q=${query}`, {
-      state: { anime: animeResult.data, manga: mangaResult.data, type: "all" },
+      state: {
+        anime: animeResult.data,
+        manga: mangaResult.data,
+        characters: characterResult.data,
+        type: "all",
+      },
     });
   };
 
@@ -48,7 +54,7 @@ const Nav = () => {
         } else {
           toggleError(!error);
         }
-      } 
+      }
     } catch (err) {
       console.log(err);
     }
@@ -88,9 +94,7 @@ const Nav = () => {
         <NavItems>
           <NavItem title="Anime"></NavItem>
           <NavItem title="Manga"></NavItem>
-          <ListLink onClick={() => handleClick("list")}>
-            List
-          </ListLink>
+          <ListLink onClick={() => handleClick("list")}>List</ListLink>
         </NavItems>
         <BottomRight>
           <InputWrapper onSubmit={handleSearch}>
@@ -240,8 +244,7 @@ const ListLink = styled.a`
   cursor: pointer;
   background-color: ${(props) => props.theme.main};
   position: relative;
-`
-
+`;
 
 const BottomRight = styled.div`
   display: flex;
