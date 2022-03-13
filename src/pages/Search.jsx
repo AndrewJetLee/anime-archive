@@ -13,7 +13,9 @@ const Search = () => {
   console.log(location.state);
 
   const [animeMetaData, setAnimeMetaData] = useState(location.state.anime);
-  const [charactersMetaData, setCharactersMetaData] = useState(location.state.characters);
+  const [charactersMetaData, setCharactersMetaData] = useState(
+    location.state.characters
+  );
   const [mangaMetaData, setMangaMetaData] = useState(location.state.manga);
   const [animes, setAnimes] = useState(location.state.anime?.data);
   const [characters, setCharacters] = useState(location.state.characters?.data);
@@ -22,8 +24,11 @@ const Search = () => {
 
   useEffect(() => {
     setAnimes(location.state.anime?.data);
+    setAnimeMetaData(location.state.anime);
     setMangas(location.state.manga?.data);
+    setMangaMetaData(location.state.manga);
     setCharacters(location.state.characters?.data);
+    setCharactersMetaData(location.state.characters);
     setType(location.state.type);
   }, [location.state]);
 
@@ -47,7 +52,9 @@ const Search = () => {
           <>
             <Title>Anime</Title>
             <List items={animes} />
-            <More onClick={handleClick}>More</More>
+            {animeMetaData.pagination.has_next_page && (
+              <More onClick={handleClick}>More</More>
+            )}
           </>
         )}
 
@@ -55,15 +62,19 @@ const Search = () => {
           <>
             <Title>Manga</Title>
             <List items={mangas} />
-            <More onClick={handleClick}>More</More>
+            {mangaMetaData.pagination.has_next_page && (
+              <More onClick={handleClick}>More</More>
+            )}
           </>
         )}
 
-          {(type === "all") && (
+        {type === "all" && (
           <>
             <Title>Characters</Title>
             <List items={characters} />
-            <More onClick={handleClick}>More</More>
+            {charactersMetaData.pagination.has_next_page && (
+              <More onClick={handleClick}>More</More>
+            )}
           </>
         )}
       </Wrapper>

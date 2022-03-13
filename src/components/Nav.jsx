@@ -18,9 +18,9 @@ const Nav = () => {
   const handleSearch = async (e) => {
     e.preventDefault();
     console.log(query);
-    let animeResult = await jikanRequest.get(`/anime?q=${query}`);
-    let mangaResult = await jikanRequest.get(`/manga?q=${query}`);
-    let characterResult = await jikanRequest.get(`/characters?q=${query}`);
+    let animeResult = await jikanRequest.get(`/anime?q=${query}&limit=24`);
+    let mangaResult = await jikanRequest.get(`/manga?q=${query}&limit=24`);
+    let characterResult = await jikanRequest.get(`/characters?q=${query}&limit=24`);
     console.log(mangaResult);
     navigate(`/search?q=${query}`, {
       state: {
