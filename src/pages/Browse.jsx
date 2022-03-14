@@ -15,25 +15,23 @@ const Browse = () => {
 
   useEffect(() => {
     getList();
-  }, [filter, type])
-
+  }, [filter, type]);
 
   const getList = async () => {
     const res = await jikanRequest.get(`/${filter}/${type}`);
     console.log(res);
-    setList(res.data.data)
+    setList(res.data.data);
     setMetaData(res.data.meta);
-  }
+  };
 
- 
   return (
     <Container>
+      <Nav />
+      <Header>
+        <HeaderTitle>Browse</HeaderTitle>
+      </Header>
       <Wrapper>
-        <Nav />
-        <Header >
-          <HeaderTitle>Browse</HeaderTitle>
-        </Header>
-        <List items={list}/>
+        <List items={list} />
         {/* <More onClick={handleClick}>More</More> */}
       </Wrapper>
       <Footer />
@@ -59,5 +57,4 @@ const Wrapper = styled.div`
   min-height: 100vh;
 `;
 
-const More = styled.button`
-`
+const More = styled.button``;
