@@ -9,8 +9,8 @@ const NavItem = ({ title }) => {
   
   const handleClickAnimeItem = async (e) => {
     let type = e.target.getAttribute("name");
-    if (type === "top") {
-      navigate(`browse/top/anime`);
+    if (type === "topAnime") {
+      navigate(`/browse/top/anime`);
     } else if (type === "genres") {
       navigate(`/anime/genres`)
     }
@@ -18,8 +18,8 @@ const NavItem = ({ title }) => {
 
   const handleClickMangaItem = async (e) => {
     let type = e.target.getAttribute("name");
-    if (type === "top") {
-      navigate(`browse/top/manga`);
+    if (type === "topManga") {
+      navigate(`/browse/top/manga`);
     } else if (type === "genres") {
       navigate(`/manga/genres`)
     }
@@ -30,13 +30,13 @@ const NavItem = ({ title }) => {
       <Link>{title}</Link>
       {title === "Anime" ? (
         <Content open={open} onClick={handleClickAnimeItem}>
-          <ContentItem name="top">Top {title}</ContentItem>
+          <ContentItem name="topAnime">Top {title}</ContentItem>
           <ContentItem name="seasonal">Seasonal {title}</ContentItem>
           <ContentItem name="genres">Genres</ContentItem>
         </Content>
       ) : (
         <Content open={open} onClick={handleClickMangaItem}>
-          <ContentItem name="top">Top {title}</ContentItem>
+          <ContentItem name="topManga">Top {title}</ContentItem>
           <ContentItem name="genres">Genres</ContentItem>
         </Content>
       )}

@@ -1,4 +1,4 @@
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import List from "../components/List";
 import Nav from "../components/Nav";
@@ -15,7 +15,7 @@ const Browse = () => {
 
   useEffect(() => {
     getList();
-  }, [])
+  }, [filter, type])
 
 
   const getList = async () => {
