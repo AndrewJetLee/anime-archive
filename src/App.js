@@ -14,7 +14,7 @@ import UserList from "./pages/UserList";
 import Browse from "./pages/Browse";
 import Genres from './pages/Genres';
 import Genre from "./pages/Genre";
-
+import Seasonal from "./pages/Seasonal";
 
 function App() {
 
@@ -34,6 +34,7 @@ function App() {
           <Route path="/manga/genres" element={<Genres/>}/>
           <Route path="/manga/genres/:id/:name" element={<Genre/>}/>
           <Route path="/browse/:filter/:type" element={<Browse/>}/>
+          <Route path="/anime/season" element={<Seasonal/>}/>
         </Routes>
       </Router>
     </Container>

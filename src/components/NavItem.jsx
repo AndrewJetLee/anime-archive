@@ -13,6 +13,8 @@ const NavItem = ({ title }) => {
       navigate(`/browse/top/anime`);
     } else if (type === "genres") {
       navigate(`/anime/genres`)
+    } else {
+      navigate(`/anime/season/`)
     }
   }
 
@@ -22,7 +24,7 @@ const NavItem = ({ title }) => {
       navigate(`/browse/top/manga`);
     } else if (type === "genres") {
       navigate(`/manga/genres`)
-    }
+    } 
   }
 
   return (
