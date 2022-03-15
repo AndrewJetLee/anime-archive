@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import CarouselItem from "./CarouselItem";
+import SearchItem from "./SearchItem";
 
 const List = ({ items }) => {  
   const containsItems  = items.length > 0;
@@ -7,7 +7,7 @@ const List = ({ items }) => {
   return (
     <Container containsItems={containsItems}>
       {containsItems ? items?.map((item, i) => (
-        <CarouselItem item={item} key={i}/>
+        <SearchItem item={item} key={i}/>
       )) : <NoneFound >Sorry, your search term did not return any results</NoneFound>}
     </Container>
   );
@@ -18,7 +18,7 @@ export default List;
 const Container = styled.div`
   display: ${ props => props.containsItems ? "grid" : "flex"};
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 250px));
   grid-auto-flow: row;
   grid-gap: 5px;
   justify-content: center;
