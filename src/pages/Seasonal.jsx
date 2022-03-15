@@ -20,7 +20,7 @@ const Seasonal = () => {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [allAnime, setAllAnime] = useState([]);
   const [sort, setSort] = useState("");
-  const [dropdownSeason, setDropdownSeason] = useState("");
+  const [dropdownSeason, setDropdownSeason] = useState("Winter");
   const [yearInput, setYearInput] = useState(null);
 
   useEffect(() => {
@@ -99,14 +99,26 @@ const Seasonal = () => {
             </Sort>
           </SortWrapper>
           <SelectSeasonWrapper>
-              <SelectSeason onChange={(e) => setDropdownSeason(e.target.value)}>
-                {seasons.map((season, i) => <option value={season} key={i}>{season}</option>)}
-              </SelectSeason>
-              <SelectYear placeholder="Year" onChange={(e) => setYearInput(e.target.value)}/>
-              <SelectSeasonButton onClick={() => {
-                  setCurrentYear(yearInput);
-                  setActiveSeason(dropdownSeason);
-              }}>Go</SelectSeasonButton>
+            <SelectSeasonLabel>Jump to: </SelectSeasonLabel>
+            <SelectSeason onChange={(e) => setDropdownSeason(e.target.value)}>
+              {seasons.map((season, i) => (
+                <option value={season} key={i}>
+                  {season}
+                </option>
+              ))}
+            </SelectSeason>
+            <SelectYear
+              placeholder="Year"
+              onChange={(e) => setYearInput(e.target.value)}
+            />
+            <SelectSeasonButton
+              onClick={() => {
+                setCurrentYear(yearInput);
+                setActiveSeason(dropdownSeason);
+              }}
+            >
+              Go
+            </SelectSeasonButton>
           </SelectSeasonWrapper>
         </SeasonTabs>
 
@@ -127,6 +139,9 @@ const SeasonTabs = styled.ul`
   align-items: center;
   justify-content: space-between;
   border-bottom: solid 1px ${(props) => props.theme.main};
+  select {
+    border-color: lightgray;
+  }
 `;
 const Previous = styled.span`
   cursor: pointer;
@@ -137,12 +152,18 @@ const Next = styled(Previous)`
     props.currentYear < new Date().getFullYear() ? "inline" : "none"};
 `;
 
-const SortWrapper = styled.div``;
+const SortWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
-const Sort = styled.select``;
+const Sort = styled.select`
+  height: 30px;
+  margin: 0 5px;
+`;
 
 const SortLabel = styled.label`
-    color: black;
+  color: black;
 `;
 
 const SeasonTab = styled.li`
@@ -156,12 +177,26 @@ const SeasonTab = styled.li`
   }
 `;
 
-const SelectSeasonWrapper = styled.div``
+const SelectSeasonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
-const SelectSeason = styled.select``
+const SelectSeasonLabel = styled(SortLabel)``;
 
-const SelectYear = styled.input``
+const SelectSeason = styled(Sort)``;
 
-const SelectSeasonButton = styled.button``
+const SelectYear = styled.input`
+  width: 50px;
+  height: 30px;
+  border: 1px solid lightgray;
+  margin: 0 5px;
+`;
+
+const SelectSeasonButton = styled.button`
+  background-color: ${(props) => props.theme.tertiary};
+  color: white;
+  height: 30px;
+`;
 
 const Content = styled.main``;
