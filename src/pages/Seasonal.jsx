@@ -19,10 +19,21 @@ const Seasonal = () => {
   );
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [allAnime, setAllAnime] = useState([]);
+  const [sort, setSort] = useState("");
 
   useEffect(() => {
     getAnime();
   }, [activeSeason, currentYear]);
+
+  useEffect(() => {
+    if (sort === "members") {
+        let sorted = [...allAnime].sort((a,b) => b.members - a.members);
+        setAllAnime(sorted);
+    } else if (sort === "score") {
+        let sorted = [...allAnime].sort((a,b) => b.score - a.score);
+        setAllAnime(sorted);
+    }
+  }, [sort]);
 
   const getAnime = async () => {
     const res = await jikanRequest.get(
@@ -54,8 +65,10 @@ const Seasonal = () => {
             >{`${season} ${currentYear}`}</SeasonTab>
           ))}
           <Next onClick={() => setCurrentYear(currentYear + 1)} currentYear={currentYear}>...</Next>
-          <Sort>
-              <option value="rating">Rating</option>
+          <Sort onChange={(e) => setSort(e.target.value)}>
+              <option value="">Select</option>
+              <option value="members">Members</option>
+              <option value="score">Score</option>
           </Sort>
         </SeasonTabs>
         
