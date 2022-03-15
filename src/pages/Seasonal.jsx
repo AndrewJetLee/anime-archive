@@ -20,6 +20,8 @@ const Seasonal = () => {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [allAnime, setAllAnime] = useState([]);
   const [sort, setSort] = useState("");
+  const [dropdownSeason, setDropdownSeason] = useState("");
+  const [yearInput, setYearInput] = useState(null);
 
   useEffect(() => {
     getAnime();
@@ -86,13 +88,26 @@ const Seasonal = () => {
           >
             ...
           </Next>
-          <Sort onChange={(e) => setSort(e.target.value)}>
-            <option className="default" value="">
-              Select
-            </option>
-            <option value="members">Members</option>
-            <option value="score">Score</option>
-          </Sort>
+          <SortWrapper>
+            <SortLabel>Sort By: </SortLabel>
+            <Sort onChange={(e) => setSort(e.target.value)}>
+              <option className="default" value="">
+                Select
+              </option>
+              <option value="members">Members</option>
+              <option value="score">Score</option>
+            </Sort>
+          </SortWrapper>
+          <SelectSeasonWrapper>
+              <SelectSeason onChange={(e) => setDropdownSeason(e.target.value)}>
+                {seasons.map((season, i) => <option value={season} key={i}>{season}</option>)}
+              </SelectSeason>
+              <SelectYear placeholder="Year" onChange={(e) => setYearInput(e.target.value)}/>
+              <SelectSeasonButton onClick={() => {
+                  setCurrentYear(yearInput);
+                  setActiveSeason(dropdownSeason);
+              }}>Go</SelectSeasonButton>
+          </SelectSeasonWrapper>
         </SeasonTabs>
 
         <Content>
@@ -121,7 +136,14 @@ const Next = styled(Previous)`
   display: ${(props) =>
     props.currentYear < new Date().getFullYear() ? "inline" : "none"};
 `;
+
+const SortWrapper = styled.div``;
+
 const Sort = styled.select``;
+
+const SortLabel = styled.label`
+    color: black;
+`;
 
 const SeasonTab = styled.li`
   padding: 8px 18px;
@@ -133,5 +155,13 @@ const SeasonTab = styled.li`
     background-color: ${(props) => props.theme.main};
   }
 `;
+
+const SelectSeasonWrapper = styled.div``
+
+const SelectSeason = styled.select``
+
+const SelectYear = styled.input``
+
+const SelectSeasonButton = styled.button``
 
 const Content = styled.main``;
