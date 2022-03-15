@@ -27,11 +27,11 @@ const Seasonal = () => {
 
   useEffect(() => {
     if (sort === "members") {
-        let sorted = [...allAnime].sort((a,b) => b.members - a.members);
-        setAllAnime(sorted);
+      let sorted = [...allAnime].sort((a, b) => b.members - a.members);
+      setAllAnime(sorted);
     } else if (sort === "score") {
-        let sorted = [...allAnime].sort((a,b) => b.score - a.score);
-        setAllAnime(sorted);
+      let sorted = [...allAnime].sort((a, b) => b.score - a.score);
+      setAllAnime(sorted);
     }
   }, [sort]);
 
@@ -51,7 +51,17 @@ const Seasonal = () => {
       </Header>
       <Wrapper>
         <SeasonTabs>
-          <Previous onClick={() => setCurrentYear(currentYear - 1)}>...</Previous>
+          <Previous
+            onClick={() => {
+              setCurrentYear(currentYear - 1);
+              setSort("");
+              document
+                .querySelector(".default")
+                .setAttribute("selected", "selected");
+            }}
+          >
+            ...
+          </Previous>
           {seasons.map((season, i) => (
             <SeasonTab
               season={season}
@@ -61,17 +71,30 @@ const Seasonal = () => {
                 setCurrentYear(currentYear);
               }}
               key={i}
-              active={ activeSeason === season ? true : false}
+              active={activeSeason === season ? true : false}
             >{`${season} ${currentYear}`}</SeasonTab>
           ))}
-          <Next onClick={() => setCurrentYear(currentYear + 1)} currentYear={currentYear}>...</Next>
+          <Next
+            onClick={() => {
+              setCurrentYear(currentYear + 1);
+              setSort("");
+              document
+                .querySelector(".default")
+                .setAttribute("selected", "selected");
+            }}
+            currentYear={currentYear}
+          >
+            ...
+          </Next>
           <Sort onChange={(e) => setSort(e.target.value)}>
-              <option value="">Select</option>
-              <option value="members">Members</option>
-              <option value="score">Score</option>
+            <option className="default" value="">
+              Select
+            </option>
+            <option value="members">Members</option>
+            <option value="score">Score</option>
           </Sort>
         </SeasonTabs>
-        
+
         <Content>
           <List items={allAnime}></List>
         </Content>
@@ -88,27 +111,27 @@ const SeasonTabs = styled.ul`
   color: ${(props) => props.theme.main};
   align-items: center;
   justify-content: space-between;
-  border-bottom: solid 1px ${props => props.theme.main};
+  border-bottom: solid 1px ${(props) => props.theme.main};
 `;
 const Previous = styled.span`
   cursor: pointer;
 `;
 
 const Next = styled(Previous)`
-  display: ${(props) => props.currentYear < new Date().getFullYear() ? "inline" : "none"};
-`
-const Sort = styled.select``
+  display: ${(props) =>
+    props.currentYear < new Date().getFullYear() ? "inline" : "none"};
+`;
+const Sort = styled.select``;
 
 const SeasonTab = styled.li`
   padding: 8px 18px;
   cursor: pointer;
-  background-color: ${props => props.active && props.theme.main};
-  color: ${props => props.active && "white"};
+  background-color: ${(props) => props.active && props.theme.main};
+  color: ${(props) => props.active && "white"};
   :hover {
     color: white;
-    background-color: ${props => props.theme.main};   
+    background-color: ${(props) => props.theme.main};
   }
 `;
 
 const Content = styled.main``;
-
