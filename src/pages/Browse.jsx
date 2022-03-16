@@ -31,7 +31,7 @@ const Browse = () => {
         <HeaderTitle>Browse</HeaderTitle>
       </Header>
       <Wrapper>
-        <List items={list} />
+        <List items={list}/>
         {/* <More onClick={handleClick}>More</More> */}
       </Wrapper>
       <Footer />

@@ -11,7 +11,6 @@ import { Title } from "../components/Carousel";
 const Search = () => {
   let location = useLocation();
   console.log(location.state);
-
   const [animeMetaData, setAnimeMetaData] = useState(location.state.anime);
   const [charactersMetaData, setCharactersMetaData] = useState(
     location.state.characters

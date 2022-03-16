@@ -18,10 +18,10 @@ const SearchItem = ({ item }) => {
     <Container onClick={handleClick}>
       <Header>
         <Title>{item.name ? item.name : item.title}</Title>
-        <Genres>{item.genres.map((genre, i) => <Genre key={i}>{genre.name}</Genre>)}</Genres>
+        <Genres>{item.genres?.map((genre, i) => <Genre key={i}>{genre.name}</Genre>)}</Genres>
       </Header>
       <Content>
-        <Image src={item.images.webp.large_image_url} className="animeImage" />
+        <Image src={item.images.jpg.large_image_url} className="animeImage" />
       </Content>
       <Bottom>GIGITY</Bottom>
     </Container>
@@ -74,10 +74,11 @@ const Genre = styled.span`
 `
 
 const Content = styled.div`
+  height: 100%;
 `
 
 const Image = styled.img`
-  object-fit: fill;
+  object-fit: cover;
   width: 100%;
   height: 100%;
 `;
@@ -85,5 +86,4 @@ const Image = styled.img`
 const Bottom = styled.div`
     display: flex;
     background-color: ${props => props.theme.secondary};
-    height: 100%;
 `

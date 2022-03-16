@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import SearchItem from "./SearchItem";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const List = ({ items }) => {  
   const containsItems  = items.length > 0;
