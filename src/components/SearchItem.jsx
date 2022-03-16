@@ -86,4 +86,5 @@ const Image = styled.img`
 const Bottom = styled.div`
     display: flex;
     background-color: ${props => props.theme.secondary};
+
 `

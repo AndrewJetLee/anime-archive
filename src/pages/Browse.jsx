@@ -11,7 +11,9 @@ const Browse = () => {
   const { filter, type } = useParams();
 
   const [list, setList] = useState([]);
-  const [metaData, setMetaData] = useState({});
+  const [pagination, setPagination] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState();
 
   useEffect(() => {
     getList();
@@ -21,7 +23,25 @@ const Browse = () => {
     const res = await jikanRequest.get(`/${filter}/${type}`);
     console.log(res);
     setList(res.data.data);
-    setMetaData(res.data.meta);
+    setPagination(res.data.pagination);
+  };
+
+  const getNextPage = async () => {
+    try {
+      if (pagination.has_next_page) {
+        let page = currentPage + 1;
+        setLoading(true);
+        const res = await jikanRequest.get(
+          `/${filter}/${type}?page=${page}`
+        );
+        setList((prevList) => [...prevList, ...res.data.data]);
+        setPagination(res.data.pagination);
+        setCurrentPage((prevCurrentPage) => prevCurrentPage + 1);
+        setLoading(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -31,8 +51,8 @@ const Browse = () => {
         <HeaderTitle>Browse</HeaderTitle>
       </Header>
       <Wrapper>
-        <List items={list}/>
-        {/* <More onClick={handleClick}>More</More> */}
+        <List items={list} />
+        { loading ? <div>Loading ...</div> : <More onClick={getNextPage}>More</More>}
       </Wrapper>
       <Footer />
     </Container>
