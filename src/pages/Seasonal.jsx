@@ -18,10 +18,13 @@ const Seasonal = () => {
     seasons[getSeason(new Date())]
   );
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const [pagination, setPagination] = useState({})
+  const [currentPage, setCurrentPage] = useState(1);
   const [allAnime, setAllAnime] = useState([]);
   const [sort, setSort] = useState("");
   const [dropdownSeason, setDropdownSeason] = useState("Winter");
   const [yearInput, setYearInput] = useState(null);
+  const [loading, setLoading] = useState();
 
   useEffect(() => {
     getAnime();
@@ -43,6 +46,25 @@ const Seasonal = () => {
     );
     console.log(res);
     setAllAnime(res.data.data);
+    setPagination(res.data.pagination);
+  };
+
+  const getNextPage = async () => {
+    try {
+      if (pagination.has_next_page) {
+        let page = currentPage + 1;
+        setLoading(true);
+        const res = await jikanRequest.get(
+          `/seasons/${currentYear}/${activeSeason}?page=${page}`
+        );
+        setAllAnime((prevAllAnime) => [...prevAllAnime, ...res.data.data]);
+        setPagination(res.data.pagination);
+        setCurrentPage((prevCurrentPage) => prevCurrentPage + 1);
+        setLoading(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -123,7 +145,7 @@ const Seasonal = () => {
         </SeasonTabs>
 
         <Content>
-          <List items={allAnime}></List>
+          <List items={allAnime} getNextPage={getNextPage} pagination={pagination}></List>
         </Content>
       </Wrapper>
       <Footer />
