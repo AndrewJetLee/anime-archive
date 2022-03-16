@@ -12,6 +12,8 @@ const Genre = () => {
   const { name, id } = useParams();
 
   const [anime, setAnime] = useState([]);
+  const [pagination, setPagination] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     getGenreAnime();
@@ -21,7 +23,24 @@ const Genre = () => {
     const res = await jikanRequest.get(`/anime?genres=${id}`);
     console.log(res);
     setAnime(res.data.data);
+    setPagination(res.data.pagination);
   }
+
+  const getNextPage = async () => {
+    try {
+      if (pagination.has_next_page) {
+        let page = currentPage + 1;
+        const res = await jikanRequest.get(
+          `/anime?genres=${id}&page=${page}`
+        );
+        setAnime((prevList) => [...prevList, ...res.data.data]);
+        setPagination(res.data.pagination);
+        setCurrentPage((prevCurrentPage) => prevCurrentPage + 1);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Container>
@@ -30,10 +49,7 @@ const Genre = () => {
         <Header>
             <HeaderTitle>{name}</HeaderTitle>
         </Header>
-        <List items={anime}/>
-        <MoreWrapper>
-            <MoreButton>More</MoreButton>
-        </MoreWrapper>
+        <List items={anime} getNextPage={getNextPage} pagination={pagination}/>
       </Wrapper>
       <Footer />
     </Container>
@@ -41,18 +57,3 @@ const Genre = () => {
 };
 
 export default Genre;
-
-const MoreWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-`
-
-const MoreButton = styled.a`
-    padding: 14px 40px;
-    background-color: ${props => props.theme.main};
-    color: white;
-    width: auto;
-    text-align: center;
-    width: 100%;
-    cursor: pointer;
-`

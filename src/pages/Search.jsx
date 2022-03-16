@@ -10,9 +10,11 @@ import { Title } from "../components/Carousel";
 
 const Search = () => {
   let location = useLocation();
+  console.log(location);
   console.log(location.state);
   const [animes, setAnimes] = useState(location.state.anime?.data);
   const [animePagination, setAnimePagination] = useState(location.state.anime);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const [mangas, setMangas] = useState(location.state.manga?.data);
   const [mangaPagination, setMangaPagination] = useState(location.state.manga);
@@ -21,7 +23,7 @@ const Search = () => {
   const [charactersPagination, setCharactersPagination] = useState(
     location.state.characters
   );
-  
+
   const [type, setType] = useState(location.state.type);
   const [searchFocus, setSearchFocus] = useState("");
 
@@ -35,8 +37,20 @@ const Search = () => {
     setType(location.state.type);
   }, [location.state]);
 
-  const handleClick = async () => {
-
+  const getNextPage = async (pagination, setPagination, setList, mediaType) => {
+    try {
+      if (pagination.has_next_page) {
+        let page = currentPage + 1;
+        const res = await jikanRequest.get(
+          `/${mediaType}${location.search}&page=${page}`
+        );
+        setList((prevList) => [...prevList, ...res.data.data]);
+        setPagination(res.data.pagination);
+        setCurrentPage((prevCurrentPage) => prevCurrentPage + 1);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -49,9 +63,15 @@ const Search = () => {
         {(type === "animeSearch" || type === "all") && (
           <>
             <Title>Anime</Title>
-            <List items={animes} type="search"/>
-            {animePagination.has_next_page && (
-              <More onClick={handleClick}>More</More>
+            {searchFocus === "anime" ? (
+              <List items={animes} />
+            ) : (
+              <>
+                <List items={animes} type="search" />
+                {animePagination.has_next_page && (
+                  <More onClick={() => getNextPage(animePagination, setAnimePagination, setAnimes, "anime")}>More</More>
+                )}
+              </>
             )}
           </>
         )}
@@ -59,9 +79,9 @@ const Search = () => {
         {(type === "mangaSearch" || type === "all") && (
           <>
             <Title>Manga</Title>
-            <List items={mangas}  type="search"/>
+            <List items={mangas} type="search" />
             {mangaPagination.has_next_page && (
-              <More onClick={handleClick}>More</More>
+              <More onClick={getNextPage}>More</More>
             )}
           </>
         )}
@@ -69,9 +89,9 @@ const Search = () => {
         {type === "all" && (
           <>
             <Title>Characters</Title>
-            <List items={characters}  type="search"/>
+            <List items={characters} type="search" />
             {charactersPagination.has_next_page && (
-              <More onClick={handleClick}>More</More>
+              <More onClick={getNextPage}>More</More>
             )}
           </>
         )}
