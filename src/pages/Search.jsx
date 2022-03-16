@@ -25,6 +25,7 @@ const Search = () => {
   );
 
   const [type, setType] = useState(location.state.type);
+  const [activeMedia, setActiveMedia] = useState("");
 
   useEffect(() => {
     setAnimes(location.state.anime?.data);
@@ -34,18 +35,31 @@ const Search = () => {
     setCharacters(location.state.characters?.data);
     setCharactersPagination(location.state.characters?.pagination);
     setType(location.state.type);
+    setActiveMedia("");
   }, [location.state]);
 
-  const getNextPage = async (pagination, setPagination, setList, mediaType) => {
+  const getNextPage = async () => {
     try {
-      if (pagination.has_next_page) {
-        let page = currentPage + 1;
-        const res = await jikanRequest.get(
-          `/${mediaType}${location.search}&page=${page}`
-        );
-        setList((prevList) => [...prevList, ...res.data.data]);
-        setPagination(res.data.pagination);
-        setCurrentPage((prevCurrentPage) => prevCurrentPage + 1);
+      if (activeMedia === "anime") {
+        if (animePagination.has_next_page) {
+          let page = currentPage + 1;
+          const res = await jikanRequest.get(
+            `/${activeMedia}${location.search}&page=${page}`
+          );
+          setAnimes((prevList) => [...prevList, ...res.data.data]);
+          setAnimePagination(res.data.pagination);
+          setCurrentPage((prevCurrentPage) => prevCurrentPage + 1);
+        }
+      } else if (activeMedia === "manga") {
+        if (mangaPagination.has_next_page) {
+          let page = currentPage + 1;
+          const res = await jikanRequest.get(
+            `/${activeMedia}${location.search}&page=${page}`
+          );
+          setMangas((prevList) => [...prevList, ...res.data.data]);
+          setMangaPagination(res.data.pagination);
+          setCurrentPage((prevCurrentPage) => prevCurrentPage + 1);
+        }
       }
     } catch (err) {
       console.log(err);
@@ -62,22 +76,57 @@ const Search = () => {
         {(type === "animeSearch" || type === "all") && (
           <>
             <Title>Anime</Title>
+            {activeMedia === "anime" ? (
+              <>
+                <List
+                  items={animes}
+                  getNextPage={getNextPage}
+                  pagination={animePagination}
+                />
+              </>
+            ) : (
               <>
                 <List items={animes} type="search" />
                 {animePagination.has_next_page && (
-                  <More onClick={() => setType("animeSearch")}>More</More>
+                  <More
+                    onClick={() => {
+                      setType("animeSearch");
+                      setActiveMedia("anime");
+                    }}
+                  >
+                    More
+                  </More>
                 )}
               </>
-            
+            )}
           </>
         )}
 
         {(type === "mangaSearch" || type === "all") && (
           <>
             <Title>Manga</Title>
-            <List items={mangas} type="search" />
-            {mangaPagination.has_next_page && (
-              <More onClick={getNextPage}>More</More>
+            {activeMedia === "manga" ? (
+              <>
+                <List
+                  items={mangas}
+                  getNextPage={getNextPage}
+                  pagination={mangaPagination}
+                />
+              </>
+            ) : (
+              <>
+                <List items={mangas} type="search" />
+                {mangaPagination.has_next_page && (
+                  <More
+                    onClick={() => {
+                      setType("mangaSearch");
+                      setActiveMedia("manga");
+                    }}
+                  >
+                    More
+                  </More>
+                )}
+              </>
             )}
           </>
         )}
