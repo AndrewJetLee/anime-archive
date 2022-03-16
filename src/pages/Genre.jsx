@@ -5,7 +5,7 @@ import { HeaderTitle, Header } from "./Login";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import { jikanRequest } from "../requestMethods";
-import List from "../components/List"; 
+import List from "../components/List";
 import styled from "styled-components";
 
 const Genre = () => {
@@ -17,22 +17,20 @@ const Genre = () => {
 
   useEffect(() => {
     getGenreAnime();
-  }, [])
+  }, []);
 
   const getGenreAnime = async () => {
     const res = await jikanRequest.get(`/anime?genres=${id}`);
     console.log(res);
     setAnime(res.data.data);
     setPagination(res.data.pagination);
-  }
+  };
 
   const getNextPage = async () => {
     try {
       if (pagination.has_next_page) {
         let page = currentPage + 1;
-        const res = await jikanRequest.get(
-          `/anime?genres=${id}&page=${page}`
-        );
+        const res = await jikanRequest.get(`/anime?genres=${id}&page=${page}`);
         setAnime((prevList) => [...prevList, ...res.data.data]);
         setPagination(res.data.pagination);
         setCurrentPage((prevCurrentPage) => prevCurrentPage + 1);
@@ -45,11 +43,11 @@ const Genre = () => {
   return (
     <Container>
       <Nav />
+      <Header>
+        <HeaderTitle>{name}</HeaderTitle>
+      </Header>
       <Wrapper>
-        <Header>
-            <HeaderTitle>{name}</HeaderTitle>
-        </Header>
-        <List items={anime} getNextPage={getNextPage} pagination={pagination}/>
+        <List items={anime} getNextPage={getNextPage} pagination={pagination} />
       </Wrapper>
       <Footer />
     </Container>

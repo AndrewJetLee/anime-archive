@@ -6,7 +6,6 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
 const SearchItem = ({ item }) => {
   const navigate = useNavigate();
-  console.log(item);
 
   const handleClick = async (e) => {
     let type =
@@ -38,8 +37,8 @@ const SearchItem = ({ item }) => {
         />
       </Content>
       <Bottom>
-        <Score><StarOutlineIcon className="icon"/>{item.scored}</Score>
-        <Members><PersonOutlineIcon className="icon"/>{item.members}</Members>
+        <Score><StarOutlineIcon className="icon"/>{(item.score || item.scored) ? item.score || item.scored : "N/A"}</Score>
+        <Members><PersonOutlineIcon className="icon"/>{item.members ? item.members : 0}</Members>
         <AddToList>Add To List</AddToList>
       </Bottom>
     </Container>
@@ -68,12 +67,12 @@ const Header = styled.header`
 `;
 
 const Title = styled.span`
-  display: inline-flex;
+  display: flex;
   color: ${(props) => props.theme.main};
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   text-align: center;
   padding: 5px;
-  height: 40px;
+  height: 50px;
   justify-content: center;
   align-items: center;
 `;
@@ -121,7 +120,6 @@ const Members = styled(Score)``
 
 const AddToList = styled.button`
   background-color: ${props => props.theme.tertiary};
-  height: 25px;
   padding: 4px 16px;
   border-radius: 2px;
   color: white;

@@ -27,12 +27,12 @@ const Genres = () => {
 
   useEffect(() => {
     if (location.pathname.includes("manga")) {
-      setType("manga")
-      getMangaGenres()
+      setType("manga");
+      getMangaGenres();
     } else {
-      setType("anime")
+      setType("anime");
       getAnimeGenres();
-    } 
+    }
   }, []);
 
   const getAnimeGenres = async () => {
@@ -111,7 +111,6 @@ const Genres = () => {
           },
         });
       }
-      
     } catch (err) {
       console.log(err);
     }
@@ -137,10 +136,10 @@ const Genres = () => {
   return (
     <Container>
       <Nav />
+      <Header>
+        <HeaderTitle>Genres</HeaderTitle>
+      </Header>
       <Wrapper>
-        <Header>
-          <HeaderTitle>Genres</HeaderTitle>
-        </Header>
         <SearchBar onSubmit={handleSearch}>
           <SearchInputWrapper>
             <SearchInput
@@ -165,67 +164,71 @@ const Genres = () => {
         {clickedFilter && (
           <FiltersWrapper>
             <FiltersTitle>Filters</FiltersTitle>
-            { type === "anime" ? <>
-            <Filter>
-              Type:
-              <Type name="type" onChange={handleChange}>
-                <option value="">Select</option>
-                <option value="tv">TV</option>
-                <option value="movie">Movie</option>
-                <option value="ova">OVA</option>
-                <option value="special">Special</option>
-                <option value="ona">ONA</option>
-                <option value="music">Music</option>
-              </Type>
-            </Filter>
-            <Filter>
-              Status:
-              <Status name="status" onChange={handleChange}>
-                <option value="">Select</option>
-                <option value="airing">Airing</option>
-                <option value="complete">Complete</option>
-                <option value="upcoming">Upcoming</option>
-              </Status>
-            </Filter>
-            <Filter>
-              Rating:
-              <Rating name="rating" onChange={handleChange}>
-                <option value="">Select</option>
-                <option value="g">G</option>
-                <option value="pg">PG</option>
-                <option value="pg13">PG-13</option>
-                <option value="r17">R - 17+</option>
-                <option value="r">R+</option>
-                <option value="rx">Rx</option>
-              </Rating>
-            </Filter>
-            </> : <>
-            <Filter>
-              Type:
-              <Type name="type" onChange={handleChange}>
-                <option value="">Select</option>
-                <option value="manga">Manga</option>
-                <option value="novel">Novel</option>
-                <option value="lightnovel">Lightnovel</option>
-                <option value="oneshot">Oneshot</option>
-                <option value="doujin">Doujin</option>
-                <option value="manhwa">Manhwa</option>
-                <option value="manhua">Manhua</option>
-              </Type>
-            </Filter>
-            <Filter>
-              Status:
-              <Status name="status" onChange={handleChange}>
-                <option value="">Select</option>
-                <option value="publishing">Publishing</option>
-                <option value="complete">Complete</option>
-                <option value="hiatus">Hiatus</option>
-                <option value="discontinued">Discontinued</option>
-                <option value="upcoming">Upcoming</option>
-              </Status>
-            </Filter>
-            </>}
-            
+            {type === "anime" ? (
+              <>
+                <Filter>
+                  Type:
+                  <Type name="type" onChange={handleChange}>
+                    <option value="">Select</option>
+                    <option value="tv">TV</option>
+                    <option value="movie">Movie</option>
+                    <option value="ova">OVA</option>
+                    <option value="special">Special</option>
+                    <option value="ona">ONA</option>
+                    <option value="music">Music</option>
+                  </Type>
+                </Filter>
+                <Filter>
+                  Status:
+                  <Status name="status" onChange={handleChange}>
+                    <option value="">Select</option>
+                    <option value="airing">Airing</option>
+                    <option value="complete">Complete</option>
+                    <option value="upcoming">Upcoming</option>
+                  </Status>
+                </Filter>
+                <Filter>
+                  Rating:
+                  <Rating name="rating" onChange={handleChange}>
+                    <option value="">Select</option>
+                    <option value="g">G</option>
+                    <option value="pg">PG</option>
+                    <option value="pg13">PG-13</option>
+                    <option value="r17">R - 17+</option>
+                    <option value="r">R+</option>
+                    <option value="rx">Rx</option>
+                  </Rating>
+                </Filter>
+              </>
+            ) : (
+              <>
+                <Filter>
+                  Type:
+                  <Type name="type" onChange={handleChange}>
+                    <option value="">Select</option>
+                    <option value="manga">Manga</option>
+                    <option value="novel">Novel</option>
+                    <option value="lightnovel">Lightnovel</option>
+                    <option value="oneshot">Oneshot</option>
+                    <option value="doujin">Doujin</option>
+                    <option value="manhwa">Manhwa</option>
+                    <option value="manhua">Manhua</option>
+                  </Type>
+                </Filter>
+                <Filter>
+                  Status:
+                  <Status name="status" onChange={handleChange}>
+                    <option value="">Select</option>
+                    <option value="publishing">Publishing</option>
+                    <option value="complete">Complete</option>
+                    <option value="hiatus">Hiatus</option>
+                    <option value="discontinued">Discontinued</option>
+                    <option value="upcoming">Upcoming</option>
+                  </Status>
+                </Filter>
+              </>
+            )}
+
             <Filter>
               Order By:
               <OrderBy name="orderBy" onChange={handleChange}>
@@ -236,7 +239,6 @@ const Genres = () => {
                 <option value="rank">Rank</option>
               </OrderBy>
             </Filter>
-           
           </FiltersWrapper>
         )}
 
@@ -331,7 +333,7 @@ const SearchInputWrapper = styled.div`
     padding: 8px;
     color: gray;
     cursor: pointer;
-    transition: all .167s ease;
+    transition: all 0.167s ease;
     :hover {
       background-color: #f3f3f3;
       color: #797979;
