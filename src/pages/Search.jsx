@@ -60,6 +60,16 @@ const Search = () => {
           setMangaPagination(res.data.pagination);
           setCurrentPage((prevCurrentPage) => prevCurrentPage + 1);
         }
+      } else if (activeMedia === "characters") {
+        if (charactersPagination.has_next_page) {
+          let page = currentPage + 1;
+          const res = await jikanRequest.get(
+            `/${activeMedia}${location.search}&page=${page}`
+          );
+          setCharacters((prevList) => [...prevList, ...res.data.data]);
+          setCharactersPagination(res.data.pagination);
+          setCurrentPage((prevCurrentPage) => prevCurrentPage + 1);
+        }
       }
     } catch (err) {
       console.log(err);
@@ -131,12 +141,27 @@ const Search = () => {
           </>
         )}
 
-        {type === "all" && (
+        {(type === "charactersSearch" || type === "all") && (
           <>
             <Title>Characters</Title>
-            <List items={characters} type="search" />
-            {charactersPagination.has_next_page && (
-              <More onClick={getNextPage}>More</More>
+            {activeMedia === "characters" ? (
+              <>
+                <List
+                  items={characters}
+                  getNextPage={getNextPage}
+                  pagination={charactersPagination}
+                />
+              </>
+            ) : (
+              <>
+                <List items={characters} type="search" />
+                {charactersPagination.has_next_page && (
+                  <More onClick={() => {
+                    setType("charactersSearch");
+                    setActiveMedia("characters");
+                  }}>More</More>
+                )}
+              </>
             )}
           </>
         )}
