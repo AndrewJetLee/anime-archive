@@ -25,15 +25,14 @@ const Search = () => {
   );
 
   const [type, setType] = useState(location.state.type);
-  const [searchFocus, setSearchFocus] = useState("");
 
   useEffect(() => {
     setAnimes(location.state.anime?.data);
-    setAnimePagination(location.state.anime.pagination);
+    setAnimePagination(location.state.anime?.pagination);
     setMangas(location.state.manga?.data);
-    setMangaPagination(location.state.manga.pagination);
+    setMangaPagination(location.state.manga?.pagination);
     setCharacters(location.state.characters?.data);
-    setCharactersPagination(location.state.characters.pagination);
+    setCharactersPagination(location.state.characters?.pagination);
     setType(location.state.type);
   }, [location.state]);
 
@@ -63,16 +62,13 @@ const Search = () => {
         {(type === "animeSearch" || type === "all") && (
           <>
             <Title>Anime</Title>
-            {searchFocus === "anime" ? (
-              <List items={animes} />
-            ) : (
               <>
                 <List items={animes} type="search" />
                 {animePagination.has_next_page && (
-                  <More onClick={() => getNextPage(animePagination, setAnimePagination, setAnimes, "anime")}>More</More>
+                  <More onClick={() => setType("animeSearch")}>More</More>
                 )}
               </>
-            )}
+            
           </>
         )}
 
