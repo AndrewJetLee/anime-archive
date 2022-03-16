@@ -51,7 +51,7 @@ const Browse = () => {
         <HeaderTitle>Browse</HeaderTitle>
       </Header>
       <Wrapper>
-        <List items={list} />
+        <List items={list} getNextPage={getNextPage} pagination={pagination}/>
         { loading ? <div>Loading ...</div> : <More onClick={getNextPage}>More</More>}
       </Wrapper>
       <Footer />
