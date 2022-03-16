@@ -192,8 +192,8 @@ const Wrapper = styled.div`
 const More = styled.button`
   width: 100%;
   background-color: ${props => props.theme.tertiary};
-  padding: 20px 24px;
-  font-size: 1.7rem;
+  padding: 16px;
+  font-size: 1.6rem;
   font-weight: 600;
   margin-top: 20px;
   border-radius: 4px;

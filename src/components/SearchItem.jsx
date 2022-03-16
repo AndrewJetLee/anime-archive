@@ -1,9 +1,12 @@
 import styled from "styled-components";
 import { jikanRequest } from "../requestMethods";
 import { useNavigate } from "react-router-dom";
+import StarOutlineIcon from '@mui/icons-material/StarOutline';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
 const SearchItem = ({ item }) => {
   const navigate = useNavigate();
+  console.log(item);
 
   const handleClick = async (e) => {
     let type =
@@ -34,7 +37,11 @@ const SearchItem = ({ item }) => {
           className="animeImage"
         />
       </Content>
-      <Bottom>GIGITY</Bottom>
+      <Bottom>
+        <Score><StarOutlineIcon className="icon"/>{item.scored}</Score>
+        <Members><PersonOutlineIcon className="icon"/>{item.members}</Members>
+        <AddToList>Add To List</AddToList>
+      </Bottom>
     </Container>
   );
 };
@@ -76,19 +83,19 @@ const Genres = styled.div`
   font-size: 0.9rem;
   background-color: ${(props) => props.theme.secondary};
   align-items: center;
-  height: 20px;
+  height: 25px;
 `;
 
 const Genre = styled.span`
-  padding: 2px 6px;
+  padding: 0 3px;
 `;
 
 const Content = styled.div`
-  height: 100%;
+  height: 400px;
 `;
 
 const Image = styled.img`
-  object-fit: fill;
+  object-fit: cover;
   width: 100%;
   height: 400px;
 `;
@@ -96,4 +103,26 @@ const Image = styled.img`
 const Bottom = styled.div`
   display: flex;
   background-color: ${(props) => props.theme.secondary};
+  font-size: 1.2rem;
+  align-items: center;
+  justify-content: space-around;
+  padding: 4px;
 `;
+
+const Score = styled.div`
+  display: flex;
+  align-items: center;
+  .icon {
+    margin-right: 3px;
+  }
+`
+
+const Members = styled(Score)``
+
+const AddToList = styled.button`
+  background-color: ${props => props.theme.tertiary};
+  height: 25px;
+  padding: 4px 16px;
+  border-radius: 2px;
+  color: white;
+`
