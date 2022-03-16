@@ -104,7 +104,7 @@ const Search = () => {
                       setActiveMedia("anime");
                     }}
                   >
-                    More
+                    Search More Anime
                   </More>
                 )}
               </>
@@ -133,7 +133,7 @@ const Search = () => {
                       setActiveMedia("manga");
                     }}
                   >
-                    More
+                    Search More Manga
                   </More>
                 )}
               </>
@@ -159,7 +159,7 @@ const Search = () => {
                   <More onClick={() => {
                     setType("charactersSearch");
                     setActiveMedia("characters");
-                  }}>More</More>
+                  }}>Search More Characters</More>
                 )}
               </>
             )}
@@ -189,4 +189,17 @@ const Wrapper = styled.div`
   min-height: 100vh;
 `;
 
-const More = styled.button``;
+const More = styled.button`
+  width: 100%;
+  background-color: ${props => props.theme.tertiary};
+  padding: 20px 24px;
+  font-size: 1.7rem;
+  font-weight: 600;
+  margin-top: 20px;
+  border-radius: 4px;
+  transition: opacity 0.167s ease-in-out;
+  cursor: pointer;
+  :hover {
+    opacity: .8;
+  }
+`;
