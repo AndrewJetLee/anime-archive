@@ -18,10 +18,21 @@ const SearchItem = ({ item }) => {
     <Container onClick={handleClick}>
       <Header>
         <Title>{item.name ? item.name : item.title}</Title>
-        <Genres>{item.genres?.map((genre, i) => <Genre key={i}>{genre.name}</Genre>)}</Genres>
+        <Genres>
+          {item.genres?.map((genre, i) => (
+            <Genre key={i}>{genre.name}</Genre>
+          ))}
+        </Genres>
       </Header>
       <Content>
-        <Image src={item.images.jpg.large_image_url} className="animeImage" />
+        <Image
+          src={
+            item.images.jpg.large_image_url
+              ? item.images.jpg.large_image_url
+              : item.images.jpg.image_url
+          }
+          className="animeImage"
+        />
       </Content>
       <Bottom>GIGITY</Bottom>
     </Container>
@@ -36,7 +47,6 @@ const Container = styled.div`
   flex-direction: column;
   transition-property: opacity;
   transition-duration: 0.16s;
-  position: relative;
   border: solid 1px lightgray;
   cursor: pointer;
   :hover {
@@ -45,14 +55,14 @@ const Container = styled.div`
 `;
 
 const Header = styled.header`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
 
 const Title = styled.span`
   display: inline-flex;
-  color: ${props => props.theme.main};
+  color: ${(props) => props.theme.main};
   font-size: 1.4rem;
   text-align: center;
   padding: 5px;
@@ -61,30 +71,29 @@ const Title = styled.span`
   align-items: center;
 `;
 const Genres = styled.div`
-    display: flex;
-    justify-content: center;
-    font-size: .9rem;
-    background-color: ${props => props.theme.secondary};
-    align-items: center;
-    height: 20px;
-`
+  display: flex;
+  justify-content: center;
+  font-size: 0.9rem;
+  background-color: ${(props) => props.theme.secondary};
+  align-items: center;
+  height: 20px;
+`;
 
 const Genre = styled.span`
-    padding: 2px 6px;
-`
+  padding: 2px 6px;
+`;
 
 const Content = styled.div`
   height: 100%;
-`
+`;
 
 const Image = styled.img`
-  object-fit: cover;
+  object-fit: fill;
   width: 100%;
-  height: 100%;
+  height: 400px;
 `;
 
 const Bottom = styled.div`
-    display: flex;
-    background-color: ${props => props.theme.secondary};
-
-`
+  display: flex;
+  background-color: ${(props) => props.theme.secondary};
+`;
