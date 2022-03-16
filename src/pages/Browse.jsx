@@ -29,8 +29,8 @@ const Browse = () => {
   const getNextPage = async () => {
     try {
       if (pagination.has_next_page) {
-        let page = currentPage + 1;
         setLoading(true);
+        let page = currentPage + 1;
         const res = await jikanRequest.get(
           `/${filter}/${type}?page=${page}`
         );
@@ -52,7 +52,6 @@ const Browse = () => {
       </Header>
       <Wrapper>
         <List items={list} getNextPage={getNextPage} pagination={pagination}/>
-        { loading ? <div>Loading ...</div> : <More onClick={getNextPage}>More</More>}
       </Wrapper>
       <Footer />
     </Container>
