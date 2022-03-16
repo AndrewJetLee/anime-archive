@@ -11,33 +11,32 @@ import { Title } from "../components/Carousel";
 const Search = () => {
   let location = useLocation();
   console.log(location.state);
-  const [animeMetaData, setAnimeMetaData] = useState(location.state.anime);
-  const [charactersMetaData, setCharactersMetaData] = useState(
+  const [animes, setAnimes] = useState(location.state.anime?.data);
+  const [animePagination, setAnimePagination] = useState(location.state.anime);
+
+  const [mangas, setMangas] = useState(location.state.manga?.data);
+  const [mangaPagination, setMangaPagination] = useState(location.state.manga);
+
+  const [characters, setCharacters] = useState(location.state.characters?.data);
+  const [charactersPagination, setCharactersPagination] = useState(
     location.state.characters
   );
-  const [mangaMetaData, setMangaMetaData] = useState(location.state.manga);
-  const [animes, setAnimes] = useState(location.state.anime?.data);
-  const [characters, setCharacters] = useState(location.state.characters?.data);
-  const [mangas, setMangas] = useState(location.state.manga?.data);
+  
   const [type, setType] = useState(location.state.type);
+  const [searchFocus, setSearchFocus] = useState("");
 
   useEffect(() => {
     setAnimes(location.state.anime?.data);
-    setAnimeMetaData(location.state.anime);
+    setAnimePagination(location.state.anime.pagination);
     setMangas(location.state.manga?.data);
-    setMangaMetaData(location.state.manga);
+    setMangaPagination(location.state.manga.pagination);
     setCharacters(location.state.characters?.data);
-    setCharactersMetaData(location.state.characters);
+    setCharactersPagination(location.state.characters.pagination);
     setType(location.state.type);
   }, [location.state]);
 
   const handleClick = async () => {
-    const loadedAnime = await jikanRequest.get(animeMetaData.links.next);
-    const loadedManga = await jikanRequest.get(mangaMetaData.links.next);
-    setAnimeMetaData(loadedAnime.data);
-    setAnimes([...animes, ...loadedAnime.data.data]);
-    setMangaMetaData(loadedAnime.data);
-    setMangas([...mangas, ...loadedManga.data.data]);
+
   };
 
   return (
@@ -50,8 +49,8 @@ const Search = () => {
         {(type === "animeSearch" || type === "all") && (
           <>
             <Title>Anime</Title>
-            <List items={animes} />
-            {animeMetaData.pagination.has_next_page && (
+            <List items={animes} type="search"/>
+            {animePagination.has_next_page && (
               <More onClick={handleClick}>More</More>
             )}
           </>
@@ -60,8 +59,8 @@ const Search = () => {
         {(type === "mangaSearch" || type === "all") && (
           <>
             <Title>Manga</Title>
-            <List items={mangas} />
-            {mangaMetaData.pagination.has_next_page && (
+            <List items={mangas}  type="search"/>
+            {mangaPagination.has_next_page && (
               <More onClick={handleClick}>More</More>
             )}
           </>
@@ -70,8 +69,8 @@ const Search = () => {
         {type === "all" && (
           <>
             <Title>Characters</Title>
-            <List items={characters} />
-            {charactersMetaData.pagination.has_next_page && (
+            <List items={characters}  type="search"/>
+            {charactersPagination.has_next_page && (
               <More onClick={handleClick}>More</More>
             )}
           </>

@@ -2,27 +2,41 @@ import styled from "styled-components";
 import SearchItem from "./SearchItem";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-const List = ({ items, getNextPage, pagination }) => {
+const List = ({ type, items, getNextPage, pagination }) => {
   const containsItems = items.length > 0;
   console.log(pagination);
 
   return (
-    <InfiniteScroll
-      dataLength={items.length}
-      next={getNextPage}
-      hasMore={pagination.has_next_page}
-      loader={<h4>Loading...</h4>}
-    >
-      <Container containsItems={containsItems}>
-        {containsItems ? (
-          items?.map((item, i) => <SearchItem item={item} key={i} />)
-        ) : (
-          <NoneFound>
-            Sorry, your search term did not return any results
-          </NoneFound>
-        )}
-      </Container>
-    </InfiniteScroll>
+    <>
+      {type === "search" ? (
+        <Container containsItems={containsItems}>
+          {containsItems ? (
+            items?.map((item, i) => <SearchItem item={item} key={i} />)
+          ) : (
+            <NoneFound>
+              Sorry, your search term did not return any results
+            </NoneFound>
+          )}
+        </Container>
+      ) : (
+        <InfiniteScroll
+          dataLength={items.length}
+          next={getNextPage}
+          hasMore={pagination.has_next_page}
+          loader={<h4>Loading...</h4>}
+        >
+          <Container containsItems={containsItems}>
+            {containsItems ? (
+              items?.map((item, i) => <SearchItem item={item} key={i} />)
+            ) : (
+              <NoneFound>
+                Sorry, your search term did not return any results
+              </NoneFound>
+            )}
+          </Container>
+        </InfiniteScroll>
+      )}
+    </>
   );
 };
 
