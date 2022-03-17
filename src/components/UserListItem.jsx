@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const UserListItem = ({ item, number, handleDelete }) => {
   const navigate = useNavigate();
+  console.log(item);
   return (
     <Container >
       <Number>{number}</Number>
@@ -16,7 +17,7 @@ const UserListItem = ({ item, number, handleDelete }) => {
       {/* <Type>{item.attributes.showType ? item.attributes.showType : "Manga"} </Type> */}
       <Edit>
         <Delete onClick={() => {
-          handleDelete(item.id);
+          handleDelete(item.mal_id);
         }}>Delete</Delete>
       </Edit>
     </Container>

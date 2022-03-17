@@ -14,8 +14,12 @@ const UserList = () => {
   console.log(userList);
 
   const handleDelete = async (id) => {
-    const res = await publicRequest.delete(`/user/list/${id}`);
-    setUserList(res.data.list);
+    try {
+      const res = await publicRequest.delete(`/user/list/${id}`);
+      setUserList(res.data.list);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

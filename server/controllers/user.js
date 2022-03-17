@@ -62,7 +62,7 @@ module.exports = {
     try {
       await User.findOneAndUpdate(
         { _id: req.session.passport.user },
-        { $pull: { list: {id: req.params.id}}},
+        { $pull: { list: {mal_id : Number(req.params.id) }}},
         { multi: true }
       );
       const updatedUser = await User.findById(req.session.passport.user);
