@@ -25,10 +25,25 @@ const UserList = () => {
   return (
     <Container>
       <Nav />
+      <Header>
+        <BannerWrapper>
+          <Banner src="/images/aa-default-banner.jpg"></Banner>
+        </BannerWrapper>
+        <HeaderContent>
+          <ProfilePictureWrapper>
+            <ProfilePicture src="/images/placeholder-img.png"></ProfilePicture>
+          </ProfilePictureWrapper>
+          <HeaderTabs>
+            <All>ALL ANIME</All>
+            <Watching>CURRENTLY WATCHING</Watching>
+            <Completed>COMPLETED</Completed>
+            <Hold>ON HOLD</Hold>
+            <Dropped>DROPPED</Dropped>
+            <Planned>PLAN TO WATCH</Planned>
+          </HeaderTabs>
+        </HeaderContent>
+      </Header>
       <Wrapper>
-        <Header>
-          <h3>All Anime</h3>
-        </Header>
         <Table>
           <TableBody>
             <TableRow>
@@ -73,14 +88,69 @@ const Wrapper = styled.div`
   min-height: 100vh;
 `;
 
+// Header
 const Header = styled.header`
   background-color: ${(props) => props.theme.main};
   color: white;
-  h3 {
-    text-align: center;
-  }
+  width: 100%;
 `;
 
+const BannerWrapper = styled.div`
+  height: 450px;
+`;
+
+const Banner = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+`;
+
+const HeaderContent = styled.section`
+  width: 100vw;
+  border: solid;
+  display: flex;
+  height: 100px;
+  align-items: center;
+`;
+
+const ProfilePictureWrapper = styled.div`
+  border: solid black 8px;
+  border-radius: 50%;
+  overflow: hidden;
+  min-height: 200px;
+  min-width: 200px;
+  max-width: 200px;
+  max-height: 200px;
+  position: relative;
+  margin-left: 80px;
+`;
+
+const ProfilePicture = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+const HeaderTabs = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 80%;
+`;
+
+const All = styled.span`
+  font-weight: 500;
+  font-size: 2.4rem;
+`;
+
+const Watching = styled(All)`
+  
+`;
+const Completed = styled(All)``;
+const Hold = styled(All)``;
+const Dropped = styled(All)``;
+const Planned = styled(All)``;
+
+// List
 const Table = styled.table``;
 
 const TableBody = styled.tbody``;
