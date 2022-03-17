@@ -11,6 +11,7 @@ const Home = ({ user }) => {
   const [upcomingAnime, setUpcomingAnime] = useState([]);
   const [trendingAnime, setTrendingAnime] = useState([]);
   const [trendingManga, setTrendingManga] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getAllMedia();
@@ -18,16 +19,19 @@ const Home = ({ user }) => {
 
   const getAllMedia = async () => {
     try {
+      setLoading(true);
       const seasonalAnime = await jikanRequest.get("/seasons/now");
       const upcomingAnime = await jikanRequest.get("/seasons/upcoming");
       const trendingAnime = await jikanRequest.get("/top/anime");
-      setTimeout(async () => {
-        const trendingManga = await jikanRequest.get("/top/manga");
+      // setTimeout(async () => {
+        
+      // }, 2000);
+      const trendingManga = await jikanRequest.get("/top/manga");
         setTrendingManga(trendingManga.data.data);
-      }, 2000);
       setSeasonalAnime(seasonalAnime.data.data);
       setUpcomingAnime(upcomingAnime.data.data);
       setTrendingAnime(trendingAnime.data.data);
+      setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -38,10 +42,10 @@ const Home = ({ user }) => {
       <Nav user={user} />
       <Wrapper>
         <Hero />
-        <Carousel title={"Currently Airing"} data={seasonalAnime} />
-        <Carousel title={"Upcoming Anime"} data={upcomingAnime} />
-        <Carousel title={"Popular Anime"} data={trendingAnime} />
-        <Carousel title={"Popular Manga"} data={trendingManga} />
+        <Carousel title={"Currently Airing"} data={seasonalAnime} loading={loading}/>
+        <Carousel title={"Upcoming Anime"} data={upcomingAnime} loading={loading}/>
+        <Carousel title={"Popular Anime"} data={trendingAnime} loading={loading}/>
+        <Carousel title={"Popular Manga"} data={trendingManga} loading={loading}/>
       </Wrapper>
       <Footer/>
     </Container>
