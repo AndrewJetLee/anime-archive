@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import List from "../components/List";
 import styled from "styled-components";
 import { jikanRequest } from "../requestMethods";
+import { fabClasses } from "@mui/material";
 
 const Seasonal = () => {
   const seasons = ["Winter", "Spring", "Summer", "Fall"];
@@ -24,7 +25,7 @@ const Seasonal = () => {
   const [sort, setSort] = useState("");
   const [dropdownSeason, setDropdownSeason] = useState("Winter");
   const [yearInput, setYearInput] = useState(null);
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getAnime();
@@ -41,26 +42,30 @@ const Seasonal = () => {
   }, [sort]);
 
   const getAnime = async () => {
-    const res = await jikanRequest.get(
-      `/seasons/${currentYear}/${activeSeason}`
-    );
-    console.log(res);
-    setAllAnime(res.data.data);
-    setPagination(res.data.pagination);
+    try {
+      setLoading(true);
+      const res = await jikanRequest.get(
+        `/seasons/${currentYear}/${activeSeason}`
+      );
+      setAllAnime(res.data.data);
+      setLoading(false);
+      setPagination(res.data.pagination);
+    } catch (err) {
+      console.log(err);
+    }
+    
   };
 
   const getNextPage = async () => {
     try {
       if (pagination.has_next_page) {
         let page = currentPage + 1;
-        setLoading(true);
         const res = await jikanRequest.get(
           `/seasons/${currentYear}/${activeSeason}?page=${page}`
         );
         setAllAnime((prevAllAnime) => [...prevAllAnime, ...res.data.data]);
         setPagination(res.data.pagination);
         setCurrentPage((prevCurrentPage) => prevCurrentPage + 1);
-        setLoading(false);
       }
     } catch (err) {
       console.log(err);
@@ -145,7 +150,7 @@ const Seasonal = () => {
         </SeasonTabs>
 
         <Content>
-          <List items={allAnime} getNextPage={getNextPage} pagination={pagination}></List>
+          <List items={allAnime} getNextPage={getNextPage} pagination={pagination} loading={loading}></List>
         </Content>
       </Wrapper>
       <Footer />
