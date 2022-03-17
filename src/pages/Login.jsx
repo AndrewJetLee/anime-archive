@@ -38,26 +38,29 @@ const Login = () => {
     console.log("In development");
   };
 
-
   return (
     <Container>
+      <Nav />
+      <Header>
+        <HeaderTitle>Login</HeaderTitle>
+      </Header>
       <Wrapper>
-        <Nav />
-        <Header>
-          <HeaderTitle>Login</HeaderTitle>
-        </Header>
         {forgot ? (
           <Content>
-            <Form >
+            <Form>
               <ForgotFormHeader>
                 <ForgotFormTitle>Forgot your password?</ForgotFormTitle>
-                <ForgotFormDescription>Enter your email to retrieve your password</ForgotFormDescription>
+                <ForgotFormDescription>
+                  Enter your email to retrieve your password
+                </ForgotFormDescription>
               </ForgotFormHeader>
               <EmailWrapper>
                 <Label>Email</Label>
                 <Username name="username" />
               </EmailWrapper>
-              <ResetPassword onSubmit={handleForgotPassword}>Reset Your Password</ResetPassword>
+              <ResetPassword onSubmit={handleForgotPassword}>
+                Reset Your Password
+              </ResetPassword>
               <Forgot onClick={handleForgotPassword}>Back to Sign In</Forgot>
             </Form>
           </Content>
@@ -74,7 +77,9 @@ const Login = () => {
               </PasswordWrapper>
               <LoginButton onClick={handleSubmit}>Login</LoginButton>
             </Form>
-            <Forgot onClick={handleForgotPassword}>Forgot your password?</Forgot>
+            <Forgot onClick={handleForgotPassword}>
+              Forgot your password?
+            </Forgot>
             <Register>Create account</Register>
           </Content>
         )}
@@ -170,21 +175,14 @@ const Register = styled.a`
   color: ${(props) => props.theme.main};
 `;
 
-
-
 const Forgot = styled(Register)``;
 
 // Forget password form
 
-const ForgotFormHeader = styled.div`
-`
-const ForgotFormTitle = styled.h3``
+const ForgotFormHeader = styled.div``;
+const ForgotFormTitle = styled.h3``;
 
-const ForgotFormDescription = styled.span``
+const ForgotFormDescription = styled.span``;
 
-const ResetPassword = styled(LoginButton)`
-
-`
-const EmailWrapper = styled(UsernameWrapper)`
-  
-`
+const ResetPassword = styled(LoginButton)``;
+const EmailWrapper = styled(UsernameWrapper)``;

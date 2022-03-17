@@ -4,9 +4,9 @@ import Footer from "../components/Footer";
 import { months, days, getYears } from "../utility/helpers";
 import { useState } from "react";
 import { publicRequest } from "../requestMethods";
+import { HeaderTitle, Header } from "./Login";
 
 const Register = () => {
-
   const [formInputs, setFormInputs] = useState({
     email: "",
     username: "",
@@ -14,41 +14,41 @@ const Register = () => {
     day: "",
     month: "",
     year: "",
-  })
-  
+  });
+
   const handleFormChange = (e) => {
-    let value = e.target.value; 
+    let value = e.target.value;
     setFormInputs({
-      ...formInputs, 
-      [e.target.name]: value
-    })
-  }
+      ...formInputs,
+      [e.target.name]: value,
+    });
+  };
 
   const handleSubmit = async (e) => {
     let birthday = `${formInputs.month} ${formInputs.day}, ${formInputs.year}`;
     console.log(birthday);
-    let { day, month, year, ...others } = formInputs;  
+    let { day, month, year, ...others } = formInputs;
     let payload = {
-      ...others, 
-      birthday
+      ...others,
+      birthday,
     };
     console.log(payload);
     const res = await publicRequest.post("/user/register", payload);
     console.log(res);
-  }
+  };
 
   return (
     <Container>
+      <Nav />
+      <Header>
+        <HeaderTitle>Register</HeaderTitle>
+      </Header>
       <Wrapper>
-        <Nav />
-        <Header>
-          <Title>Register</Title>
-        </Header>
         <Content>
           <Form onChange={handleFormChange}>
             <EmailWrapper>
               <Label>Email</Label>
-              <Email name="email"/>
+              <Email name="email" />
             </EmailWrapper>
             <UsernameWrapper>
               <Label>Username</Label>
@@ -56,12 +56,14 @@ const Register = () => {
             </UsernameWrapper>
             <PasswordWrapper>
               <Label>Password</Label>
-              <Password type="password" name="password"/>
+              <Password type="password" name="password" />
             </PasswordWrapper>
             <BirthdayWrapper>
               <Label>Birthday</Label>
               <Month name="month" id="">
-                {months.map((month, i) => <option key={i}>{month.short}</option>)}
+                {months.map((month, i) => (
+                  <option key={i}>{month.short}</option>
+                ))}
               </Month>
               -
               <Day name="day">
@@ -69,12 +71,16 @@ const Register = () => {
               </Day>
               -
               <Year name="year">
-                {getYears(new Date().getFullYear()).map((year, i) => <option key={i}>{year}</option>)}
+                {getYears(new Date().getFullYear()).map((year, i) => (
+                  <option key={i}>{year}</option>
+                ))}
               </Year>
             </BirthdayWrapper>
           </Form>
           <CreateButton onClick={handleSubmit}>Create Account</CreateButton>
-          <span>Already have an account? <Login href="/login">Login</Login></span> 
+          <span>
+            Already have an account? <Login href="/login">Login</Login>
+          </span>
         </Content>
       </Wrapper>
       <Footer />
@@ -100,11 +106,6 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const Header = styled.header`
-  background-color: ${(props) => props.theme.secondary};
-  border-bottom: 1px solid ${(props) => props.theme.main};
-  width: 100%;
-`;
 const Title = styled.span`
   display: inline-block;
   font-weight: 600;
@@ -148,10 +149,9 @@ const Password = styled(Username)``;
 
 const BirthdayWrapper = styled.div`
   margin-bottom: 20px;
-
 `;
 const Month = styled.select`
-  border-color: ${props => props.theme.seconday};
+  border-color: ${(props) => props.theme.seconday};
   height: 45px;
   width: 70px;
   margin-right: 5px;
@@ -162,7 +162,7 @@ const Day = styled(Month)`
   margin-left: 5px;
 `;
 const Year = styled(Month)`
-   margin-left: 5px;
+  margin-left: 5px;
 `;
 
 const Label = styled.label`
