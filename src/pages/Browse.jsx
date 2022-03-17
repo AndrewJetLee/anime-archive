@@ -20,24 +20,26 @@ const Browse = () => {
   }, [filter, type]);
 
   const getList = async () => {
-    const res = await jikanRequest.get(`/${filter}/${type}`);
-    console.log(res);
-    setList(res.data.data);
-    setPagination(res.data.pagination);
+    try {
+      setLoading(true);
+      const res = await jikanRequest.get(`/${filter}/${type}`);
+      console.log(res);
+      setList(res.data.data);
+      setLoading(false);
+      setPagination(res.data.pagination);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const getNextPage = async () => {
     try {
       if (pagination.has_next_page) {
-        setLoading(true);
         let page = currentPage + 1;
-        const res = await jikanRequest.get(
-          `/${filter}/${type}?page=${page}`
-        );
+        const res = await jikanRequest.get(`/${filter}/${type}?page=${page}`);
         setList((prevList) => [...prevList, ...res.data.data]);
         setPagination(res.data.pagination);
         setCurrentPage((prevCurrentPage) => prevCurrentPage + 1);
-        setLoading(false);
       }
     } catch (err) {
       console.log(err);
@@ -51,7 +53,7 @@ const Browse = () => {
         <HeaderTitle>Browse</HeaderTitle>
       </Header>
       <Wrapper>
-        <List items={list} getNextPage={getNextPage} pagination={pagination}/>
+        <List items={list} getNextPage={getNextPage} pagination={pagination} loading={loading}/>
       </Wrapper>
       <Footer />
     </Container>

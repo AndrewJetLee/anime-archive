@@ -1,12 +1,10 @@
 import styled from "styled-components";
 import SearchItem from "./SearchItem";
 import InfiniteScroll from "react-infinite-scroll-component";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import Loading from "./Loading";
 
-const List = ({ type, items, getNextPage, pagination }) => {
+const List = ({ type, items, getNextPage, pagination, loading }) => {
   const containsItems = items.length > 0;
-  console.log(pagination);
 
   return (
     <>
@@ -22,40 +20,27 @@ const List = ({ type, items, getNextPage, pagination }) => {
         </Container>
       ) : (
         <>
-          <InfiniteScroll
-            dataLength={items.length}
-            next={getNextPage}
-            hasMore={pagination.has_next_page}
-            loader={
-              <Container>
-                <SkeletonItem>
-                  <Skeleton width="100%" height="400px"/>
-                </SkeletonItem>
-                <SkeletonItem>
-                  <Skeleton width="100%" height="400px" />
-                </SkeletonItem>
-                <SkeletonItem>
-                  <Skeleton width="100%" height="400px" />
-                </SkeletonItem>
-                <SkeletonItem>
-                  <Skeleton width="100%" height="400px" />
-                </SkeletonItem>
-                <SkeletonItem>
-                  <Skeleton width="100%" height="400px" />
-                </SkeletonItem>
-              </Container>
-            }
-          >
-            <Container containsItems={containsItems}>
-              {containsItems ? (
-                items?.map((item, i) => <SearchItem item={item} key={i} />)
-              ) : (
-                <NoneFound>
-                  Sorry, your search term did not return any results
-                </NoneFound>
-              )}
-            </Container>
-          </InfiniteScroll>
+          {loading ? (
+            <Loading count={10}/>
+          ) :  <InfiniteScroll
+          dataLength={items.length}
+          next={getNextPage}
+          hasMore={pagination.has_next_page}
+          loader={
+            <Loading count={5}/>
+          }
+        >
+          <Container containsItems={containsItems}>
+            {containsItems ? (
+              items?.map((item, i) => <SearchItem item={item} key={i} />)
+            ) : (
+              <NoneFound>
+                Sorry, your search term did not return any results
+              </NoneFound>
+            )}
+          </Container>
+        </InfiniteScroll>}
+         
         </>
       )}
     </>
@@ -91,7 +76,6 @@ const SkeletonItem = styled.div`
   flex-direction: column;
   transition-property: opacity;
   transition-duration: 0.16s;
-  border: solid 1px lightgray;
   cursor: pointer;
   height: 400px;
   :hover {

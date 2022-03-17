@@ -102,7 +102,7 @@ const Image = styled.img`
 const Bottom = styled.div`
   display: flex;
   background-color: ${(props) => props.theme.secondary};
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   align-items: center;
   justify-content: space-around;
   padding: 4px;
