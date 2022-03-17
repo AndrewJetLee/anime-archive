@@ -23,11 +23,8 @@ const Home = ({ user }) => {
       const seasonalAnime = await jikanRequest.get("/seasons/now");
       const upcomingAnime = await jikanRequest.get("/seasons/upcoming");
       const trendingAnime = await jikanRequest.get("/top/anime");
-      // setTimeout(async () => {
-        
-      // }, 2000);
       const trendingManga = await jikanRequest.get("/top/manga");
-        setTrendingManga(trendingManga.data.data);
+      setTrendingManga(trendingManga.data.data);
       setSeasonalAnime(seasonalAnime.data.data);
       setUpcomingAnime(upcomingAnime.data.data);
       setTrendingAnime(trendingAnime.data.data);
@@ -42,12 +39,28 @@ const Home = ({ user }) => {
       <Nav user={user} />
       <Wrapper>
         <Hero />
-        <Carousel title={"Currently Airing"} data={seasonalAnime} loading={loading}/>
-        <Carousel title={"Upcoming Anime"} data={upcomingAnime} loading={loading}/>
-        <Carousel title={"Popular Anime"} data={trendingAnime} loading={loading}/>
-        <Carousel title={"Popular Manga"} data={trendingManga} loading={loading}/>
+        <Carousel
+          title={"Currently Airing"}
+          data={seasonalAnime}
+          loading={loading}
+        />
+        <Carousel
+          title={"Upcoming Anime"}
+          data={upcomingAnime}
+          loading={loading}
+        />
+        <Carousel
+          title={"Popular Anime"}
+          data={trendingAnime}
+          loading={loading}
+        />
+        <Carousel
+          title={"Popular Manga"}
+          data={trendingManga}
+          loading={loading}
+        />
       </Wrapper>
-      <Footer/>
+      <Footer />
     </Container>
   );
 };

@@ -9,11 +9,14 @@ import { useNavigate, useLocation } from "react-router-dom";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import SearchIcon from "@mui/icons-material/Search";
 import { Checkbox } from "@mui/material";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const Genres = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [genres, setGenres] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [type, setType] = useState("");
   const [clickedFilter, toggleClickedFilter] = useState(false);
   const [query, setQuery] = useState("");
@@ -33,24 +36,42 @@ const Genres = () => {
       setType("anime");
       getAnimeGenres();
     }
-  }, []);
+  }, [location.pathname]);
 
   const getAnimeGenres = async () => {
-    const res = await jikanRequest.get("/genres/anime");
-    console.log(res);
-    setGenres(res.data.data);
+    try {
+      setLoading(true);
+      const res = await jikanRequest.get("/genres/anime");
+      console.log(res);
+      setGenres(res.data.data);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const getMangaGenres = async () => {
-    const res = await jikanRequest.get("/genres/manga");
-    console.log(res);
-    setGenres(res.data.data);
+    try {
+      setLoading(true);
+      const res = await jikanRequest.get("/genres/manga");
+      console.log(res);
+      setGenres(res.data.data);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleClickGenre = async (id, name) => {
-    const res = await jikanRequest.get(`/anime?genres=${id}`);
-    console.log(res);
-    navigate(`/anime/genres/${id}/${name}`);
+    try {
+      setLoading(true);
+      const res = await jikanRequest.get(`/anime?genres=${id}`);
+      console.log(res);
+      navigate(`/anime/genres/${id}/${name}`);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleSearch = async (e) => {
@@ -244,40 +265,48 @@ const Genres = () => {
 
         <GenresListWrapper>
           {genres.map((genre, i) => (
-            <Genre
-              key={i}
-              onClick={
-                !clickedFilter
-                  ? () => handleClickGenre(genre.mal_id, genre.name)
-                  : (e) => console.log(e.target.value)
-              }
-            >
-              {`${genre.name} `}({genre.count})
-              {!clickedFilter ? (
-                <ArrowForwardIosIcon />
+            <>
+              {loading ? (
+                <SkeletonGenre>
+                  <Skeleton baseColor="#FB9935" width="100%" height="100%"/>
+                </SkeletonGenre>
               ) : (
-                <Checkbox
-                  value={genre.mal_id}
-                  sx={{
-                    backgroundColor: "#FB9935",
-                    color: "white",
-                    "&.Mui-checked": {
-                      color: "white",
-                    },
-                    "& .MuiSvgIcon-root": { fontSize: 24 },
-                  }}
-                  onChange={(e) =>
-                    !genreFilter.includes(e.target.value)
-                      ? toggleGenreFilter([...genreFilter, e.target.value])
-                      : toggleGenreFilter([
-                          ...genreFilter.filter(
-                            (value) => value !== e.target.value
-                          ),
-                        ])
+                <Genre
+                  key={i}
+                  onClick={
+                    !clickedFilter
+                      ? () => handleClickGenre(genre.mal_id, genre.name)
+                      : (e) => console.log(e.target.value)
                   }
-                />
+                >
+                  {`${genre.name} `}({genre.count})
+                  {!clickedFilter ? (
+                    <ArrowForwardIosIcon />
+                  ) : (
+                    <Checkbox
+                      value={genre.mal_id}
+                      sx={{
+                        backgroundColor: "#FB9935",
+                        color: "white",
+                        "&.Mui-checked": {
+                          color: "white",
+                        },
+                        "& .MuiSvgIcon-root": { fontSize: 24 },
+                      }}
+                      onChange={(e) =>
+                        !genreFilter.includes(e.target.value)
+                          ? toggleGenreFilter([...genreFilter, e.target.value])
+                          : toggleGenreFilter([
+                              ...genreFilter.filter(
+                                (value) => value !== e.target.value
+                              ),
+                            ])
+                      }
+                    />
+                  )}
+                </Genre>
               )}
-            </Genre>
+            </>
           ))}
         </GenresListWrapper>
       </Wrapper>
@@ -307,6 +336,11 @@ const Genre = styled.div`
   :hover {
     opacity: 0.8;
   }
+`;
+
+const SkeletonGenre = styled.div`
+  width: 220px;
+  height: 35px;
 `;
 
 const SearchBar = styled.form`
