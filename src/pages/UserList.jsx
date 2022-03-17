@@ -44,26 +44,16 @@ const UserList = () => {
         </HeaderContent>
       </Header>
       <Wrapper>
-        <Table>
-          <TableBody>
-            <TableRow>
-              <th className="number">#</th>
-              <th className="image">Image</th>
-              <th className="title">Title</th>
-              <th className="score">Score</th>
-              <th className="type">Type</th>
-              <th className="type">Edit</th>
-            </TableRow>
-            {userList.map((item, i) => (
-              <UserListItem
-                item={item}
-                key={i}
-                number={i + 1}
-                handleDelete={handleDelete}
-              />
-            ))}
-          </TableBody>
-        </Table>
+        <AnimeList>
+          {userList.map((item, i) => (
+            <UserListItem
+              item={item}
+              key={i}
+              number={i + 1}
+              handleDelete={handleDelete}
+            />
+          ))}
+        </AnimeList>
       </Wrapper>
       <Footer />
     </Container>
@@ -81,9 +71,9 @@ const Container = styled.div`
   overflow: hidden;
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled.main`
   display: flex;
-  width: 70vw;
+  width: 91vw;
   flex-direction: column;
   min-height: 100vh;
 `;
@@ -93,6 +83,7 @@ const Header = styled.header`
   background-color: ${(props) => props.theme.main};
   color: white;
   width: 100%;
+  margin-bottom: 80px;
 `;
 
 const BannerWrapper = styled.div`
@@ -107,7 +98,6 @@ const Banner = styled.img`
 
 const HeaderContent = styled.section`
   width: 100vw;
-  border: solid;
   display: flex;
   height: 100px;
   align-items: center;
@@ -119,8 +109,8 @@ const ProfilePictureWrapper = styled.div`
   overflow: hidden;
   min-height: 200px;
   min-width: 200px;
-  max-width: 200px;
-  max-height: 200px;
+  max-width: 220px;
+  max-height: 220px;
   position: relative;
   margin-left: 80px;
 `;
@@ -142,25 +132,13 @@ const All = styled.span`
   font-size: 2.4rem;
 `;
 
-const Watching = styled(All)`
-  
-`;
+const Watching = styled(All)``;
 const Completed = styled(All)``;
 const Hold = styled(All)``;
 const Dropped = styled(All)``;
 const Planned = styled(All)``;
 
 // List
-const Table = styled.table``;
-
-const TableBody = styled.tbody``;
-
-const TableRow = styled.tr`
-  th {
-    text-align: left;
-    font-size: 1.2rem;
-  }
-  .image {
-    padding-left: 20px;
-  }
+const AnimeList = styled.section`
+  width: 100%;
 `;

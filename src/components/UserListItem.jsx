@@ -5,20 +5,35 @@ const UserListItem = ({ item, number, handleDelete }) => {
   const navigate = useNavigate();
   console.log(item);
   return (
-    <Container >
-      <Number>{number}</Number>
-      <Image>
-        <img src={item.images.jpg.image_url} alt=""/>
-      </Image>
-      <Title onClick={() => {
-        navigate("/media", { state: item })
-      }}>{item.title}</Title>
-      <Score>{item.rating}</Score>
+    <Container>
+      <AnimeInfo>
+        <ImageWrapper>
+          <Number>{number}</Number>
+          <Image src={item.images.jpg.image_url}></Image>
+        </ImageWrapper>
+        <InfoWrapper>
+          <Type>{item.type}</Type>
+          <Title
+            onClick={() => {
+              navigate("/media", { state: item });
+            }}
+          >
+            {item.title}
+          </Title>
+          <Rating>{item.rating}</Rating>
+          
+        </InfoWrapper>
+      </AnimeInfo>
+
       {/* <Type>{item.attributes.showType ? item.attributes.showType : "Manga"} </Type> */}
       <Edit>
-        <Delete onClick={() => {
-          handleDelete(item.mal_id);
-        }}>Delete</Delete>
+        <Delete
+          onClick={() => {
+            handleDelete(item.mal_id);
+          }}
+        >
+          Delete
+        </Delete>
       </Edit>
     </Container>
   );
@@ -26,26 +41,62 @@ const UserListItem = ({ item, number, handleDelete }) => {
 
 export default UserListItem;
 
-const Container = styled.tr`
+const Container = styled.div`
   font-size: 1.3rem;
+  border: solid;
+  display: flex;
+  align-items: center;
+  min-height: 150px;
 `;
 
-
-const Number = styled.td``;
-const Image = styled.td`
-  img {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-  }
+const AnimeInfo = styled.div`
+  display: flex;
 `;
-const Title = styled.td`
+
+const ImageWrapper = styled.div`
+  display: relative;
+  display: flex;
+  margin-right: 10px;
+`;
+
+const InfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const Number = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 600;
-  color: ${props => props.theme.main};
-  cursor: pointer;
+  color: white;
+  background-color: ${props => props.theme.tertiary};
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: relative;
+  top: 5px;
+  left: 20px;
 `;
-const Score = styled.td``;
-const Type = styled.td``;
+
+const Image = styled.img`
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+`;
+const Rating = styled.a`
+  margin-bottom: 5px;
+`;
+const Title = styled.a`
+  font-weight: 600;
+  color: ${(props) => props.theme.main};
+  cursor: pointer;
+  margin-bottom: 5px;
+`;
+
+const Type = styled(Rating)``;
 const Edit = styled.td``;
 
 const Delete = styled.a`
