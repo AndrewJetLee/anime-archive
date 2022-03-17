@@ -41,7 +41,7 @@ module.exports = {
   addList: async (req, res) => {
     try {
       const userQuery = await User.findById(req.session.passport.user);
-      if (userQuery._doc.list.some((item) => item.id === req.body.id)) {
+      if (userQuery._doc.list.some((item) => item.mal_id === req.body.mal_id)) {
         res.status(200).send("Anime or manga already exists in your list");
       } else {
         await User.findOneAndUpdate(

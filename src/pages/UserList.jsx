@@ -10,35 +10,39 @@ const UserList = () => {
   const location = useLocation();
   const list = location.state;
   const [userList, setUserList] = useState(list ? list : null);
-  
+
   console.log(userList);
 
   const handleDelete = async (id) => {
     const res = await publicRequest.delete(`/user/list/${id}`);
     setUserList(res.data.list);
-  }
+  };
 
   return (
     <Container>
       <Nav />
       <Wrapper>
-        
         <Header>
           <h3>All Anime</h3>
         </Header>
-        <Table >
+        <Table>
           <TableBody>
-          <TableRow>
-            <th className="number">#</th>
-            <th className="image">Image</th>
-            <th className="title">Title</th>
-            <th className="score">Score</th>
-            <th className="type">Type</th>
-            <th className="type">Edit</th>
-          </TableRow>
-          {userList.map((item, i) => (
-            <UserListItem item={item} key={i} number={i + 1} handleDelete={handleDelete}/>
-          ))}
+            <TableRow>
+              <th className="number">#</th>
+              <th className="image">Image</th>
+              <th className="title">Title</th>
+              <th className="score">Score</th>
+              <th className="type">Type</th>
+              <th className="type">Edit</th>
+            </TableRow>
+            {userList.map((item, i) => (
+              <UserListItem
+                item={item}
+                key={i}
+                number={i + 1}
+                handleDelete={handleDelete}
+              />
+            ))}
           </TableBody>
         </Table>
       </Wrapper>
@@ -66,23 +70,21 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.header`
-  background-color: ${props => props.theme.main};
+  background-color: ${(props) => props.theme.main};
   color: white;
   h3 {
     text-align: center;
   }
-`
+`;
 
 const Table = styled.table``;
 
-const TableBody = styled.tbody`
-`;
+const TableBody = styled.tbody``;
 
 const TableRow = styled.tr`
   th {
     text-align: left;
     font-size: 1.2rem;
-    
   }
   .image {
     padding-left: 20px;

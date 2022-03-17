@@ -6,6 +6,7 @@ import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import Review from "../components/Review";
 import { Title } from "../components/Carousel";
+import { fadeIn } from "../components/Nav";
 
 const Media = () => {
   const location = useLocation();
@@ -15,6 +16,7 @@ const Media = () => {
 
   const [reviews, setReviews] = useState([]);
   const [voiceActors, setVoiceActors] = useState([]);
+  const [alert, toggleAlert] = useState(false);
 
   useEffect(() => {
     if (type === "characters") {
@@ -25,8 +27,14 @@ const Media = () => {
   }, [type, id]);
 
   const handleAddToList = async () => {
-    const res = await publicRequest.put("/user/list", item);
-    console.log(res);
+    try {
+      const res = await publicRequest.put("/user/list", item);
+      console.log(res);
+      toggleAlert(true);
+      setTimeout(() => toggleAlert(false), 4000);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const getReviews = async () => {
@@ -345,6 +353,11 @@ const Media = () => {
         )}
       </Wrapper>
       <Footer />
+      {alert ? (
+        <Alert>
+           Successfully added to list!
+        </Alert>
+      ) : null}
     </Container>
   );
 };
@@ -432,6 +445,7 @@ const Inputs = styled.div`
   display: flex;
   justify-content: center;
 `;
+
 const AddButton = styled.a`
   background-color: ${(props) => props.theme.tertiary};
   color: white;
@@ -441,6 +455,11 @@ const AddButton = styled.a`
   border-radius: 4px;
   text-align: center;
   cursor: pointer;
+  transition: opacity 0.167s ease-in-out;
+  :hover {
+    opacity: .8;
+    color: white;
+  }
 `;
 
 const Information = styled.div``;
@@ -573,3 +592,19 @@ const VideoWrapper = styled(Synopsis)`
 `;
 
 const Reviews = styled(Synopsis)``;
+
+const Alert = styled.div`
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 40px;
+  top: 100px;
+  background-color: ${(props) => props.theme.tertiary};
+  color: white;
+  padding: 4px 12px;
+  animation: ${fadeIn} 0.3s ease-in;
+  .errorIcon {
+    font-size: 30px;
+    margin-right: 10px;
+  }
+`;

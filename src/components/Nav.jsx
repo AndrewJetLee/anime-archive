@@ -79,7 +79,7 @@ const Nav = () => {
             )}
             {localStorage.getItem("user") ? (
               <User>
-                <UserImage src="./images/placeholder-img.png" />
+                <UserImage src="/images/placeholder-img.png" />
                 <UserInfo>
                   {JSON.parse(localStorage.getItem("user")).username}
                 </UserInfo>
