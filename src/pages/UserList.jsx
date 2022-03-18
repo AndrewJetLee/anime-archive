@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useLocation } from "react-router-dom";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
@@ -10,6 +10,7 @@ const UserList = () => {
   const location = useLocation();
   const list = location.state;
   const [userList, setUserList] = useState(list ? list : null);
+  const [activeTab, setActiveTab] = useState("current");
 
   console.log(userList);
 
@@ -33,13 +34,29 @@ const UserList = () => {
           <ProfilePictureWrapper>
             <ProfilePicture src="/images/placeholder-img.png"></ProfilePicture>
           </ProfilePictureWrapper>
-          <HeaderTabs>
-            <All>ALL ANIME</All>
-            <Watching>CURRENTLY WATCHING</Watching>
-            <Completed>COMPLETED</Completed>
-            <Hold>ON HOLD</Hold>
-            <Dropped>DROPPED</Dropped>
-            <Planned>PLAN TO WATCH</Planned>
+          <HeaderTabs
+            onClick={(e) => {
+              setActiveTab(e.target.getAttribute("value"));
+            }}
+          >
+            <All activeTab={activeTab} value="all">
+              ALL ANIME
+            </All>
+            <Watching activeTab={activeTab} value="current">
+              CURRENTLY WATCHING
+            </Watching>
+            <Completed activeTab={activeTab} value="completed">
+              COMPLETED
+            </Completed>
+            <Hold activeTab={activeTab} value="hold">
+              ON HOLD
+            </Hold>
+            <Dropped activeTab={activeTab} value="dropped">
+              DROPPED
+            </Dropped>
+            <Planned activeTab={activeTab} value="planned">
+              PLAN TO WATCH
+            </Planned>
           </HeaderTabs>
         </HeaderContent>
       </Header>
@@ -87,7 +104,7 @@ const Header = styled.header`
 `;
 
 const BannerWrapper = styled.div`
-  height: 450px;
+  height: 400px;
 `;
 
 const Banner = styled.img`
@@ -109,8 +126,8 @@ const ProfilePictureWrapper = styled.div`
   overflow: hidden;
   min-height: 200px;
   min-width: 200px;
-  max-width: 220px;
-  max-height: 220px;
+  max-width: 200px;
+  max-height: 200px;
   position: relative;
   margin-left: 80px;
 `;
@@ -125,18 +142,81 @@ const HeaderTabs = styled.div`
   display: flex;
   justify-content: space-around;
   width: 80%;
-`;
-
-const All = styled.span`
+  height: 100%;
   font-weight: 500;
-  font-size: 2.4rem;
+  font-size: 2rem;
+  div {
+    cursor: pointer;
+  }
 `;
 
-const Watching = styled(All)``;
-const Completed = styled(All)``;
-const Hold = styled(All)``;
-const Dropped = styled(All)``;
-const Planned = styled(All)``;
+const All = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 5px solid transparent;
+  ${(props) =>
+    props.activeTab === "all" &&
+    css`
+      border-bottom: solid 5px ${(props) => props.theme.tertiary};
+    `}
+`;
+
+const Watching = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 5px solid transparent;
+  ${(props) =>
+    props.activeTab === "current" &&
+    css`
+      border-bottom: solid 5px ${(props) => props.theme.tertiary};
+    `}
+`;
+const Completed = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 5px solid transparent;
+  ${(props) =>
+    props.activeTab === "completed" &&
+    css`
+      border-bottom: solid 5px ${(props) => props.theme.tertiary};
+    `}
+`;
+const Hold = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 5px solid transparent;
+  ${(props) =>
+    props.activeTab === "hold" &&
+    css`
+      border-bottom: solid 5px ${(props) => props.theme.tertiary};
+    `}
+`;
+const Dropped = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 5px solid transparent;
+  ${(props) =>
+    props.activeTab === "dropped" &&
+    css`
+      border-bottom: solid 5px ${(props) => props.theme.tertiary};
+    `}
+`;
+const Planned = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 5px solid transparent;
+  ${(props) =>
+    props.activeTab === "planned" &&
+    css`
+      border-bottom: solid 5px ${(props) => props.theme.tertiary};
+    `}
+`;
 
 // List
 const AnimeList = styled.section`

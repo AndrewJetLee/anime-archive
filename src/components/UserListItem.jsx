@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import StarRateIcon from '@mui/icons-material/StarRate';
 
 const UserListItem = ({ item, number, handleDelete }) => {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ const UserListItem = ({ item, number, handleDelete }) => {
           ))}
         </Genres>
         <OtherInfo>
-          <Score>Your Score: {item.score}</Score>
+          <Score>Your Score: {item.score} <StarRateIcon className="starIcon"/> </Score>
           <Members>Members: {item.members}</Members>
           <Favorites>Favorites: {item.favorites}</Favorites>
         </OtherInfo>
@@ -157,8 +158,16 @@ const OtherInfo = styled.div`
   justify-content: center;
 `;
 
-const Score = styled.span`
+const Score = styled.div`
   margin: 6px 18px;
+  display: flex;
+  align-items: center;
+  vertical-align: center;
+  .starIcon {
+    position: relative;
+    top: -2px;
+    color: ${(props) => props.theme.tertiary};
+  }
 `;
 
 const Members = styled(Score)``;

@@ -17,6 +17,8 @@ const Media = () => {
   const [reviews, setReviews] = useState([]);
   const [voiceActors, setVoiceActors] = useState([]);
   const [alert, toggleAlert] = useState(false);
+  const [statusDropdown, setStatusDropdown] = useState("");
+  const [ratingDropdown, setRatingDropdown] = useState("");
 
   useEffect(() => {
     if (type === "characters") {
@@ -78,20 +80,20 @@ const Media = () => {
               <AddToListTitle>Add to My List</AddToListTitle>
               <StatusWrapper>
                 <label for="status">Status: </label>
-                <StatusDropdown name="status">
-                  <option value="">Plan to Watch</option>
-                  <option value="">Completed</option>
-                  <option value="">Currently Watching</option>
-                  <option value="">On Hold</option>
-                  <option value="">Dropped</option>
+                <StatusDropdown name="status" onChange={(e) => setStatusDropdown(e.target.value)}>
+                  <option value="Plan to Watch">Plan to Watch</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Currently Watching">Currently Watching</option>
+                  <option value="On Hold">On Hold</option>
+                  <option value="Dropped">Dropped</option>
                 </StatusDropdown>
               </StatusWrapper>
               <RatingWrapper>
                 <label for="rating">Rating: </label>
-                <RatingDropdown name="rating">
+                <RatingDropdown name="rating" onChange={(e) => setRatingDropdown(e.target.value)}>
                   <option value="">Select</option>
                   {new Array(10).fill("").map((item, i) => (
-                    <option>{i + 1}</option>
+                    <option value={i + 1}>{i + 1}</option>
                   ))}
                 </RatingDropdown>
               </RatingWrapper>
