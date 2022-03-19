@@ -1,13 +1,15 @@
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import { useNavigate } from "react-router-dom";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import StarRateIcon from '@mui/icons-material/StarRate';
+import StarRateIcon from "@mui/icons-material/StarRate";
+import { useState, useEffect } from "react";
 
 const UserListItem = ({ item, number, handleDelete }) => {
   const navigate = useNavigate();
+  
   console.log(item);
   return (
-    <Container>
+    <Container mediaStatus={item.userOptions.userStatus}>
       <Left>
         <ImageWrapper>
           <Number>{number}</Number>
@@ -22,7 +24,9 @@ const UserListItem = ({ item, number, handleDelete }) => {
           >
             {item.title}
           </Title>
-          <Status>{item.status}</Status>
+          <Status>
+            {item.status} - <Edit>Edit</Edit>
+          </Status>
         </InfoWrapper>
       </Left>
       <Right>
@@ -34,8 +38,11 @@ const UserListItem = ({ item, number, handleDelete }) => {
             }}
           />
         </Delete>
+        <UserStatus>Status: {item.userOptions.userStatus}</UserStatus>
         <Progress>
-          Progress: 0/{item.episodes}
+          Progress:{" "}
+          {item.userOptions.userProgress ? item.userOptions.userProgress : "-"}/
+          {item.episodes}
         </Progress>
         <Rating>Rated: {item.rating}</Rating>
         <Genres>
@@ -44,7 +51,10 @@ const UserListItem = ({ item, number, handleDelete }) => {
           ))}
         </Genres>
         <OtherInfo>
-          <Score>Your Score: {item.score} <StarRateIcon className="starIcon"/> </Score>
+          <Score>
+            Your Score: {item.userOptions.userRating}{" "}
+            <StarRateIcon className="starIcon" />{" "}
+          </Score>
           <Members>Members: {item.members}</Members>
           <Favorites>Favorites: {item.favorites}</Favorites>
         </OtherInfo>
@@ -61,9 +71,13 @@ const Container = styled.div`
   align-items: center;
   min-height: 150px;
   justify-content: space-between;
-  background-color: ${props => props.theme.secondary};
+  background-color: ${(props) => props.theme.secondary};
   border-radius: 2px;
-  border-left: 2px solid green;
+  ${(props) => props.mediaStatus === "Currently Watching" ?  css`border-left: 2px solid green` 
+  : props.mediaStatus === "Plan to Watch" ? css`border-left: 2px solid grey` 
+  : props.mediaStatus === "Completed" ? css`border-left: 2px solid blue`
+  : props.mediaStatus === "On Hold" ? css`border-left: 2px solid yellow`
+  : css`border-left: 2px solid red`}
 `;
 
 const Left = styled.div`
@@ -111,9 +125,12 @@ const Title = styled.a`
   cursor: pointer;
   margin-bottom: 5px;
 `;
+
 const Status = styled.a`
   margin-bottom: 5px;
 `;
+
+const Edit = styled.span``;
 
 const Type = styled(Status)``;
 
@@ -135,10 +152,15 @@ const Delete = styled.div`
 
 const Rating = styled.div`
   margin: 0 5px;
+  width: 120px;
+`;
+
+const Progress = styled.div`
+  margin: 0 5px;
   width: 80px;
 `;
 
-const Progress = styled(Rating)``;
+const UserStatus = styled(Progress)``;
 
 const Genres = styled.div`
   display: flex;
