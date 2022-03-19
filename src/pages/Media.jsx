@@ -6,7 +6,8 @@ import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import Review from "../components/Review";
 import { Title } from "../components/Carousel";
-import { fadeIn } from "../components/Nav";
+import { fadeIn, Error } from "../components/Nav";
+import ErrorOutlinedIcon from "@mui/icons-material/ErrorOutlined";
 
 const Media = () => {
   const location = useLocation();
@@ -20,6 +21,7 @@ const Media = () => {
   const [statusDropdown, setStatusDropdown] = useState("");
   const [ratingDropdown, setRatingDropdown] = useState("");
   const [episodesWatched, setEpisodesWatched] = useState(0);
+  const [error, toggleError] = useState(false);
 
   useEffect(() => {
     if (type === "characters") {
@@ -29,8 +31,21 @@ const Media = () => {
     }
   }, [type, id]);
 
+  const handleError = async () => {
+    toggleError(true);
+    setTimeout(() => {
+      toggleError(false);
+    }, 3000)
+  }
+
   const handleAddToList = async () => {
+    if ((episodesWatched > item.episodes) || (episodesWatched < 0)) {
+      handleError();
+      console.log("Not a valid episode number")
+      return;
+    }
     try {
+     
       const payload = {...item, userOptions: {
         userStatus: statusDropdown,
         userRating: ratingDropdown,
@@ -373,6 +388,9 @@ const Media = () => {
            Successfully added to list!
         </Alert>
       ) : null}
+        <Error error={error}>
+          <ErrorOutlinedIcon className="errorIcon" /> Invalid episode input
+        </Error>
     </Container>
   );
 };
