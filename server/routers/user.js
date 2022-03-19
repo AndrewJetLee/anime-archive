@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { register, login, logout, getList, addList, deleteList } = require("../controllers/user");
+const { register, login, logout, getList, addList, deleteList, editListItem } = require("../controllers/user");
 const passport = require("passport");
 const { isAuthenticated } = require("../utility/authMiddleware");
 
@@ -17,6 +17,7 @@ router.post(
 
 //put requests
 router.put("/list", isAuthenticated, addList);
+router.put("/list/:id", isAuthenticated, editListItem);
 
 //delete requests
 router.delete("/list/:id", isAuthenticated, deleteList);

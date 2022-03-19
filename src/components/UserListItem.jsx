@@ -1,31 +1,44 @@
-import styled, {css} from "styled-components";
+import styled, { css } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import { useState, useEffect } from "react";
+import { publicRequest } from "../requestMethods";
 
 const UserListItem = ({ item, number, handleDelete }) => {
   const navigate = useNavigate();
-  
+  const [media, setMedia] = useState(item);
+  const [modal, toggleModal] = useState(false);
+
+  const handleEdit = async () => {
+    try {
+      const res = await publicRequest.put(`/list/${item.mal_id}`);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   console.log(item);
   return (
-    <Container mediaStatus={item.userOptions.userStatus}>
+    <>
+    <Container mediaStatus={media.userOptions.userStatus}>
       <Left>
         <ImageWrapper>
           <Number>{number}</Number>
-          <Image src={item.images.jpg.image_url}></Image>
+          <Image src={media.images.jpg.image_url}></Image>
         </ImageWrapper>
         <InfoWrapper>
-          <Type>{item.type}</Type>
+          <Type>{media.type}</Type>
           <Title
             onClick={() => {
-              navigate("/media", { state: item });
+              navigate("/media", { state: media });
             }}
           >
-            {item.title}
+            {media.title}
           </Title>
           <Status>
-            {item.status} - <Edit>Edit</Edit>
+            {media.status} - <Edit onClick={() => toggleModal(!modal)}>Edit</Edit>
           </Status>
         </InfoWrapper>
       </Left>
@@ -34,32 +47,36 @@ const UserListItem = ({ item, number, handleDelete }) => {
           <RemoveCircleIcon
             className="removeIcon"
             onClick={() => {
-              handleDelete(item.mal_id);
+              handleDelete(media.mal_id);
             }}
           />
         </Delete>
-        <UserStatus>Status: {item.userOptions.userStatus}</UserStatus>
+        <UserStatus>Status: {media.userOptions.userStatus}</UserStatus>
         <Progress>
           Progress:{" "}
-          {item.userOptions.userProgress ? item.userOptions.userProgress : "-"}/
-          {item.episodes}
+          {media.userOptions.userProgress ? media.userOptions.userProgress : "-"}/
+          {media.episodes}
         </Progress>
-        <Rating>Rated: {item.rating}</Rating>
+        <Rating>Rated: {media.rating}</Rating>
         <Genres>
-          {item.genres.map((genre, i) => (
+          {media.genres.map((genre, i) => (
             <Genre key={i}>{genre.name}</Genre>
           ))}
         </Genres>
         <OtherInfo>
           <Score>
-            Your Score: {item.userOptions.userRating}{" "}
+            Your Score: {media.userOptions.userRating ? media.userOptions.userRating : "-"}{" "}
             <StarRateIcon className="starIcon" />{" "}
           </Score>
-          <Members>Members: {item.members}</Members>
-          <Favorites>Favorites: {item.favorites}</Favorites>
+          <Members>Members: {media.members}</Members>
+          <Favorites>Favorites: {media.favorites}</Favorites>
         </OtherInfo>
       </Right>
     </Container>
+    { modal && <Modal>
+
+      </Modal>}
+    </>
   );
 };
 
@@ -73,11 +90,26 @@ const Container = styled.div`
   justify-content: space-between;
   background-color: ${(props) => props.theme.secondary};
   border-radius: 2px;
-  ${(props) => props.mediaStatus === "Currently Watching" ?  css`border-left: 2px solid green` 
-  : props.mediaStatus === "Plan to Watch" ? css`border-left: 2px solid grey` 
-  : props.mediaStatus === "Completed" ? css`border-left: 2px solid blue`
-  : props.mediaStatus === "On Hold" ? css`border-left: 2px solid yellow`
-  : css`border-left: 2px solid red`}
+  ${(props) =>
+    props.mediaStatus === "Currently Watching"
+      ? css`
+          border-left: 2px solid green;
+        `
+      : props.mediaStatus === "Plan to Watch"
+      ? css`
+          border-left: 2px solid grey;
+        `
+      : props.mediaStatus === "Completed"
+      ? css`
+          border-left: 2px solid blue;
+        `
+      : props.mediaStatus === "On Hold"
+      ? css`
+          border-left: 2px solid yellow;
+        `
+      : css`
+          border-left: 2px solid red;
+        `}
 `;
 
 const Left = styled.div`
@@ -130,7 +162,13 @@ const Status = styled.a`
   margin-bottom: 5px;
 `;
 
-const Edit = styled.span``;
+const Edit = styled.span`
+  color: ${(props) => props.theme.main};
+  cursor: pointer;
+  :hover {
+    opacity: .8;
+  }
+`;
 
 const Type = styled(Status)``;
 
@@ -195,3 +233,24 @@ const Score = styled.div`
 const Members = styled(Score)``;
 
 const Favorites = styled(Score)``;
+
+const Modal = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: gray;
+  opacity: .5;
+  z-index: 10000;
+`;
+
+const ModalContent = styled.div``
+
+const ModalTitle = styled.div``
+
+const ModalStatus = styled.div``
+
+const ModalWatched = styled.div``
+
+const ModalScore = styled.div``

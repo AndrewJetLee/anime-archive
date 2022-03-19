@@ -72,4 +72,20 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+  editListItem: async (req,res) => {
+    const mediaId = Number(req.params.id);
+    try {
+      await User.findOneAndUpdate(
+        { _id: req.session.passport.user, "list.mal_id": mediaId },
+        { $set: {
+          "list.$.userOptions": req.body
+        }} 
+      )
+      const updatedUser = await User.findById(req.session.passport.user);
+      const { hash, salt, birthday, email, ...others } = updatedUser._doc;
+      res.status(200).send(others);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
 };
