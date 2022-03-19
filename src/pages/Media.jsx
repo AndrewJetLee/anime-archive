@@ -19,6 +19,7 @@ const Media = () => {
   const [alert, toggleAlert] = useState(false);
   const [statusDropdown, setStatusDropdown] = useState("");
   const [ratingDropdown, setRatingDropdown] = useState("");
+  const [episodesWatched, setEpisodesWatched] = useState(0);
 
   useEffect(() => {
     if (type === "characters") {
@@ -30,7 +31,12 @@ const Media = () => {
 
   const handleAddToList = async () => {
     try {
-      const res = await publicRequest.put("/user/list", item);
+      const payload = {...item, userOptions: {
+        userStatus: statusDropdown,
+        userRating: ratingDropdown,
+        userProgress:  episodesWatched
+      }};
+      const res = await publicRequest.put("/user/list", payload);
       console.log(res);
       toggleAlert(true);
       setTimeout(() => toggleAlert(false), 4000);
@@ -81,6 +87,7 @@ const Media = () => {
               <StatusWrapper>
                 <label for="status">Status: </label>
                 <StatusDropdown name="status" onChange={(e) => setStatusDropdown(e.target.value)}>
+                  <option value="">Select</option>
                   <option value="Plan to Watch">Plan to Watch</option>
                   <option value="Completed">Completed</option>
                   <option value="Currently Watching">Currently Watching</option>
@@ -97,6 +104,12 @@ const Media = () => {
                   ))}
                 </RatingDropdown>
               </RatingWrapper>
+              <EpisodesWatchedWrapper>
+                <label for="episodes">Episodes: </label>
+                <EpisodesWatched placeholder="0" onChange={(e) => {
+                  setEpisodesWatched(e.target.value)
+                }}/>/{item.episodes}
+              </EpisodesWatchedWrapper>
               <Inputs>
                 <AddButton onClick={handleAddToList}>Add To List</AddButton>
               </Inputs>
@@ -442,6 +455,15 @@ const StatusDropdown = styled.select`
 
 const RatingWrapper = styled(StatusWrapper)``;
 const RatingDropdown = styled(StatusDropdown)``;
+
+const EpisodesWatchedWrapper = styled(StatusWrapper)``
+const EpisodesWatched = styled.input`
+  margin-left: 5px;
+  height: 25px;
+  width: 30px;
+  border: #cecece 1px solid;
+`
+
 
 const Inputs = styled.div`
   display: flex;
