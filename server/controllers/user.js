@@ -74,6 +74,7 @@ module.exports = {
   },
   editListItem: async (req,res) => {
     const mediaId = Number(req.params.id);
+    const payload = req.body;
     try {
       await User.findOneAndUpdate(
         { _id: req.session.passport.user, "list.mal_id": mediaId },

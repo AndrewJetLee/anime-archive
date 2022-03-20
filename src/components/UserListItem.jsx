@@ -9,7 +9,7 @@ import {
   RatingDropdown,
   EpisodesWatched,
 } from "../pages/Media";
-const UserListItem = ({ item, number, handleDelete }) => {
+const UserListItem = ({ item, number, handleDelete, getList }) => {
   const navigate = useNavigate();
   const [media, setMedia] = useState(item);
   const [modal, toggleModal] = useState(false);
@@ -17,16 +17,22 @@ const UserListItem = ({ item, number, handleDelete }) => {
   const [ratingDropdown, setRatingDropdown] = useState("");
   const [episodesWatched, setEpisodesWatched] = useState(0);
 
-  const handleEdit = async () => {
+  const handleEdit = async (e) => {
     try {
-      const res = await publicRequest.put(`/list/edit/${item.mal_id}`);
+      let payload = {
+        userStatus: statusDropdown,
+        userRating: ratingDropdown,
+        userProgress:  episodesWatched
+      };
+      const res = await publicRequest.put(`user/list/edit/${media.mal_id}`, payload);
+      getList();
       console.log(res);
     } catch (err) {
       console.log(err);
     }
   };
 
-  console.log(item);
+  console.log(media);
   return (
     <>
       <Container mediaStatus={media.userOptions.userStatus}>
@@ -92,7 +98,7 @@ const UserListItem = ({ item, number, handleDelete }) => {
             <ModalHeader>
               <h3>Edit Anime</h3>
             </ModalHeader>
-            <ModalTitle>Anime Title: {item.title}</ModalTitle>
+            <ModalTitle>Anime Title: {media.title}</ModalTitle>
             <ModalStatus>
               <label for="status">Status: </label>
               <StatusDropdown name="status" onChange={(e) => setStatusDropdown(e.target.value)}>
@@ -112,7 +118,7 @@ const UserListItem = ({ item, number, handleDelete }) => {
                   setEpisodesWatched(e.target.value);
                 }}
               />
-              /{item.episodes}
+              /{media.episodes}
             </ModalWatched>
             <ModalScore>
               <label for="rating">Rating: </label>
@@ -126,7 +132,7 @@ const UserListItem = ({ item, number, handleDelete }) => {
                 ))}
               </RatingDropdown>
             </ModalScore>
-            <Submit >Submit</Submit>
+            <Submit onClick={(e) => handleEdit(e)}>Submit</Submit>
           </ModalContent>
         </Modal>
       )}
@@ -302,7 +308,7 @@ const Modal = styled.div`
   justify-content: center;
 `;
 
-const ModalContent = styled.form`
+const ModalContent = styled.div`
   position: fixed;
   left: 50%;
   top: 50%;

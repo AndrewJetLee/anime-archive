@@ -57,9 +57,7 @@ const Nav = () => {
     try {
       if (type === "list") {
         if (user) {
-          const res = await publicRequest.get("/user/list");
-          console.log(res);
-          navigate("/list", { state: res.data.list });
+          navigate("/list");
         } else {
           handleError();
         }

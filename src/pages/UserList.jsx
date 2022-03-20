@@ -3,16 +3,29 @@ import { useLocation } from "react-router-dom";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import UserListItem from "../components/UserListItem";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { publicRequest } from "../requestMethods";
 
 const UserList = () => {
-  const location = useLocation();
-  const list = location.state;
-  const [userList, setUserList] = useState(list ? list : null);
+  const [userList, setUserList] = useState([]);
   const [activeTab, setActiveTab] = useState("current");
-
+  const user = JSON.parse(localStorage.getItem("user"));
   console.log(userList);
+
+  useEffect(() => {
+    getList()
+  }, [])
+
+  const getList = async () => {
+    try {
+      if (user) {
+        const res = await publicRequest.get("/user/list");
+        setUserList(res.data.list);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   const handleDelete = async (id) => {
     try {
@@ -68,6 +81,7 @@ const UserList = () => {
               key={i}
               number={i + 1}
               handleDelete={handleDelete}
+              getList={getList}
             />
           ))}
         </AnimeList>
