@@ -460,22 +460,22 @@ const AddToListTitle = styled.span`
   border-bottom: 1px solid lightgrey;
 `;
 
-const StatusWrapper = styled.div`
+export const StatusWrapper = styled.div`
   display: flex;
   align-items: center;
 `;
 
-const StatusDropdown = styled.select`
+export const StatusDropdown = styled.select`
   margin-left: 20px;
   height: 30px;
   border: #cecece 1px solid;
 `;
 
-const RatingWrapper = styled(StatusWrapper)``;
-const RatingDropdown = styled(StatusDropdown)``;
+export const RatingWrapper = styled(StatusWrapper)``;
+export const RatingDropdown = styled(StatusDropdown)``;
 
-const EpisodesWatchedWrapper = styled(StatusWrapper)``
-const EpisodesWatched = styled.input`
+export const EpisodesWatchedWrapper = styled(StatusWrapper)``
+export const EpisodesWatched = styled.input`
   margin-left: 5px;
   height: 25px;
   width: 30px;

@@ -17,7 +17,7 @@ router.post(
 
 //put requests
 router.put("/list", isAuthenticated, addList);
-router.put("/list/:id", isAuthenticated, editListItem);
+router.put("/list/edit/:id", isAuthenticated, editListItem);
 
 //delete requests
 router.delete("/list/:id", isAuthenticated, deleteList);

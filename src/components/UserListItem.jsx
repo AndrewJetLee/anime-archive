@@ -4,78 +4,132 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import { useState, useEffect } from "react";
 import { publicRequest } from "../requestMethods";
-
+import {
+  StatusDropdown,
+  RatingDropdown,
+  EpisodesWatched,
+} from "../pages/Media";
 const UserListItem = ({ item, number, handleDelete }) => {
   const navigate = useNavigate();
   const [media, setMedia] = useState(item);
   const [modal, toggleModal] = useState(false);
+  const [statusDropdown, setStatusDropdown] = useState("");
+  const [ratingDropdown, setRatingDropdown] = useState("");
+  const [episodesWatched, setEpisodesWatched] = useState(0);
 
   const handleEdit = async () => {
     try {
-      const res = await publicRequest.put(`/list/${item.mal_id}`);
+      const res = await publicRequest.put(`/list/edit/${item.mal_id}`);
       console.log(res);
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   console.log(item);
   return (
     <>
-    <Container mediaStatus={media.userOptions.userStatus}>
-      <Left>
-        <ImageWrapper>
-          <Number>{number}</Number>
-          <Image src={media.images.jpg.image_url}></Image>
-        </ImageWrapper>
-        <InfoWrapper>
-          <Type>{media.type}</Type>
-          <Title
-            onClick={() => {
-              navigate("/media", { state: media });
-            }}
-          >
-            {media.title}
-          </Title>
-          <Status>
-            {media.status} - <Edit onClick={() => toggleModal(!modal)}>Edit</Edit>
-          </Status>
-        </InfoWrapper>
-      </Left>
-      <Right>
-        <Delete>
-          <RemoveCircleIcon
-            className="removeIcon"
-            onClick={() => {
-              handleDelete(media.mal_id);
-            }}
-          />
-        </Delete>
-        <UserStatus>Status: {media.userOptions.userStatus}</UserStatus>
-        <Progress>
-          Progress:{" "}
-          {media.userOptions.userProgress ? media.userOptions.userProgress : "-"}/
-          {media.episodes}
-        </Progress>
-        <Rating>Rated: {media.rating}</Rating>
-        <Genres>
-          {media.genres.map((genre, i) => (
-            <Genre key={i}>{genre.name}</Genre>
-          ))}
-        </Genres>
-        <OtherInfo>
-          <Score>
-            Your Score: {media.userOptions.userRating ? media.userOptions.userRating : "-"}{" "}
-            <StarRateIcon className="starIcon" />{" "}
-          </Score>
-          <Members>Members: {media.members}</Members>
-          <Favorites>Favorites: {media.favorites}</Favorites>
-        </OtherInfo>
-      </Right>
-    </Container>
-    { modal && <Modal>
-
-      </Modal>}
+      <Container mediaStatus={media.userOptions.userStatus}>
+        <Left>
+          <ImageWrapper>
+            <Number>{number}</Number>
+            <Image src={media.images.jpg.image_url}></Image>
+          </ImageWrapper>
+          <InfoWrapper>
+            <Type>{media.type}</Type>
+            <Title
+              onClick={() => {
+                navigate("/media", { state: media });
+              }}
+            >
+              {media.title}
+            </Title>
+            <Status>
+              {media.status} -{" "}
+              <Edit onClick={() => toggleModal(!modal)}>Edit</Edit>
+            </Status>
+          </InfoWrapper>
+        </Left>
+        <Right>
+          <Delete>
+            <RemoveCircleIcon
+              className="removeIcon"
+              onClick={() => {
+                handleDelete(media.mal_id);
+              }}
+            />
+          </Delete>
+          <UserStatus>Status: {media.userOptions.userStatus}</UserStatus>
+          <Progress>
+            Progress:{" "}
+            {media.userOptions.userProgress
+              ? media.userOptions.userProgress
+              : "-"}
+            /{media.episodes}
+          </Progress>
+          <Rating>Rated: {media.rating}</Rating>
+          <Genres>
+            {media.genres.map((genre, i) => (
+              <Genre key={i}>{genre.name}</Genre>
+            ))}
+          </Genres>
+          <OtherInfo>
+            <Score>
+              Your Score:{" "}
+              {media.userOptions.userRating
+                ? media.userOptions.userRating
+                : "-"}{" "}
+              <StarRateIcon className="starIcon" />{" "}
+            </Score>
+            <Members>Members: {media.members}</Members>
+            <Favorites>Favorites: {media.favorites}</Favorites>
+          </OtherInfo>
+        </Right>
+      </Container>
+      {modal && (
+        <Modal>
+          <ModalContent>
+            <ModalHeader>
+              <h3>Edit Anime</h3>
+            </ModalHeader>
+            <ModalTitle>Anime Title: {item.title}</ModalTitle>
+            <ModalStatus>
+              <label for="status">Status: </label>
+              <StatusDropdown name="status" onChange={(e) => setStatusDropdown(e.target.value)}>
+                <option value="">Select</option>
+                <option value="Plan to Watch">Plan to Watch</option>
+                <option value="Completed">Completed</option>
+                <option value="Currently Watching">Currently Watching</option>
+                <option value="On Hold">On Hold</option>
+                <option value="Dropped">Dropped</option>
+              </StatusDropdown>
+            </ModalStatus>
+            <ModalWatched>
+              <label for="episodes">Episodes: </label>
+              <EpisodesWatched
+                placeholder="0"
+                onChange={(e) => {
+                  setEpisodesWatched(e.target.value);
+                }}
+              />
+              /{item.episodes}
+            </ModalWatched>
+            <ModalScore>
+              <label for="rating">Rating: </label>
+              <RatingDropdown
+                name="rating"
+                onChange={(e) => setRatingDropdown(e.target.value)}
+              >
+                <option value="">Select</option>
+                {new Array(10).fill("").map((item, i) => (
+                  <option value={i + 1}>{i + 1}</option>
+                ))}
+              </RatingDropdown>
+            </ModalScore>
+            <Submit >Submit</Submit>
+          </ModalContent>
+        </Modal>
+      )}
     </>
   );
 };
@@ -166,7 +220,7 @@ const Edit = styled.span`
   color: ${(props) => props.theme.main};
   cursor: pointer;
   :hover {
-    opacity: .8;
+    opacity: 0.8;
   }
 `;
 
@@ -240,17 +294,57 @@ const Modal = styled.div`
   bottom: 0;
   right: 0;
   left: 0;
-  background-color: gray;
-  opacity: .5;
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
   z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-const ModalContent = styled.div``
+const ModalContent = styled.form`
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 400px;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px 20px;
+  border-radius: 2px;
+  border: 8px solid ${props => props.theme.main};
+`;
 
-const ModalTitle = styled.div``
+const ModalHeader = styled.div`
+  h3 {
+    border-bottom: 1px solid gray;
+    padding-bottom: 4px;
+  }
+`;
 
-const ModalStatus = styled.div``
+const ModalTitle = styled.div`
+   margin-bottom: 20px;
+`;
 
-const ModalWatched = styled.div``
+const ModalStatus = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+`;
 
-const ModalScore = styled.div``
+const ModalWatched = styled(ModalStatus)`
+`;
+
+const ModalScore = styled(ModalStatus)``;
+
+const Submit = styled.button`
+  width: 100%;
+  background-color: ${props => props.theme.tertiary};
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  color: white;
+  transition: opacity 0.167s ease-in-out;
+  :hover {
+    opacity: .8;
+  }
+`;
