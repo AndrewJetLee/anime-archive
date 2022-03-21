@@ -8,24 +8,46 @@ import { publicRequest } from "../requestMethods";
 
 const UserList = () => {
   const [userList, setUserList] = useState([]);
-  const [activeTab, setActiveTab] = useState("current");
+  const [filteredList, setFilteredList] = useState([]);
+  const [activeTab, setActiveTab] = useState("all");
   const user = JSON.parse(localStorage.getItem("user"));
   console.log(userList);
-
+  
   useEffect(() => {
     getList()
   }, [])
+
+  useEffect(() => {
+    filterList()
+  }, [activeTab])
 
   const getList = async () => {
     try {
       if (user) {
         const res = await publicRequest.get("/user/list");
         setUserList(res.data.list);
+        setFilteredList(res.data.list);
       }
     } catch (err) {
       console.log(err);
     }
   }
+
+  const filterList = () => {
+    if (activeTab === "all") {
+      setFilteredList(userList);
+    } else if (activeTab === "current") {
+      setFilteredList(userList.filter((item, i) => item.userOptions.userStatus === "Currently Watching"))
+    } else if (activeTab === "completed") {
+      setFilteredList(userList.filter((item, i) => item.userOptions.userStatus === "Completed"))
+    } else if (activeTab === "hold") {
+      setFilteredList(userList.filter((item, i) => item.userOptions.userStatus === "On Hold"))
+    } else if (activeTab === "dropped") {
+      setFilteredList(userList.filter((item, i) => item.userOptions.userStatus === "Dropped"))
+    } else if (activeTab === "planned") {
+      setFilteredList(userList.filter((item, i) => item.userOptions.userStatus === "Plan To Watch"))
+    }
+  } 
 
   const handleDelete = async (id) => {
     try {
@@ -75,13 +97,14 @@ const UserList = () => {
       </Header>
       <Wrapper>
         <AnimeList>
-          {userList.map((item, i) => (
+          {filteredList.map((item, i) => (
             <UserListItem
               item={item}
               key={i}
               number={i + 1}
               handleDelete={handleDelete}
               getList={getList}
+              filteredList={filteredList}
             />
           ))}
         </AnimeList>

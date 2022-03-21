@@ -9,13 +9,17 @@ import {
   RatingDropdown,
   EpisodesWatched,
 } from "../pages/Media";
-const UserListItem = ({ item, number, handleDelete, getList }) => {
+const UserListItem = ({ item, number, handleDelete, getList, filteredList }) => {
   const navigate = useNavigate();
   const [media, setMedia] = useState(item);
   const [modal, toggleModal] = useState(false);
   const [statusDropdown, setStatusDropdown] = useState("");
   const [ratingDropdown, setRatingDropdown] = useState("");
   const [episodesWatched, setEpisodesWatched] = useState(0);
+
+  useEffect(() => {
+    setMedia(item);
+  }, [filteredList])
 
   const handleEdit = async (e) => {
     try {
