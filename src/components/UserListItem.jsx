@@ -174,27 +174,28 @@ const Container = styled.div`
   align-items: center;
   min-height: 150px;
   justify-content: space-between;
-  background-color: ${(props) => props.theme.secondary};
+  background-color: ${props => props.theme.secondary};
+  margin-bottom: 7px;
   border-radius: 2px;
   ${(props) =>
     props.mediaStatus === "Currently Watching"
       ? css`
-          border-left: 2px solid green;
+          border-left: 3px solid green;
         `
       : props.mediaStatus === "Plan to Watch"
       ? css`
-          border-left: 2px solid grey;
+          border-left: 3px solid grey;
         `
       : props.mediaStatus === "Completed"
       ? css`
-          border-left: 2px solid blue;
+          border-left: 3px solid blue;
         `
       : props.mediaStatus === "On Hold"
       ? css`
-          border-left: 2px solid yellow;
+          border-left: 3px solid yellow;
         `
       : css`
-          border-left: 2px solid red;
+          border-left: 3px solid red;
         `}
 `;
 
@@ -242,6 +243,10 @@ const Title = styled.a`
   color: ${(props) => props.theme.main};
   cursor: pointer;
   margin-bottom: 5px;
+  :hover {
+    opacity: .7;
+    color: ${(props) => props.theme.main};
+  }
 `;
 
 const Status = styled.a`
@@ -296,6 +301,7 @@ const Genre = styled.a`
   padding: 4px 18px;
   border-radius: 4px;
   margin: 2px;
+  color: white;
 `;
 
 const OtherInfo = styled.div`

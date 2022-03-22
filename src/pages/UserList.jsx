@@ -174,7 +174,7 @@ const HeaderContent = styled.section`
 `;
 
 const ProfilePictureWrapper = styled.div`
-  border: solid black 8px;
+  border: solid gray 8px;
   border-radius: 50%;
   overflow: hidden;
   min-height: 200px;
@@ -274,4 +274,5 @@ const Planned = styled.div`
 // List
 const AnimeList = styled.section`
   width: 100%;
+  
 `;
