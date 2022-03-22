@@ -25,7 +25,7 @@ const UserList = () => {
     try {
       if (user) {
         const res = await publicRequest.get("/user/list");
-        setUserList(res.data.list.sort((a, b) => {
+        setUserList([...res.data.list].sort((a, b) => {
           if (a.userOptions.userStatus.toUpperCase() < b.userOptions.userStatus.toUpperCase()) {
             return -1;
           }
@@ -34,7 +34,7 @@ const UserList = () => {
           }
           return 0;
         }));
-        setFilteredList(res.data.list.sort((a, b) => {
+        setFilteredList([...res.data.list].sort((a, b) => {
           if (a.userOptions.userStatus.toUpperCase() < b.userOptions.userStatus.toUpperCase()) {
             return -1;
           }

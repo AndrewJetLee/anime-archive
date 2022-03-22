@@ -9,6 +9,7 @@ import {
   RatingDropdown,
   EpisodesWatched,
 } from "../pages/Media";
+import { Error } from "../components/Nav"
 const UserListItem = ({ item, number, handleDelete, getList, filteredList }) => {
   const navigate = useNavigate();
   const [media, setMedia] = useState(item);
@@ -16,6 +17,7 @@ const UserListItem = ({ item, number, handleDelete, getList, filteredList }) => 
   const [statusDropdown, setStatusDropdown] = useState("");
   const [ratingDropdown, setRatingDropdown] = useState("");
   const [episodesWatched, setEpisodesWatched] = useState(0);
+  const [error, toggleError] = useState(false);
 
   useEffect(() => {
     setMedia(item);
@@ -30,6 +32,8 @@ const UserListItem = ({ item, number, handleDelete, getList, filteredList }) => 
       };
       const res = await publicRequest.put(`user/list/edit/${media.mal_id}`, payload);
       getList();
+      toggleModal(!modal);
+      toggleError(true);
       console.log(res);
     } catch (err) {
       console.log(err);
@@ -96,6 +100,9 @@ const UserListItem = ({ item, number, handleDelete, getList, filteredList }) => 
           </OtherInfo>
         </Right>
       </Container>
+      <Error error={error}>
+        Successfully edited list!
+      </Error>
       {modal && (
         <Modal>
           <ModalContent>
