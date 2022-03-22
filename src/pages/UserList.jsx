@@ -69,6 +69,7 @@ const UserList = () => {
     try {
       const res = await publicRequest.delete(`/user/list/${id}`);
       setUserList(res.data.list);
+      setFilteredList(res.data.list);
     } catch (err) {
       console.log(err);
     }

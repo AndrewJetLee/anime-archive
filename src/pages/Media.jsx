@@ -21,7 +21,6 @@ const Media = () => {
   const [statusDropdown, setStatusDropdown] = useState("");
   const [ratingDropdown, setRatingDropdown] = useState("");
   const [episodesWatched, setEpisodesWatched] = useState(0);
-  const [addList, toggleAddList] = useState(false);
   const [error, toggleError] = useState(false);
 
   useEffect(() => {

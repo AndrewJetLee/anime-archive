@@ -9,7 +9,7 @@ import {
   RatingDropdown,
   EpisodesWatched,
 } from "../pages/Media";
-import Alert from "../components/Alert"
+import Alert from "../components/Alert";
 import { jikanRequest } from "../requestMethods";
 
 const UserListItem = ({
@@ -54,6 +54,7 @@ const UserListItem = ({
     }
   };
 
+
   const handleClick = async (e) => {
     let type =
       media.demographics.length > 0
@@ -74,11 +75,7 @@ const UserListItem = ({
           </ImageWrapper>
           <InfoWrapper>
             <Type>{media.type}</Type>
-            <Title
-              onClick={handleClick}
-            >
-              {media.title}
-            </Title>
+            <Title onClick={handleClick}>{media.title}</Title>
             <Status>
               {media.status} -{" "}
               <Edit onClick={() => toggleModal(!modal)}>Edit</Edit>
@@ -91,6 +88,11 @@ const UserListItem = ({
               className="removeIcon"
               onClick={() => {
                 handleDelete(media.mal_id);
+                getList();
+                toggleAlertStatus(true);
+                setTimeout(() => {
+                  toggleAlertStatus(false);
+                }, 3000);
               }}
             />
           </Delete>
@@ -121,8 +123,8 @@ const UserListItem = ({
           </OtherInfo>
         </Right>
       </Container>
-      
-      <Alert alertStatus={alertStatus} message="Successfully updated list!"/>
+
+      <Alert alertStatus={alertStatus} message="Successfully updated list!" />
       {modal && (
         <Modal>
           <ModalContent>
@@ -182,7 +184,7 @@ const Container = styled.div`
   align-items: center;
   min-height: 150px;
   justify-content: space-between;
-  background-color: ${props => props.theme.secondary};
+  background-color: ${(props) => props.theme.secondary};
   margin-bottom: 7px;
   border-radius: 2px;
   ${(props) =>
@@ -252,7 +254,7 @@ const Title = styled.a`
   cursor: pointer;
   margin-bottom: 5px;
   :hover {
-    opacity: .7;
+    opacity: 0.7;
     color: ${(props) => props.theme.main};
   }
 `;
