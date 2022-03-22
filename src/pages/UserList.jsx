@@ -25,8 +25,24 @@ const UserList = () => {
     try {
       if (user) {
         const res = await publicRequest.get("/user/list");
-        setUserList(res.data.list);
-        setFilteredList(res.data.list);
+        setUserList(res.data.list.sort((a, b) => {
+          if (a.userOptions.userStatus.toUpperCase() < b.userOptions.userStatus.toUpperCase()) {
+            return -1;
+          }
+          if (a.userOptions.userStatus.toUpperCase() > b.userOptions.userStatus.toUpperCase()) {
+            return 1;
+          }
+          return 0;
+        }));
+        setFilteredList(res.data.list.sort((a, b) => {
+          if (a.userOptions.userStatus.toUpperCase() < b.userOptions.userStatus.toUpperCase()) {
+            return -1;
+          }
+          if (a.userOptions.userStatus.toUpperCase() > b.userOptions.userStatus.toUpperCase()) {
+            return 1;
+          }
+          return 0;
+        }));
       }
     } catch (err) {
       console.log(err);
@@ -45,7 +61,7 @@ const UserList = () => {
     } else if (activeTab === "dropped") {
       setFilteredList(userList.filter((item, i) => item.userOptions.userStatus === "Dropped"))
     } else if (activeTab === "planned") {
-      setFilteredList(userList.filter((item, i) => item.userOptions.userStatus === "Plan To Watch"))
+      setFilteredList(userList.filter((item, i) => item.userOptions.userStatus === "Plan to Watch"))
     }
   } 
 

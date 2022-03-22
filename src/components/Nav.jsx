@@ -283,6 +283,7 @@ export const fadeIn = keyframes`
 `;
 
 export const Error = styled.div`
+  pointer-events: none;
   opacity: 0;
   ${(props) =>
     props.error
