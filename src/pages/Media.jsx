@@ -8,6 +8,7 @@ import Review from "../components/Review";
 import { Title } from "../components/Carousel";
 import { fadeIn, Error } from "../components/Nav";
 import ErrorOutlinedIcon from "@mui/icons-material/ErrorOutlined";
+import Alert from "../components/Alert";
 
 const Media = () => {
   const location = useLocation();
@@ -396,7 +397,7 @@ const Media = () => {
         )}
       </Wrapper>
       <Footer />
-      {alert ? <Alert>Successfully added to list!</Alert> : null}
+      {alert ? <Alert alertStatus={alert} message="Successfully added to list!"></Alert> : null}
       <Error error={error}>
         <ErrorOutlinedIcon className="errorIcon" /> Invalid episode input
       </Error>
@@ -648,18 +649,18 @@ const VideoWrapper = styled(Synopsis)`
 
 const Reviews = styled(Synopsis)``;
 
-const Alert = styled.div`
-  display: flex;
-  align-items: center;
-  position: absolute;
-  right: 40px;
-  top: 100px;
-  background-color: ${(props) => props.theme.tertiary};
-  color: white;
-  padding: 4px 12px;
-  animation: ${fadeIn} 0.3s ease-in;
-  .errorIcon {
-    font-size: 30px;
-    margin-right: 10px;
-  }
-`;
+// const Alert = styled.div`
+//   display: flex;
+//   align-items: center;
+//   position: absolute;
+//   right: 40px;
+//   top: 100px;
+//   background-color: ${(props) => props.theme.tertiary};
+//   color: white;
+//   padding: 4px 12px;
+//   animation: ${fadeIn} 0.3s ease-in;
+//   .errorIcon {
+//     font-size: 30px;
+//     margin-right: 10px;
+//   }
+// `;
