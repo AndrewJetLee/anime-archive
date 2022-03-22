@@ -9,31 +9,44 @@ import {
   RatingDropdown,
   EpisodesWatched,
 } from "../pages/Media";
-import { Error } from "../components/Nav"
-const UserListItem = ({ item, number, handleDelete, getList, filteredList }) => {
+import Alert from "../components/Alert"
+
+const UserListItem = ({
+  item,
+  number,
+  handleDelete,
+  getList,
+  filteredList,
+}) => {
   const navigate = useNavigate();
   const [media, setMedia] = useState(item);
   const [modal, toggleModal] = useState(false);
-  const [statusDropdown, setStatusDropdown] = useState("");
+  const [statusDropdown, setStatusDropdown] = useState("Plan to Watch");
   const [ratingDropdown, setRatingDropdown] = useState("");
   const [episodesWatched, setEpisodesWatched] = useState(0);
-  const [error, toggleError] = useState(false);
+  const [alertStatus, toggleAlertStatus] = useState(false);
 
   useEffect(() => {
     setMedia(item);
-  }, [filteredList])
+  }, [filteredList]);
 
   const handleEdit = async (e) => {
     try {
       let payload = {
         userStatus: statusDropdown,
         userRating: ratingDropdown,
-        userProgress:  episodesWatched
+        userProgress: episodesWatched,
       };
-      const res = await publicRequest.put(`user/list/edit/${media.mal_id}`, payload);
+      const res = await publicRequest.put(
+        `user/list/edit/${media.mal_id}`,
+        payload
+      );
       getList();
       toggleModal(!modal);
-      toggleError(true);
+      toggleAlertStatus(true);
+      setTimeout(() => {
+        toggleAlertStatus(false);
+      }, 3000);
       console.log(res);
     } catch (err) {
       console.log(err);
@@ -100,9 +113,8 @@ const UserListItem = ({ item, number, handleDelete, getList, filteredList }) => 
           </OtherInfo>
         </Right>
       </Container>
-      <Error error={error}>
-        Successfully edited list!
-      </Error>
+      
+      <Alert alertStatus={alertStatus} message="Successfully updated list!"/>
       {modal && (
         <Modal>
           <ModalContent>
@@ -112,7 +124,10 @@ const UserListItem = ({ item, number, handleDelete, getList, filteredList }) => 
             <ModalTitle>Anime Title: {media.title}</ModalTitle>
             <ModalStatus>
               <label for="status">Status: </label>
-              <StatusDropdown name="status" onChange={(e) => setStatusDropdown(e.target.value)}>
+              <StatusDropdown
+                name="status"
+                onChange={(e) => setStatusDropdown(e.target.value)}
+              >
                 <option value="">Select</option>
                 <option value="Plan to Watch">Plan to Watch</option>
                 <option value="Completed">Completed</option>
@@ -328,7 +343,7 @@ const ModalContent = styled.div`
   background-color: white;
   padding: 20px 20px;
   border-radius: 2px;
-  border: 8px solid ${props => props.theme.main};
+  border: 8px solid ${(props) => props.theme.main};
 `;
 
 const ModalHeader = styled.div`
@@ -339,7 +354,7 @@ const ModalHeader = styled.div`
 `;
 
 const ModalTitle = styled.div`
-   margin-bottom: 20px;
+  margin-bottom: 20px;
 `;
 
 const ModalStatus = styled.div`
@@ -348,20 +363,19 @@ const ModalStatus = styled.div`
   margin-bottom: 20px;
 `;
 
-const ModalWatched = styled(ModalStatus)`
-`;
+const ModalWatched = styled(ModalStatus)``;
 
 const ModalScore = styled(ModalStatus)``;
 
 const Submit = styled.button`
   width: 100%;
-  background-color: ${props => props.theme.tertiary};
+  background-color: ${(props) => props.theme.tertiary};
   padding: 10px;
   cursor: pointer;
   border-radius: 4px;
   color: white;
   transition: opacity 0.167s ease-in-out;
   :hover {
-    opacity: .8;
+    opacity: 0.8;
   }
 `;
