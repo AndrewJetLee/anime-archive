@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { jikanRequest } from "../requestMethods";
 import { useNavigate } from "react-router-dom";
-import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import StarIcon from '@mui/icons-material/Star';
+import PersonIcon from '@mui/icons-material/Person';
 
 const SearchItem = ({ item }) => {
   const navigate = useNavigate();
@@ -17,16 +17,16 @@ const SearchItem = ({ item }) => {
   };
 
   return (
-    <Container onClick={handleClick}>
+    <Container>
       <Header>
-        <Title>{item.name ? item.name : item.title}</Title>
+        <Title onClick={handleClick}>{item.name ? item.name : item.title}</Title>
         <Genres>
           {item.genres?.map((genre, i) => (
-            <Genre key={i}>{genre.name}</Genre>
+            <>{i < 5 && <Genre key={i}>{genre.name}</Genre>}</>
           ))}
         </Genres>
       </Header>
-      <Content>
+      <Content onClick={handleClick}>
         <Image
           src={
             item.images.jpg.large_image_url
@@ -37,8 +37,14 @@ const SearchItem = ({ item }) => {
         />
       </Content>
       <Bottom>
-        <Score><StarOutlineIcon className="icon"/>{(item.score || item.scored) ? item.score || item.scored : "N/A"}</Score>
-        <Members><PersonOutlineIcon className="icon"/>{item.members ? item.members : 0}</Members>
+        <Score>
+          <StarIcon className="icon" />
+          {item.score || item.scored ? item.score || item.scored : "N/A"}
+        </Score>
+        <Members>
+          <PersonIcon className="icon" />
+          {item.members ? item.members : 0}
+        </Members>
         <AddToList>Add To List</AddToList>
       </Bottom>
     </Container>
@@ -51,13 +57,7 @@ const Container = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  transition-property: opacity;
-  transition-duration: 0.16s;
   border: solid 1px lightgray;
-  cursor: pointer;
-  :hover {
-    opacity: 0.5;
-  }
 `;
 
 const Header = styled.header`
@@ -69,20 +69,26 @@ const Header = styled.header`
 const Title = styled.span`
   display: flex;
   color: ${(props) => props.theme.main};
-  font-size: 1.3rem;
+  font-size: 1.5rem;
+  font-weight: 500;
   text-align: center;
   padding: 5px;
   height: 50px;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  :hover {
+    text-decoration: underline;
+  }
 `;
 const Genres = styled.div`
   display: flex;
   justify-content: center;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   background-color: ${(props) => props.theme.secondary};
   align-items: center;
-  height: 25px;
+  min-height: 25px;
+  font-weight: 500;
 `;
 
 const Genre = styled.span`
@@ -91,6 +97,12 @@ const Genre = styled.span`
 
 const Content = styled.div`
   height: 400px;
+  cursor: pointer;
+  transition-property: opacity;
+  transition-duration: 0.16s;
+  :hover {
+    opacity: .8;
+  }
 `;
 
 const Image = styled.img`
@@ -102,7 +114,7 @@ const Image = styled.img`
 const Bottom = styled.div`
   display: flex;
   background-color: ${(props) => props.theme.secondary};
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   align-items: center;
   justify-content: space-around;
   padding: 4px;
@@ -111,16 +123,26 @@ const Bottom = styled.div`
 const Score = styled.div`
   display: flex;
   align-items: center;
+  font-weight: 500;
   .icon {
     margin-right: 3px;
+    position: relative;
+    top: -1.1px;
+    color: ${props => props.theme.tertiary};
   }
-`
+`;
 
-const Members = styled(Score)``
+const Members = styled(Score)``;
 
 const AddToList = styled.button`
-  background-color: ${props => props.theme.tertiary};
+  background-color: ${(props) => props.theme.tertiary};
   padding: 4px 16px;
   border-radius: 2px;
   color: white;
-`
+  transition-property: opacity;
+  transition-duration: 0.16s;
+  cursor: pointer;
+  :hover {
+    opacity: .8;
+  }
+`;
