@@ -10,6 +10,7 @@ import {
   EpisodesWatched,
 } from "../pages/Media";
 import Alert from "../components/Alert"
+import { jikanRequest } from "../requestMethods";
 
 const UserListItem = ({
   item,
@@ -53,6 +54,15 @@ const UserListItem = ({
     }
   };
 
+  const handleClick = async (e) => {
+    let type =
+      media.demographics.length > 0
+        ? media.demographics[0].type
+        : media.genres[0].type;
+    const response = await jikanRequest.get(`/${type}/${media.mal_id}`);
+    navigate(`/${type}/${media.mal_id}`, { state: response.data.data });
+  };
+
   console.log(media);
   return (
     <>
@@ -65,9 +75,7 @@ const UserListItem = ({
           <InfoWrapper>
             <Type>{media.type}</Type>
             <Title
-              onClick={() => {
-                navigate("/media", { state: media });
-              }}
+              onClick={handleClick}
             >
               {media.title}
             </Title>
@@ -294,14 +302,16 @@ const UserStatus = styled(Progress)``;
 const Genres = styled.div`
   display: flex;
   flex-direction: column;
+  min-width: 120px;
 `;
 
 const Genre = styled.a`
   background-color: ${(props) => props.theme.tertiary};
   padding: 4px 18px;
-  border-radius: 4px;
+  border-radius: 3px;
   margin: 2px;
   color: white;
+  text-align: center;
 `;
 
 const OtherInfo = styled.div`

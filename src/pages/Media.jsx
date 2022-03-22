@@ -21,6 +21,7 @@ const Media = () => {
   const [statusDropdown, setStatusDropdown] = useState("");
   const [ratingDropdown, setRatingDropdown] = useState("");
   const [episodesWatched, setEpisodesWatched] = useState(0);
+  const [addList, toggleAddList] = useState(false);
   const [error, toggleError] = useState(false);
 
   useEffect(() => {
@@ -35,22 +36,24 @@ const Media = () => {
     toggleError(true);
     setTimeout(() => {
       toggleError(false);
-    }, 3000)
-  }
+    }, 3000);
+  };
 
   const handleAddToList = async () => {
-    if ((episodesWatched > item.episodes) || (episodesWatched < 0)) {
+    if (episodesWatched > item.episodes || episodesWatched < 0) {
       handleError();
-      console.log("Not a valid episode number")
+      console.log("Not a valid episode number");
       return;
     }
     try {
-     
-      const payload = {...item, userOptions: {
-        userStatus: statusDropdown,
-        userRating: ratingDropdown,
-        userProgress:  episodesWatched
-      }};
+      const payload = {
+        ...item,
+        userOptions: {
+          userStatus: statusDropdown,
+          userRating: ratingDropdown,
+          userProgress: episodesWatched,
+        },
+      };
       const res = await publicRequest.put("/user/list", payload);
       console.log(res);
       toggleAlert(true);
@@ -99,9 +102,13 @@ const Media = () => {
           {type !== "characters" && (
             <AddToListWrapper>
               <AddToListTitle>Add to My List</AddToListTitle>
+
               <StatusWrapper>
                 <label for="status">Status: </label>
-                <StatusDropdown name="status" onChange={(e) => setStatusDropdown(e.target.value)}>
+                <StatusDropdown
+                  name="status"
+                  onChange={(e) => setStatusDropdown(e.target.value)}
+                >
                   <option value="">Select</option>
                   <option value="Plan to Watch">Plan to Watch</option>
                   <option value="Completed">Completed</option>
@@ -112,7 +119,10 @@ const Media = () => {
               </StatusWrapper>
               <RatingWrapper>
                 <label for="rating">Rating: </label>
-                <RatingDropdown name="rating" onChange={(e) => setRatingDropdown(e.target.value)}>
+                <RatingDropdown
+                  name="rating"
+                  onChange={(e) => setRatingDropdown(e.target.value)}
+                >
                   <option value="">Select</option>
                   {new Array(10).fill("").map((item, i) => (
                     <option value={i + 1}>{i + 1}</option>
@@ -121,9 +131,13 @@ const Media = () => {
               </RatingWrapper>
               <EpisodesWatchedWrapper>
                 <label for="episodes">Episodes: </label>
-                <EpisodesWatched placeholder="0" onChange={(e) => {
-                  setEpisodesWatched(e.target.value)
-                }}/>/{item.episodes}
+                <EpisodesWatched
+                  placeholder="0"
+                  onChange={(e) => {
+                    setEpisodesWatched(e.target.value);
+                  }}
+                />
+                /{item.episodes}
               </EpisodesWatchedWrapper>
               <Inputs>
                 <AddButton onClick={handleAddToList}>Add To List</AddButton>
@@ -383,14 +397,10 @@ const Media = () => {
         )}
       </Wrapper>
       <Footer />
-      {alert ? (
-        <Alert>
-           Successfully added to list!
-        </Alert>
-      ) : null}
-        <Error error={error}>
-          <ErrorOutlinedIcon className="errorIcon" /> Invalid episode input
-        </Error>
+      {alert ? <Alert>Successfully added to list!</Alert> : null}
+      <Error error={error}>
+        <ErrorOutlinedIcon className="errorIcon" /> Invalid episode input
+      </Error>
     </Container>
   );
 };
@@ -412,9 +422,13 @@ const Header = styled.div`
   line-height: 0;
 `;
 const Titles = styled.div`
+  padding-top: 4px;
+  padding-left: 10px;
   border-bottom: 1px solid ${(props) => props.theme.main};
 `;
-const CanonTitle = styled.h3``;
+const CanonTitle = styled.h3`
+
+`;
 const EnglishTitle = styled.h4`
   color: #858585;
 `;
@@ -463,6 +477,7 @@ const AddToListTitle = styled.span`
 export const StatusWrapper = styled.div`
   display: flex;
   align-items: center;
+  padding: 4px 0;
 `;
 
 export const StatusDropdown = styled.select`
@@ -474,14 +489,13 @@ export const StatusDropdown = styled.select`
 export const RatingWrapper = styled(StatusWrapper)``;
 export const RatingDropdown = styled(StatusDropdown)``;
 
-export const EpisodesWatchedWrapper = styled(StatusWrapper)``
+export const EpisodesWatchedWrapper = styled(StatusWrapper)``;
 export const EpisodesWatched = styled.input`
   margin-left: 5px;
   height: 25px;
   width: 30px;
   border: #cecece 1px solid;
-`
-
+`;
 
 const Inputs = styled.div`
   display: flex;
@@ -499,7 +513,7 @@ const AddButton = styled.a`
   cursor: pointer;
   transition: opacity 0.167s ease-in-out;
   :hover {
-    opacity: .8;
+    opacity: 0.8;
     color: white;
   }
 `;
@@ -511,6 +525,7 @@ const Statistics = styled.div``;
 const SideBarList = styled.ul`
   font-size: 1.2rem;
   li {
+    text-transform: capitalize;
     margin-top: 8px;
     line-height: 1.3;
   }
@@ -601,12 +616,11 @@ const VoiceActors = styled(Synopsis)``;
 const VoiceActor = styled.div`
   display: flex;
   padding: 5px;
-  border-top: 1px solid ${props => props.theme.secondary};
+  border-top: 1px solid ${(props) => props.theme.secondary};
 `;
 
 const VAPicture = styled.img`
   width: 100px;
-  
 `;
 
 const VAInfo = styled.div`
@@ -620,7 +634,7 @@ const VAInfo = styled.div`
 `;
 
 const VAName = styled.span`
-  color: ${props => props.theme.main};
+  color: ${(props) => props.theme.main};
 `;
 
 const VALanguage = styled.span``;
