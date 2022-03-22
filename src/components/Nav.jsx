@@ -1,5 +1,4 @@
 import styled, { keyframes, css } from "styled-components";
-import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { publicRequest, jikanRequest } from "../requestMethods";
 import { useState } from "react";
@@ -75,9 +74,6 @@ const Nav = () => {
           <Slogan src="/images/aa-slogan.jpg" />
         </Left>
         <Right>
-          <Icons>
-            <MenuIcon className="icon" />
-          </Icons>
           <Profile>
             {localStorage.getItem("user") ? (
               <Logout onClick={handleLogout}>Logout</Logout>
@@ -238,6 +234,11 @@ const ListLink = styled.a`
   cursor: pointer;
   background-color: ${(props) => props.theme.main};
   position: relative;
+  text-transform: uppercase;
+  :hover {
+    background-color: white;
+    color: black;
+  }
 `;
 
 const BottomRight = styled.div`

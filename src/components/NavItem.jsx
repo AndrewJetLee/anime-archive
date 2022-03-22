@@ -55,6 +55,7 @@ const Container = styled.div`
   z-index: 1000;
   background-color: ${props => props.open && props.theme.secondary};
   color: ${props => props.open ? "black" : "white"};
+  text-transform: uppercase; 
 `;
 
 const Link = styled.a``;
@@ -84,7 +85,7 @@ const Content = styled.div`
 const ContentItem = styled.a`
   width: 100%;
   padding: 8px 12px;
-  font-weight: 400;
+  font-weight: 600;
   :hover {
      background-color: ${(props) => props.theme.main};
      color: ${(props => "white")};
