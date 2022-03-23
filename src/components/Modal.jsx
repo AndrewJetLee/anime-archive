@@ -7,7 +7,7 @@ import {
 } from "../pages/Media";
 import { publicRequest } from "../requestMethods";
 
-const Modal = ({media, title, toggleAlertStatus, toggleModal, modal}) => {
+const Modal = ({media, title, toggleAlertStatus, toggleModal, modal, type, helper}) => {
   const [statusDropdown, setStatusDropdown] = useState("Plan to Watch");
   const [ratingDropdown, setRatingDropdown] = useState("");
   const [episodesWatched, setEpisodesWatched] = useState(0);
@@ -38,9 +38,32 @@ const Modal = ({media, title, toggleAlertStatus, toggleModal, modal}) => {
     }
   };
 
+  const handleEdit = async (e) => {
+    try {
+      let payload = {
+        userStatus: statusDropdown,
+        userRating: ratingDropdown,
+        userProgress: episodesWatched,
+      };
+      const res = await publicRequest.put(
+        `user/list/edit/${media.mal_id}`,
+        payload
+      );
+      helper();
+      toggleModal(!modal);
+      toggleAlertStatus(true);
+      setTimeout(() => {
+        toggleAlertStatus(false);
+      }, 3000);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <Container>
-      <Content>
+    <Container onClick={() => toggleModal(!modal)}>
+      <Content onClick={e => e.stopPropagation()}>
         <Header>
           <h3>{title}</h3>
         </Header>
@@ -81,7 +104,7 @@ const Modal = ({media, title, toggleAlertStatus, toggleModal, modal}) => {
             ))}
           </RatingDropdown>
         </Score>
-        <Submit onClick={(e) => handleAddToList(e)}>Submit</Submit>
+        <Submit onClick={type === "edit" ? handleEdit : handleAddToList}>Submit</Submit>
       </Content>
     </Container>
   );

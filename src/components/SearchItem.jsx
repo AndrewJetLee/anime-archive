@@ -57,7 +57,15 @@ const SearchItem = ({ item }) => {
         </Bottom>
       </Container>
       <Alert alertStatus={alertStatus} message="Successfully added to list!" />
-      { modal && <Modal media={item} title="Add to List" toggleAlertStatus={toggleAlertStatus} toggleModal={toggleModal} modal={modal}/>}
+      {modal && (
+        <Modal
+          media={item}
+          title="Add to List"
+          toggleAlertStatus={toggleAlertStatus}
+          toggleModal={toggleModal}
+          modal={modal}
+        />
+      )}
     </>
   );
 };

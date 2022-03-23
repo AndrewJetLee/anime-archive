@@ -3,12 +3,7 @@ import { useNavigate } from "react-router-dom";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import { useState, useEffect } from "react";
-import { publicRequest } from "../requestMethods";
-import {
-  StatusDropdown,
-  RatingDropdown,
-  EpisodesWatched,
-} from "../pages/Media";
+import Modal from "./Modal";
 import Alert from "../components/Alert";
 import { jikanRequest } from "../requestMethods";
 
@@ -22,38 +17,11 @@ const UserListItem = ({
   const navigate = useNavigate();
   const [media, setMedia] = useState(item);
   const [modal, toggleModal] = useState(false);
-  const [statusDropdown, setStatusDropdown] = useState("Plan to Watch");
-  const [ratingDropdown, setRatingDropdown] = useState("");
-  const [episodesWatched, setEpisodesWatched] = useState(0);
   const [alertStatus, toggleAlertStatus] = useState(false);
 
   useEffect(() => {
     setMedia(item);
   }, [filteredList]);
-
-  const handleEdit = async (e) => {
-    try {
-      let payload = {
-        userStatus: statusDropdown,
-        userRating: ratingDropdown,
-        userProgress: episodesWatched,
-      };
-      const res = await publicRequest.put(
-        `user/list/edit/${media.mal_id}`,
-        payload
-      );
-      getList();
-      toggleModal(!modal);
-      toggleAlertStatus(true);
-      setTimeout(() => {
-        toggleAlertStatus(false);
-      }, 3000);
-      console.log(res);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
 
   const handleClick = async (e) => {
     let type =
@@ -126,51 +94,15 @@ const UserListItem = ({
 
       <Alert alertStatus={alertStatus} message="Successfully updated list!" />
       {modal && (
-        <Modal>
-          <ModalContent>
-            <ModalHeader>
-              <h3>Edit Anime</h3>
-            </ModalHeader>
-            <ModalTitle>Anime Title: {media.title}</ModalTitle>
-            <ModalStatus>
-              <label for="status">Status: </label>
-              <StatusDropdown
-                name="status"
-                onChange={(e) => setStatusDropdown(e.target.value)}
-              >
-                <option value="">Select</option>
-                <option value="Plan to Watch">Plan to Watch</option>
-                <option value="Completed">Completed</option>
-                <option value="Currently Watching">Currently Watching</option>
-                <option value="On Hold">On Hold</option>
-                <option value="Dropped">Dropped</option>
-              </StatusDropdown>
-            </ModalStatus>
-            <ModalWatched>
-              <label for="episodes">Episodes: </label>
-              <EpisodesWatched
-                placeholder="0"
-                onChange={(e) => {
-                  setEpisodesWatched(e.target.value);
-                }}
-              />
-              /{media.episodes}
-            </ModalWatched>
-            <ModalScore>
-              <label for="rating">Rating: </label>
-              <RatingDropdown
-                name="rating"
-                onChange={(e) => setRatingDropdown(e.target.value)}
-              >
-                <option value="">Select</option>
-                {new Array(10).fill("").map((item, i) => (
-                  <option value={i + 1}>{i + 1}</option>
-                ))}
-              </RatingDropdown>
-            </ModalScore>
-            <Submit onClick={(e) => handleEdit(e)}>Submit</Submit>
-          </ModalContent>
-        </Modal>
+        <Modal
+          media={media}
+          title="Edit List"
+          toggleAlertStatus={toggleAlertStatus}
+          toggleModal={toggleModal}
+          modal={modal}
+          type="edit"
+          helper={getList}
+        />
       )}
     </>
   );
@@ -274,7 +206,6 @@ const Edit = styled.span`
 const Type = styled(Status)``;
 
 // Right
-
 const Right = styled.div`
   display: flex;
   align-items: center;
@@ -337,63 +268,3 @@ const Score = styled.div`
 const Members = styled(Score)``;
 
 const Favorites = styled(Score)``;
-
-const Modal = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-  z-index: 10000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ModalContent = styled.div`
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  width: 400px;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px 20px;
-  border-radius: 2px;
-  border: 8px solid ${(props) => props.theme.main};
-`;
-
-const ModalHeader = styled.div`
-  h3 {
-    border-bottom: 1px solid gray;
-    padding-bottom: 4px;
-  }
-`;
-
-const ModalTitle = styled.div`
-  margin-bottom: 20px;
-`;
-
-const ModalStatus = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
-const ModalWatched = styled(ModalStatus)``;
-
-const ModalScore = styled(ModalStatus)``;
-
-const Submit = styled.button`
-  width: 100%;
-  background-color: ${(props) => props.theme.tertiary};
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 4px;
-  color: white;
-  transition: opacity 0.167s ease-in-out;
-  :hover {
-    opacity: 0.8;
-  }
-`;
