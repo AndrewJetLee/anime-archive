@@ -31,6 +31,7 @@ const Genres = () => {
   useEffect(() => {
     if (location.pathname.includes("manga")) {
       setType("manga");
+      console.log("render");
       getMangaGenres();
     } else {
       setType("anime");
@@ -267,8 +268,8 @@ const Genres = () => {
           {genres.map((genre, i) => (
             <>
               {loading ? (
-                <SkeletonGenre>
-                  <Skeleton baseColor="#FB9935" width="100%" height="100%"/>
+                <SkeletonGenre key={i}>
+                  <Skeleton baseColor="#FB9935" width="100%" height="100%" />
                 </SkeletonGenre>
               ) : (
                 <Genre
