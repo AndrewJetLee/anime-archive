@@ -1,11 +1,16 @@
 import styled from "styled-components";
 import { jikanRequest } from "../requestMethods";
 import { useNavigate } from "react-router-dom";
-import StarIcon from '@mui/icons-material/Star';
-import PersonIcon from '@mui/icons-material/Person';
+import StarIcon from "@mui/icons-material/Star";
+import PersonIcon from "@mui/icons-material/Person";
+import Modal from "./Modal";
+import { useState } from "react";
+import Alert from "./Alert";
 
 const SearchItem = ({ item }) => {
   const navigate = useNavigate();
+  const [modal, toggleModal] = useState(false);
+  const [alertStatus, toggleAlertStatus] = useState(false);
 
   const handleClick = async (e) => {
     let type =
@@ -17,37 +22,43 @@ const SearchItem = ({ item }) => {
   };
 
   return (
-    <Container>
-      <Header>
-        <Title onClick={handleClick}>{item.name ? item.name : item.title}</Title>
-        <Genres>
-          {item.genres?.map((genre, i) => (
-            <>{i < 5 && <Genre key={i}>{genre.name}</Genre>}</>
-          ))}
-        </Genres>
-      </Header>
-      <Content onClick={handleClick}>
-        <Image
-          src={
-            item.images.jpg.large_image_url
-              ? item.images.jpg.large_image_url
-              : item.images.jpg.image_url
-          }
-          className="animeImage"
-        />
-      </Content>
-      <Bottom>
-        <Score>
-          <StarIcon className="icon" />
-          {item.score || item.scored ? item.score || item.scored : "N/A"}
-        </Score>
-        <Members>
-          <PersonIcon className="icon" />
-          {item.members ? item.members : 0}
-        </Members>
-        <AddToList>Add To List</AddToList>
-      </Bottom>
-    </Container>
+    <>
+      <Container>
+        <Header>
+          <Title onClick={handleClick}>
+            {item.name ? item.name : item.title}
+          </Title>
+          <Genres>
+            {item.genres?.map((genre, i) => (
+              <>{i < 5 && <Genre key={i}>{genre.name}</Genre>}</>
+            ))}
+          </Genres>
+        </Header>
+        <Content onClick={handleClick}>
+          <Image
+            src={
+              item.images.jpg.large_image_url
+                ? item.images.jpg.large_image_url
+                : item.images.jpg.image_url
+            }
+            className="animeImage"
+          />
+        </Content>
+        <Bottom>
+          <Score>
+            <StarIcon className="icon" />
+            {item.score || item.scored ? item.score || item.scored : "N/A"}
+          </Score>
+          <Members>
+            <PersonIcon className="icon" />
+            {item.members ? item.members : 0}
+          </Members>
+          <AddToList onClick={() => toggleModal(true)}>Add To List</AddToList>
+        </Bottom>
+      </Container>
+      <Alert alertStatus={alertStatus} message="Successfully added to list!" />
+      { modal && <Modal media={item} title="Add to List" toggleAlertStatus={toggleAlertStatus} toggleModal={toggleModal} modal={modal}/>}
+    </>
   );
 };
 
@@ -101,7 +112,7 @@ const Content = styled.div`
   transition-property: opacity;
   transition-duration: 0.16s;
   :hover {
-    opacity: .8;
+    opacity: 0.8;
   }
 `;
 
@@ -128,7 +139,7 @@ const Score = styled.div`
     margin-right: 3px;
     position: relative;
     top: -1.1px;
-    color: ${props => props.theme.tertiary};
+    color: ${(props) => props.theme.tertiary};
   }
 `;
 
@@ -143,6 +154,6 @@ const AddToList = styled.button`
   transition-duration: 0.16s;
   cursor: pointer;
   :hover {
-    opacity: .8;
+    opacity: 0.8;
   }
 `;
