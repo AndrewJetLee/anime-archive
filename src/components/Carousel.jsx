@@ -49,7 +49,7 @@ const Container = styled.div`
 
 export const Title = styled.h2`
   text-transform: uppercase;
-  font-size: ${(props) => (props.size ? props.size : "1.5rem")};
+  font-size: ${(props) => (props.size ? props.size : "1.7rem")};
   padding-bottom: 5px;
   background-color: ${(props) => props.theme.secondary};
   padding: ${(props) => (props.padding ? props.padding : "12px")};
@@ -63,7 +63,7 @@ const SkeletonCarouselItem = styled.div`
   transition-property: opacity;
   transition-duration: 0.16s;
   position: relative;
-  height: 280px;
+  height: 290px;;
   cursor: pointer;
   :hover {
     opacity: 0.5;
