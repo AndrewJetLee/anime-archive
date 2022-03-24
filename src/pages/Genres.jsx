@@ -94,7 +94,7 @@ const Genres = () => {
     <Container>
       <Nav />
       <Header>
-        <HeaderTitle>Genres</HeaderTitle>
+        <HeaderTitle>Search</HeaderTitle>
       </Header>
       <Wrapper>
       <SearchBar filters={filters} genreFilter={genreFilter} type={type}/>

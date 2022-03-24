@@ -32,7 +32,7 @@ const Container = styled.div`
   transition-property: opacity;
   transition-duration: 0.16s;
   position: relative;
-  height: 220px;
+  height: 280px;
   cursor: pointer;
   :hover {
     opacity: 0.5;

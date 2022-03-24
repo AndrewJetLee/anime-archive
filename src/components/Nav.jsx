@@ -132,8 +132,11 @@ const Wrapper = styled.div`
   width: 100%;
   padding-right: 40px;
   padding-left: 20px;
+  align-items: center;
   background-color: ${(props) =>
     props.position === "bottom" ? props.theme.main : "white"};
+  height: ${(props) =>
+    props.position === "bottom" && "35px"};
 `;
 
 //Left nav and children
@@ -162,15 +165,6 @@ const Right = styled.div`
   justify-content: flex-end;
   width: 40%;
 `;
-const Icons = styled.div`
-  display: flex;
-  align-items: center;
-  margin-right: 20px;
-  .icon {
-    font-size: 2.6rem;
-    cursor: pointer;
-  }
-`;
 
 const Profile = styled.div`
   display: flex;
@@ -178,7 +172,7 @@ const Profile = styled.div`
 `;
 
 const Login = styled.button`
-  height: 2.5rem;
+  height: 3rem;
   margin-right: 1rem;
   border: none;
   padding: 4px 25px;
@@ -188,12 +182,17 @@ const Login = styled.button`
   font-size: 1.4rem;
   font-weight: 600;
   cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.167s ease-in-out;
+  :hover{
+    background-color: #e4e4e4;
+  }
 `;
 
 const Logout = styled(Login)``;
 
 const SignUp = styled.button`
-  height: 2.5rem;
+  height: 3rem;
   background-color: ${(props) => props.theme.main};
   color: white;
   padding: 4px 25px;
@@ -201,6 +200,7 @@ const SignUp = styled.button`
   font-size: 1.4rem;
   font-weight: 600;
   cursor: pointer;
+  text-transform: uppercase;
 `;
 
 //WIP
@@ -222,9 +222,9 @@ const UserInfo = styled.span`
 const NavItems = styled.div`
   display: flex;
   color: white;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   font-weight: 600;
-  height: 34px;
+  height: 100%;
   align-items: center;
 `;
 
@@ -234,6 +234,9 @@ const ListLink = styled.a`
   background-color: ${(props) => props.theme.main};
   position: relative;
   text-transform: uppercase;
+  height: 100%;
+  display: flex;
+  align-items: center;
   :hover {
     background-color: white;
     color: black;
@@ -251,9 +254,10 @@ const InputWrapper = styled.form`
   border-radius: 4px;
   margin-right: 4px;
   width: 300px;
-  height: 20px;
+  height: 25px;
   .searchIcon {
-    font-size: 2rem;
+    padding: 4px;
+    font-size: 3rem;
     border-left: solid 1px;
     cursor: pointer;
     background-color: ${(props) => props.theme.secondary};
@@ -262,7 +266,7 @@ const InputWrapper = styled.form`
 const SearchInput = styled.input`
   width: 100%;
   height: 100%;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   border: none;
   box-shadow: none;
   padding: 4px;

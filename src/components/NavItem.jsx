@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import { jikanRequest } from "../requestMethods";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -34,12 +33,12 @@ const NavItem = ({ title }) => {
         <Content open={open} onClick={handleClickAnimeItem}>
           <ContentItem name="topAnime">Top {title}</ContentItem>
           <ContentItem name="seasonal">Seasonal {title}</ContentItem>
-          <ContentItem name="genres">Genres</ContentItem>
+          <ContentItem name="genres">Anime Search</ContentItem>
         </Content>
       ) : (
         <Content open={open} onClick={handleClickMangaItem}>
           <ContentItem name="topManga">Top {title}</ContentItem>
-          <ContentItem name="genres">Genres</ContentItem>
+          <ContentItem name="genres">Manga Search</ContentItem>
         </Content>
       )}
     </Container>
@@ -56,6 +55,9 @@ const Container = styled.div`
   background-color: ${props => props.open && props.theme.secondary};
   color: ${props => props.open ? "black" : "white"};
   text-transform: uppercase; 
+  height: 100%;
+  display: flex;
+  align-items: center;
 `;
 
 const Link = styled.a``;

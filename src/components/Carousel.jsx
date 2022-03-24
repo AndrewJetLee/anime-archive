@@ -15,7 +15,7 @@ const Carousel = ({ title, data, loading }) => {
         navigation={true}
         modules={[Navigation]}
         spaceBetween={10}
-        slidesPerView={8}
+        slidesPerView={7}
         onSlideChange={() => console.log("slide change")}
         onSwiper={(swiper) => console.log(swiper)}
       >
