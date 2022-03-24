@@ -24,7 +24,7 @@ const Carousel = ({ title, data, loading }) => {
             {new Array(10).fill(" ").map((item, i) => (
               <SwiperSlide key={i}>
                 <SkeletonCarouselItem>
-                  <Skeleton width="100%" height="220px" />
+                  <Skeleton width="100%" height="280px" />
                 </SkeletonCarouselItem>
               </SwiperSlide>
             ))}
@@ -63,7 +63,7 @@ const SkeletonCarouselItem = styled.div`
   transition-property: opacity;
   transition-duration: 0.16s;
   position: relative;
-  height: 220px;
+  height: 280px;
   cursor: pointer;
   :hover {
     opacity: 0.5;
