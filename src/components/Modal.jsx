@@ -27,7 +27,6 @@ const Modal = ({media, title, toggleAlertStatus, toggleModal, modal, type, helpe
         },
       };
       const res = await publicRequest.put("/user/list", payload);
-      console.log(res);
       toggleModal(!modal)
       toggleAlertStatus(true);
       setTimeout(() => {
@@ -55,7 +54,6 @@ const Modal = ({media, title, toggleAlertStatus, toggleModal, modal, type, helpe
       setTimeout(() => {
         toggleAlertStatus(false);
       }, 3000);
-      console.log(res);
     } catch (err) {
       console.log(err);
     }
