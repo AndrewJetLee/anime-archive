@@ -21,7 +21,6 @@ const Nav = () => {
     let characterResult = await jikanRequest.get(
       `/characters?q=${query}&limit=24`
     );
-    console.log(mangaResult);
     navigate(`/search?q=${query}`, {
       state: {
         anime: animeResult.data,
@@ -33,10 +32,8 @@ const Nav = () => {
   };
 
   const handleLogout = async () => {
-    console.log("clicked logout");
     try {
-      const res = await publicRequest.get("/user/logout");
-      console.log(res);
+      await publicRequest.get("/user/logout");
       localStorage.clear();
       navigate("/");
     } catch (err) {
