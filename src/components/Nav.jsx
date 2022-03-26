@@ -299,13 +299,15 @@ export const Error = styled.div`
   display: flex;
   align-items: center;
   position: fixed;
-  right: 40px;
+  right: 24px;
   top: 100px;
   background-color: ${(props) => props.theme.tertiary};
   color: white;
-  padding: 4px 12px;
+  padding: 4px 0;
+  padding-right: 16px;
+  padding-left: 12px;
   .errorIcon {
     font-size: 30px;
-    margin-right: 10px;
+    margin-right: 4px;
   }
 `;

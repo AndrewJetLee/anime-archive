@@ -103,7 +103,7 @@ const Title = styled.span`
 const Genres = styled.div`
   display: flex;
   justify-content: center;
-  font-size: 1.1rem;
+  font-size: 1rem;
   background-color: ${(props) => props.theme.secondary};
   align-items: center;
   min-height: 25px;

@@ -51,7 +51,6 @@ export default List;
 
 const Container = styled.div`
   display: ${(props) => (props.containsItems ? "grid" : "flex")};
-  display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 260px));
   grid-auto-flow: row;
   grid-gap: 5px;
