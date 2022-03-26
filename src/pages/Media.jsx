@@ -16,7 +16,6 @@ const Media = () => {
 
   console.log(location.state);
 
-  const [media, setMedia] = useState({});
   const [reviews, setReviews] = useState([]);
   const [voiceActors, setVoiceActors] = useState([]);
   const [alert, toggleAlert] = useState(false);
@@ -25,11 +24,7 @@ const Media = () => {
   const [episodesWatched, setEpisodesWatched] = useState(0);
   const [error, toggleError] = useState(false);
 
-  const item = location.state || media;
-
-  useEffect(() => {
-    getMedia();
-  }, [])
+  const item = location.state;
 
   useEffect(() => {
     if (type === "characters") {
@@ -38,16 +33,6 @@ const Media = () => {
       getReviews();
     }
   }, [type, id]);
-
-  const getMedia = async () => {
-    try {
-      const res = await jikanRequest.get(`/${type}/${id}`);
-      console.log("response", res);
-      setMedia(res.data.data);
-    } catch (err) {
-      console.log(err);
-    }
-  }
  
   const handleError = async () => {
     toggleError(true);
