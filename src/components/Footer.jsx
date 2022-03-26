@@ -49,11 +49,11 @@ const Footer = () => {
       <Content>
         <Top>
           <Socials>
-            <GitHubIcon className="icons github" />
-            <LinkedInIcon className="icons linkedin" />
-            <InstagramIcon className="icons instagram" />
-            <TwitterIcon className="icons twitter" />
-            <FacebookIcon className="icons facebook" />
+            <IconLink href="https://github.com/AndrewJetLee"><GitHubIcon className="icons github" /></IconLink>
+            <IconLink href="https://www.linkedin.com/in/andrewjetlee/"><LinkedInIcon className="icons linkedin" /></IconLink>
+            <IconLink><InstagramIcon className="icons instagram" /></IconLink>
+            <IconLink><TwitterIcon className="icons twitter" /></IconLink>
+            <IconLink> <FacebookIcon className="icons facebook" /></IconLink>
           </Socials>
         </Top>
         <Bottom>
@@ -62,10 +62,10 @@ const Footer = () => {
               <a href="/">Home</a>
             </li>
             <li>
-              <a href="/anime">Anime</a>
+              <a href="/browse/top/anime">Anime</a>
             </li>
             <li>
-              <a href="/manga">Manga</a>
+              <a href="/browse/top/manga">Manga</a>
             </li>
             <li>
               <a href="/list">List</a>
@@ -74,8 +74,8 @@ const Footer = () => {
           <ProjectsWrapper>
             <span>Personal projects:</span>
             <Projects>
-              <Project>E-commerce</Project>
-              <Project>Secure Your Vote</Project>
+              <Project href="https://github.com/AndrewJetLee/e-commerce-app-v2-api">E-commerce</Project>
+              <Project href="https://github.com/blue-ocean-bubbles/syv">Secure Your Vote</Project>
             </Projects>
           </ProjectsWrapper>
           <Copyright>@2021 Jet Lee</Copyright>
@@ -166,6 +166,8 @@ const Socials = styled.div`
     font-size: 3.5rem;
   }
 `;
+
+const IconLink = styled.a``
 
 // Bottom footer
 const Bottom = styled.div`
