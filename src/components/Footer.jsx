@@ -5,47 +5,15 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { jikanRequest } from "../requestMethods";
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { footerAnime, footerManga, footerCharacters } from "../utility/helpers";
 
 const Footer = () => {
   const navigate = useNavigate();
-  const [topAnime, setTopAnime] = useState([]);
-  const [topManga, setTopManga] = useState([]);
-  const [topCharacters, setTopCharacters] = useState([]);
 
-  useEffect(() => {
-    getAllItems();
-  }, []);
-
-  const getAllItems = async () => {
-    try {
-      setTimeout(async () => {
-        const anime = await jikanRequest.get("/top/anime");
-        const manga = await jikanRequest.get("/top/manga");
-        const characters = await jikanRequest.get("/top/characters");
-        setTopAnime(anime.data.data.slice(0, 5));
-        setTopManga(manga.data.data.slice(0, 5));
-        setTopCharacters(characters.data.data.slice(0, 5));
-      }, 4000);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handleClick = async (item) => {
-    let type;
-    if (item.demographics) {
-      if (item.demographics.length > 0) 
-      type = item.demographics[0].type;
-    } else if (item.genres) {
-      if (item.genres.length > 0)
-      type = item.genres[0].type;
-    } else {
-      type = "characters";
-    }
-    const response = await jikanRequest.get(`/${type}/${item.mal_id}`);
-    navigate(`/${type}/${item.mal_id}`, { state: response.data.data });
+  const handleClick = async (type, id) => {
+    const response = await jikanRequest.get(`/${type}/${id}`);
+    navigate(`/${type}/${id}`, { state: response.data.data });
   };
 
   return (
@@ -55,24 +23,24 @@ const Footer = () => {
           <TopAnime>
             <LinkTitle>Top Anime</LinkTitle>
             <LinkList>
-              {topAnime.map((anime, i) => (
-                <LinkListItem key={i} anime={anime} onClick={() => handleClick(anime)}>{i + 1}. {anime.title}</LinkListItem>
+              {footerAnime.map((anime, i) => (
+                <LinkListItem key={i} anime={anime} onClick={() => handleClick("anime", anime.mal_id)}>{i + 1}. {anime.title}</LinkListItem>
               ))}
             </LinkList>
           </TopAnime>
           <TopManga>
             <LinkTitle>Top Manga</LinkTitle>
             <LinkList>
-              {topManga.map((manga, i) => (
-                <LinkListItem key={i} onClick={() => handleClick(manga)}>{i + 1}. {manga.title}</LinkListItem>
+              {footerManga.map((manga, i) => (
+                <LinkListItem key={i} onClick={() => handleClick("manga", manga.mal_id)}>{i + 1}. {manga.title}</LinkListItem>
               ))}
             </LinkList>
           </TopManga>
           <PopularCharacters>
             <LinkTitle>Most Popular Characters</LinkTitle>
             <LinkList>
-              {topCharacters.map((character, i) => (
-                <LinkListItem key={i} onClick={() => handleClick(character)}>{i + 1}. {character.name}</LinkListItem>
+              {footerCharacters.map((character, i) => (
+                <LinkListItem key={i} onClick={() => handleClick("characters", character.mal_id)}>{i + 1}. {character.name}</LinkListItem>
               ))}
             </LinkList>
           </PopularCharacters>
