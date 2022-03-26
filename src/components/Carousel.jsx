@@ -45,6 +45,9 @@ export default Carousel;
 
 const Container = styled.div`
   margin-bottom: 20px;
+  .swiper-button-prev, .swiper-button-next {
+    color: ${props => props.theme.tertiary};
+  }
 `;
 
 export const Title = styled.h2`
