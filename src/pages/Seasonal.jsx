@@ -6,7 +6,6 @@ import Footer from "../components/Footer";
 import List from "../components/List";
 import styled from "styled-components";
 import { jikanRequest } from "../requestMethods";
-import { fabClasses } from "@mui/material";
 
 const Seasonal = () => {
   const seasons = ["Winter", "Spring", "Summer", "Fall"];

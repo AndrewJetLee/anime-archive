@@ -145,14 +145,13 @@ const Left = styled.div`
 
 const Logo = styled.img`
   display: inline-block;
-  width: 4.5rem;
-  height: 45px;
+  width: 100%;
+  height: 50px;
 `;
 
 const Slogan = styled.img`
   display: inline-block;
   height: 50px;
-  margin-left: 5px;
 `;
 
 //right nav and children
