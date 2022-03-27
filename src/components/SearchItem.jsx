@@ -11,12 +11,18 @@ const SearchItem = ({ item }) => {
   const navigate = useNavigate();
   const [modal, toggleModal] = useState(false);
   const [alertStatus, toggleAlertStatus] = useState(false);
-
+  console.log(item);
   const handleClick = async (e) => {
-    let type =
-      item.demographics.length > 0
-        ? item.demographics[0].type
-        : item.genres[0].type;
+    let type;
+
+    if (item.demographics) {
+      type = item.demographics[0].type
+    } else if (item.genres) {
+      type = item.genres[0].type
+    } else {
+      type = "characters";
+    }
+
     const response = await jikanRequest.get(`/${type}/${item.mal_id}`);
     navigate(`/${type}/${item.mal_id}`, { state: response.data.data });
   };

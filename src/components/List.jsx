@@ -11,7 +11,7 @@ const List = ({ type, items, getNextPage, pagination, loading }) => {
       {type === "search" ? (
         <Container containsItems={containsItems}>
           {containsItems ? (
-            items?.map((item, i) => <SearchItem item={item} key={i} />)
+            items?.map((item, i) => <SearchItem type={type} item={item} key={i} />)
           ) : (
             <NoneFound>
               Sorry, your search term did not return any results

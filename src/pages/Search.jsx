@@ -10,8 +10,7 @@ import { Title } from "../components/Carousel";
 
 const Search = () => {
   let location = useLocation();
-  console.log(location);
-  console.log(location.state);
+
   const [animes, setAnimes] = useState(location.state.anime?.data);
   const [animePagination, setAnimePagination] = useState(location.state.anime);
   const [currentPage, setCurrentPage] = useState(1);
