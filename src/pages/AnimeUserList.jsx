@@ -1,12 +1,11 @@
 import styled, { css } from "styled-components";
-import { useLocation } from "react-router-dom";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import UserListItem from "../components/UserListItem";
 import { useState, useEffect } from "react";
 import { publicRequest } from "../requestMethods";
 
-const UserList = () => {
+const UserAnimeList = () => {
   const [userList, setUserList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
   const [activeTab, setActiveTab] = useState("all");
@@ -131,7 +130,7 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default UserAnimeList;
 
 const Container = styled.div`
   display: flex;

@@ -12,6 +12,7 @@ const Nav = () => {
   const [error, toggleError] = useState(false);
 
   const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user);
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -52,7 +53,7 @@ const Nav = () => {
     try {
       if (type === "list") {
         if (user) {
-          navigate("/list");
+          navigate(`/animelist/${user.username}`);
         } else {
           handleError();
         }
@@ -145,7 +146,7 @@ const Left = styled.div`
 
 const Logo = styled.img`
   display: inline-block;
-  width: 100%;
+  width: 4.5rem;
   height: 50px;
 `;
 
@@ -171,7 +172,7 @@ const Login = styled.button`
   height: 3rem;
   margin-right: 1rem;
   border: none;
-  padding: 4px 25px;
+  padding: 4px 28px;
   color: ${(props) => props.theme.main};
   border-color: ${(props) => props.theme.main};
   border: solid 1px;

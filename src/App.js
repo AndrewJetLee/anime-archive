@@ -10,7 +10,7 @@ import Search from './pages/Search';
 import Media from './pages/Media';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import UserList from "./pages/UserList";
+import UserAnimeList from "./pages/AnimeUserList";
 import Browse from "./pages/Browse";
 import Genres from './pages/Genres';
 import Genre from "./pages/Genre";
@@ -27,7 +27,7 @@ function App() {
           <Route path="/search" element={<Search/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
-          <Route path="/list" element={<UserList/>}/>
+          <Route path="/animelist/:user" element={<UserAnimeList/>}/>
           <Route path="/:type/:id" element={<Media/>}/>
           <Route path="/anime/genres" element={<Genres/>}/>
           <Route path="/anime/genres/:id/:name" element={<Genre/>}/>
