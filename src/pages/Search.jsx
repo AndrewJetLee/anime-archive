@@ -197,6 +197,7 @@ const More = styled.button`
   margin-top: 20px;
   border-radius: 4px;
   transition: opacity 0.167s ease-in-out;
+  color: white;
   cursor: pointer;
   :hover {
     opacity: .8;
