@@ -4,25 +4,27 @@ import { useNavigate } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
 import PersonIcon from "@mui/icons-material/Person";
 import Modal from "./Modal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Alert from "./Alert";
 
 const SearchItem = ({ item }) => {
   const navigate = useNavigate();
   const [modal, toggleModal] = useState(false);
   const [alertStatus, toggleAlertStatus] = useState(false);
+  const [type, setType] = useState(null);
   console.log(item);
-  const handleClick = async (e) => {
-    let type;
 
-    if (item.demographics) {
-      type = item.demographics[0].type
-    } else if (item.genres) {
-      type = item.genres[0].type
+  useEffect(() => {
+    if (item.demographics.length > 0) {
+      setType(item.demographics[0].type);
+    } else if (item.genres.length > 0) {
+      setType(item.genres[0].type);
     } else {
-      type = "characters";
+      setType("characters");
     }
+  }, [])
 
+  const handleClick = async (e) => {
     const response = await jikanRequest.get(`/${type}/${item.mal_id}`);
     navigate(`/${type}/${item.mal_id}`, { state: response.data.data });
   };
@@ -59,7 +61,14 @@ const SearchItem = ({ item }) => {
             <PersonIcon className="icon" />
             {item.members ? item.members : 0}
           </Members>
-          <AddToList onClick={() => toggleModal(true)}>Add To List</AddToList>
+          { type === "anime" ? <AddToList
+            onClick={() => {
+              toggleModal(true);
+            }}
+          >
+            Add To List
+          </AddToList>: null}
+         
         </Bottom>
       </Container>
       <Alert alertStatus={alertStatus} message="Successfully added to list!" />
