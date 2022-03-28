@@ -26,7 +26,7 @@ const Login = () => {
     try {
       const res = await publicRequest.post("/user/login", formInputs);
       console.log(res);
-      localStorage.setItem("user", JSON.stringify(res.data));
+      sessionStorage.setItem("user", JSON.stringify(res.data));
       navigate("/");
     } catch (err) {
       console.log(err);

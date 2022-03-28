@@ -6,7 +6,7 @@ import { jikanRequest } from "../requestMethods";
 import { useEffect, useState } from "react";
 import Hero from "../components/Hero";
 
-const Home = ({ user }) => {
+const Home = () => {
   const [seasonalAnime, setSeasonalAnime] = useState([]);
   const [upcomingAnime, setUpcomingAnime] = useState([]);
   const [trendingAnime, setTrendingAnime] = useState([]);
@@ -36,7 +36,7 @@ const Home = ({ user }) => {
 
   return (
     <Container>
-      <Nav user={user} />
+      <Nav />
       <Wrapper>
         <Hero />
         <Carousel

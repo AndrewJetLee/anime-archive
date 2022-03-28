@@ -11,7 +11,7 @@ const Nav = () => {
   const [query, setQuery] = useState("");
   const [error, toggleError] = useState(false);
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(sessionStorage?.getItem("user"));
   console.log(user);
 
   const handleSearch = async (e) => {
@@ -35,7 +35,7 @@ const Nav = () => {
   const handleLogout = async () => {
     try {
       await publicRequest.get("/user/logout");
-      localStorage.clear();
+      sessionStorage.clear();
       navigate("/");
     } catch (err) {
       console.log(err);
@@ -72,16 +72,16 @@ const Nav = () => {
         </Left>
         <Right>
           <Profile>
-            {localStorage.getItem("user") ? (
+            {sessionStorage.getItem("user") ? (
               <Logout onClick={handleLogout}>Logout</Logout>
             ) : (
               <Login onClick={() => navigate("/login")}>Login</Login>
             )}
-            {localStorage.getItem("user") ? (
+            {sessionStorage.getItem("user") ? (
               <User>
                 <UserImage src="/images/placeholder-img.png" />
                 <UserInfo>
-                  {JSON.parse(localStorage.getItem("user")).username}
+                  {JSON.parse(sessionStorage.getItem("user")).username}
                 </UserInfo>
               </User>
             ) : (

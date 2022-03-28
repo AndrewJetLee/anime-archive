@@ -9,7 +9,7 @@ const UserAnimeList = () => {
   const [userList, setUserList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
   const [activeTab, setActiveTab] = useState("all");
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(sessionStorage.getItem("user"));
   console.log(userList);
   
   useEffect(() => {
