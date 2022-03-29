@@ -14,9 +14,9 @@ const SearchItem = ({ item }) => {
   const [type, setType] = useState(null);
 
   useEffect(() => {
-    if (item.episodes) {
+    if (item.episodes || item.episodes === null) {
       setType("anime");
-    } else if (item.chapters) {
+    } else if (item.chapters || item.chapters === null) {
       setType("manga");
     } else {
       setType("characters");

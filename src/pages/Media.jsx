@@ -167,11 +167,11 @@ const Media = () => {
             {type === "anime" ? (
               <SideBarList>
                 <li>
-                  <strong>Type:</strong> {item?.type}
+                  <strong>Type:</strong> {item.type}
                 </li>
 
                 <li>
-                  <strong>Episodes:</strong> {item.episodes}
+                  <strong>Episodes:</strong> {item.episodes || "Unknown"}
                 </li>
 
                 <li>
@@ -186,7 +186,7 @@ const Media = () => {
 
                 <li>
                   <strong>Genres: </strong>
-                  {item.genres.map((genre, i) =>
+                  {item.genres?.map((genre, i) =>
                     i === item.genres.length - 1 ? (
                       <a href="#">{genre.name} </a>
                     ) : (
@@ -206,7 +206,7 @@ const Media = () => {
                 </li>
                 <li>
                   <strong>Demographics: </strong>
-                  {item.demographics.map((demographic, i) =>
+                  {item.demographics?.map((demographic, i) =>
                     i === item.demographics.length - 1 ? (
                       <a href="#">{demographic.name} </a>
                     ) : (
@@ -226,18 +226,20 @@ const Media = () => {
 
                 <li>
                   <strong>Producers: </strong>
-                  {item.producers.map((producer, i) =>
+                  {item.producers?.map((producer, i) =>
                     i === item.producers.length - 1 ? (
                       <a href="#">{producer.name} </a>
                     ) : (
                       <a href="#">{producer.name}, </a>
                     )
                   )}
+                  {item.producers && item.producers.length === 0 && <span>Unknown</span>} 
                 </li>
 
                 <li>
                   <strong>Studios: </strong>
-                  {item.studios[0].name}
+                  {item.studios[0]?.name}
+                  {item.studios && item.studios.length === 0 && <span>Unknown</span>} 
                 </li>
                 <li>
                   <strong>Source: </strong>
@@ -262,7 +264,7 @@ const Media = () => {
 
                 <li>
                   <strong>Genres: </strong>
-                  {item.genres.map((genre) => (
+                  {item.genres?.map((genre) => (
                     <a href="#">{genre.name} </a>
                   ))}
                 </li>
@@ -369,7 +371,7 @@ const Media = () => {
                       {item.season} {item.year}
                     </span>
                     <span>{item?.type}</span>
-                    <span>{item.studios[0]?.name}</span>
+                    <span>{item.studios[0]?.name || "Unknown"}</span>
                   </OtherData>
                 ) : (
                   <OtherData>
