@@ -198,9 +198,9 @@ const Media = () => {
                   <strong>Themes: </strong>
                   {item.themes.map((theme, i) =>
                     i === item.themes.length - 1 ? (
-                      <a href="#">{theme.name} </a>
+                      <span>{theme.name} </span>
                     ) : (
-                      <a href="#">{theme.name}, </a>
+                      <span>{theme.name}, </span>
                     )
                   )}
                 </li>
@@ -228,18 +228,22 @@ const Media = () => {
                   <strong>Producers: </strong>
                   {item.producers?.map((producer, i) =>
                     i === item.producers.length - 1 ? (
-                      <a href="#">{producer.name} </a>
+                      <span>{producer.name} </span>
                     ) : (
-                      <a href="#">{producer.name}, </a>
+                      <span>{producer.name}, </span>
                     )
                   )}
-                  {item.producers && item.producers.length === 0 && <span>Unknown</span>} 
+                  {item.producers && item.producers.length === 0 && (
+                    <span>Unknown</span>
+                  )}
                 </li>
 
                 <li>
                   <strong>Studios: </strong>
                   {item.studios[0]?.name}
-                  {item.studios && item.studios.length === 0 && <span>Unknown</span>} 
+                  {item.studios && item.studios.length === 0 && (
+                    <span>Unknown</span>
+                  )}
                 </li>
                 <li>
                   <strong>Source: </strong>
@@ -327,9 +331,8 @@ const Media = () => {
             <Synopsis>
               <p>{item.about}</p>
             </Synopsis>
+            <Title>Voice Actors</Title>
             <VoiceActors>
-              <Title>Voice Actors</Title>
-
               {voiceActors.map((va, i) => (
                 <VoiceActor key={i}>
                   <VAPicture src={va.person.images.jpg.image_url} alt="" />
@@ -408,10 +411,15 @@ const Media = () => {
 
             <Reviews>
               <h5>Reviews</h5>
-              { reviews.length > 0 ? <>{reviews.map((review, i) => (
-                <Review review={review} key={i}></Review>
-              ))}</> : <p>No reviews have been submitted yet for this title</p>}
-              
+              {reviews.length > 0 ? (
+                <>
+                  {reviews.map((review, i) => (
+                    <Review review={review} key={i}></Review>
+                  ))}
+                </>
+              ) : (
+                <p>No reviews have been submitted yet for this title</p>
+              )}
             </Reviews>
             {reviewsPagination.has_next_page && (
               <More
@@ -645,7 +653,10 @@ const Synopsis = styled.section`
 `;
 
 //Voice Actor
-const VoiceActors = styled(Synopsis)``;
+const VoiceActors = styled(Synopsis)`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+`;
 
 const VoiceActor = styled.div`
   display: flex;
@@ -682,4 +693,3 @@ const VideoWrapper = styled(Synopsis)`
 `;
 
 const Reviews = styled(Synopsis)``;
-
