@@ -137,6 +137,7 @@ const Username = styled.input`
   border: solid 1px grey;
   border-radius: 4px;
   font-size: 2rem;
+  padding: 8px;
 `;
 
 const EmailWrapper = styled(UsernameWrapper)``;
@@ -169,6 +170,7 @@ const Label = styled.label`
   font-size: 1.5rem;
   margin-bottom: 5px;
   display: block;
+  font-weight: 600;
 `;
 
 const CreateButton = styled.button`
@@ -180,10 +182,20 @@ const CreateButton = styled.button`
   font-weight: 600;
   border-radius: 4px;
   margin-bottom: 25px;
+  cursor: pointer;
+  transition: opacity .167s ease-in-out;
+  :hover {
+    opacity: .8;
+  }
 `;
 
 const Login = styled.a`
   height: 45px;
   border: none;
   color: ${(props) => props.theme.main};
+  cursor: pointer;
+  :hover {
+    text-decoration: underline;
+    color: ${(props) => props.theme.main};
+  }
 `;
