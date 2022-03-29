@@ -20,9 +20,9 @@ const Register = () => {
     month: "Jan",
     year: "2022",
   });
-  const [emailError, toggleEmailError] = useState(false);
-  const [usernameError, toggleUsernameError] = useState(false);
-  const [passwordError, togglePasswordError] = useState(false);
+  const [emailError, toggleEmailError] = useState(null);
+  const [usernameError, toggleUsernameError] = useState(null);
+  const [passwordError, togglePasswordError] = useState(null);
   const [success, toggleSuccess] = useState(false);
   const [loading, toggleLoading] = useState(false);
 
@@ -87,7 +87,7 @@ const Register = () => {
   const validateUsername = (username) => {
     // Must contain only alphanumeric, underscore, dot and between 8 - 20 characters
     const usernameFormat =
-      /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
+      /^(?=.{6,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
     if (username.match(usernameFormat)) {
       toggleUsernameError(false);
       return true;
@@ -127,18 +127,31 @@ const Register = () => {
             <Form onChange={handleFormChange}>
               <EmailWrapper>
                 <Label>Email</Label>
-                <Email name="email" error={emailError} />
+                <Email
+                  name="email"
+                  error={emailError}
+                  onChange={(e) => {
+                    validateEmail(e.target.value);
+                  }}
+                />
                 <InputErrorMessage error={emailError}>
                   <ErrorIcon className="errorIcon" />
-                  Gigity
+                  Please enter a valid email address
                 </InputErrorMessage>
               </EmailWrapper>
 
               <UsernameWrapper>
                 <Label>Username</Label>
-                <Username name="username" error={usernameError} />
+                <Username
+                  name="username"
+                  error={usernameError}
+                  onChange={(e) => {
+                    validateUsername(e.target.value);
+                  }}
+                />
                 <InputErrorMessage error={usernameError}>
-                  Gigity
+                  <ErrorIcon className="errorIcon" />
+                  Username must contain at least 8 - 20 alphanumeric characters
                 </InputErrorMessage>
               </UsernameWrapper>
 
@@ -148,12 +161,19 @@ const Register = () => {
                   type="password"
                   name="password"
                   error={passwordError}
+                  onChange={(e) => {
+                    validatePassword(e.target.value);
+                  }}
                 />
                 <InputErrorMessage error={passwordError}>
-                  Gigity
+                  <ErrorIcon className="errorIcon" />
+                  <span>
+                    Password must have at least 8 to 15 characters and include
+                    at least 1 lowercase letter, 1 uppercase letter and 1
+                    special character (!@#$%^&*)
+                  </span>
                 </InputErrorMessage>
               </PasswordWrapper>
-
               <BirthdayWrapper>
                 <Label>Birthday</Label>
                 <Month name="month" id="">
@@ -231,7 +251,11 @@ const Username = styled.input`
   border-radius: 4px;
   font-size: 2rem;
   padding: 8px;
-  border-color: ${(props) => props.error && "red"};
+  border-color: ${(props) =>
+    props.error ? "red" : props.error === false ? "green" : "grey"};
+  :focus {
+    border-color: inherit;
+  }
 `;
 
 const EmailWrapper = styled(UsernameWrapper)``;
@@ -350,10 +374,13 @@ const InputErrorMessage = styled.div`
   color: red;
   background-color: #fde2e2;
   display: ${(props) => (props.error ? "flex" : "none")};
-  padding: 6px;
+  padding: 8px;
   align-items: center;
+  white-space: pre-wrap;
+  font-size: 1.4rem;
+  line-height: 1.5;
   .errorIcon {
-    margin-right: 4px;
-    font-size: 2.2rem;
+    margin-right: 8px;
+    font-size: 3rem;
   }
 `;
