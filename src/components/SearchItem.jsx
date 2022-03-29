@@ -12,17 +12,16 @@ const SearchItem = ({ item }) => {
   const [modal, toggleModal] = useState(false);
   const [alertStatus, toggleAlertStatus] = useState(false);
   const [type, setType] = useState(null);
-  console.log(item);
 
   useEffect(() => {
-    if (item.demographics.length > 0) {
-      setType(item.demographics[0].type);
-    } else if (item.genres.length > 0) {
-      setType(item.genres[0].type);
+    if (item.episodes) {
+      setType("anime");
+    } else if (item.chapters) {
+      setType("manga");
     } else {
       setType("characters");
     }
-  }, [])
+  }, []);
 
   const handleClick = async (e) => {
     const response = await jikanRequest.get(`/${type}/${item.mal_id}`);
@@ -36,11 +35,13 @@ const SearchItem = ({ item }) => {
           <Title onClick={handleClick}>
             {item.name ? item.name : item.title}
           </Title>
-          <Genres>
-            {item.genres?.map((genre, i) => (
-              <>{i < 5 && <Genre key={i}>{genre.name}</Genre>}</>
-            ))}
-          </Genres>
+          {type !== "characters" && (
+            <Genres>
+              {item.genres?.map((genre, i) => (
+                <>{i < 5 && <Genre key={i}>{genre.name}</Genre>}</>
+              ))}
+            </Genres>
+          )}
         </Header>
         <Content onClick={handleClick}>
           <Image
@@ -52,24 +53,29 @@ const SearchItem = ({ item }) => {
             className="animeImage"
           />
         </Content>
-        <Bottom>
-          <Score>
-            <StarIcon className="icon" />
-            {item.score || item.scored ? item.score || item.scored : "N/A"}
-          </Score>
-          <Members>
-            <PersonIcon className="icon" />
-            {item.members ? item.members : 0}
-          </Members>
-          { type === "anime" ? <AddToList
-            onClick={() => {
-              toggleModal(true);
-            }}
-          >
-            Add To List
-          </AddToList>: null}
-         
-        </Bottom>
+        {type !== "characters" && (
+          <Bottom>
+            <Score>
+              <StarIcon className="icon" />
+              {item.score || item.scored ? item.score || item.scored : "N/A"}
+            </Score>
+            <Members>
+              <PersonIcon className="icon" />
+              {item.members ? item.members : 0}
+            </Members>
+            {type === "anime" ? (
+              <AddToList
+                onClick={() => {
+                  toggleModal(true);
+                }}
+              >
+                Add To List
+              </AddToList>
+            ) : (
+              <Status>Status: {item.status}</Status>
+            )}
+          </Bottom>
+        )}
       </Container>
       <Alert alertStatus={alertStatus} message="Successfully added to list!" />
       {modal && (
@@ -179,4 +185,8 @@ const AddToList = styled.button`
   :hover {
     opacity: 0.8;
   }
+`;
+
+const Status = styled.div`
+  font-weight: 500;
 `;
