@@ -82,8 +82,8 @@ const Login = () => {
             <Forgot onClick={() => toggleForgot(!forgot)}>
               Forgot your password?
             </Forgot>
-            <Register>Create account</Register>
-          </Content>
+            <Register href="/register">Create account</Register>
+          </Content> 
         )}
       </Wrapper>
       <Alert alertStatus={alert} message="In Development" type="error"/>

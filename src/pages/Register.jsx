@@ -8,6 +8,7 @@ import { HeaderTitle, Header } from "./Login";
 import { CircularProgress } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { useNavigate } from "react-router-dom";
+import ErrorIcon from "@mui/icons-material/Error";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -19,6 +20,9 @@ const Register = () => {
     month: "Jan",
     year: "2022",
   });
+  const [emailError, toggleEmailError] = useState(false);
+  const [usernameError, toggleUsernameError] = useState(false);
+  const [passwordError, togglePasswordError] = useState(false);
   const [success, toggleSuccess] = useState(false);
   const [loading, toggleLoading] = useState(false);
 
@@ -31,10 +35,10 @@ const Register = () => {
   };
 
   const handleSubmit = async (e) => {
-    if (
-      validateEmail(formInputs.email) &&
-      validatePassword(formInputs.password) && validateUsername(formInputs.username)
-    ) {
+    const validEmail = validateEmail(formInputs.email);
+    const validPassword = validatePassword(formInputs.password);
+    const validUsername = validateUsername(formInputs.username);
+    if (validEmail && validPassword && validUsername) {
       try {
         toggleLoading(true);
         let birthday = `${formInputs.month} ${formInputs.day}, ${formInputs.year}`;
@@ -60,9 +64,10 @@ const Register = () => {
   const validateEmail = (email) => {
     const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (email.match(mailFormat)) {
+      toggleEmailError(false);
       return true;
     }
-    alert("You have entered an invalid email address!");
+    toggleEmailError(true);
     return false;
   };
 
@@ -71,24 +76,26 @@ const Register = () => {
     const passwordFormat =
       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
     if (password.match(passwordFormat)) {
-      console.log("Password works");
+      togglePasswordError(false);
       return true;
     } else {
-      alert("Invalid password");
+      togglePasswordError(true);
       return false;
     }
   };
 
   const validateUsername = (username) => {
     // Must contain only alphanumeric, underscore, dot and between 8 - 20 characters
-    const usernameFormat = /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
+    const usernameFormat =
+      /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
     if (username.match(usernameFormat)) {
-      return true; 
+      toggleUsernameError(false);
+      return true;
     } else {
-      alert("Invalid username");
-      return false; 
+      toggleUsernameError(true);
+      return false;
     }
-  }
+  };
 
   return (
     <Container>
@@ -120,16 +127,33 @@ const Register = () => {
             <Form onChange={handleFormChange}>
               <EmailWrapper>
                 <Label>Email</Label>
-                <Email name="email" />
+                <Email name="email" error={emailError} />
+                <InputErrorMessage error={emailError}>
+                  <ErrorIcon className="errorIcon" />
+                  Gigity
+                </InputErrorMessage>
               </EmailWrapper>
+
               <UsernameWrapper>
                 <Label>Username</Label>
-                <Username name="username" />
+                <Username name="username" error={usernameError} />
+                <InputErrorMessage error={usernameError}>
+                  Gigity
+                </InputErrorMessage>
               </UsernameWrapper>
+
               <PasswordWrapper>
                 <Label>Password</Label>
-                <Password type="password" name="password" />
+                <Password
+                  type="password"
+                  name="password"
+                  error={passwordError}
+                />
+                <InputErrorMessage error={passwordError}>
+                  Gigity
+                </InputErrorMessage>
               </PasswordWrapper>
+
               <BirthdayWrapper>
                 <Label>Birthday</Label>
                 <Month name="month" id="">
@@ -207,6 +231,7 @@ const Username = styled.input`
   border-radius: 4px;
   font-size: 2rem;
   padding: 8px;
+  border-color: ${(props) => props.error && "red"};
 `;
 
 const EmailWrapper = styled(UsernameWrapper)``;
@@ -319,4 +344,16 @@ const SuccessText = styled.div`
 const LoginButton = styled(CreateButton)`
   width: 80%;
   background-color: green;
+`;
+
+const InputErrorMessage = styled.div`
+  color: red;
+  background-color: #fde2e2;
+  display: ${(props) => (props.error ? "flex" : "none")};
+  padding: 6px;
+  align-items: center;
+  .errorIcon {
+    margin-right: 4px;
+    font-size: 2.2rem;
+  }
 `;
