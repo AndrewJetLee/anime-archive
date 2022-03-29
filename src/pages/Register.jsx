@@ -5,8 +5,10 @@ import { months, days, getYears } from "../utility/helpers";
 import { useState } from "react";
 import { publicRequest } from "../requestMethods";
 import { HeaderTitle, Header } from "./Login";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [formInputs, setFormInputs] = useState({
     email: "",
     username: "",
@@ -15,6 +17,7 @@ const Register = () => {
     month: "",
     year: "",
   });
+  const [success, toggleSuccess] = useState(false);
 
   const handleFormChange = (e) => {
     let value = e.target.value;
@@ -34,6 +37,7 @@ const Register = () => {
     };
     console.log(payload);
     const res = await publicRequest.post("/user/register", payload);
+    toggleSuccess(true);
     console.log(res);
   };
 
@@ -104,12 +108,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   min-height: 50vh;
   align-items: center;
-`;
-
-const Title = styled.span`
-  display: inline-block;
-  font-weight: 600;
-  padding: 8px;
 `;
 
 const Content = styled.div`
