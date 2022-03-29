@@ -188,9 +188,9 @@ const Media = () => {
                   <strong>Genres: </strong>
                   {item.genres?.map((genre, i) =>
                     i === item.genres.length - 1 ? (
-                      <a href="#">{genre.name} </a>
+                      <span>{genre.name} </span>
                     ) : (
-                      <a href="#">{genre.name}, </a>
+                      <span>{genre.name}, </span>
                     )
                   )}
                 </li>
@@ -208,9 +208,9 @@ const Media = () => {
                   <strong>Demographics: </strong>
                   {item.demographics?.map((demographic, i) =>
                     i === item.demographics.length - 1 ? (
-                      <a href="#">{demographic.name} </a>
+                      <span>{demographic.name} </span>
                     ) : (
-                      <a href="#">{demographic.name}, </a>
+                      <span>{demographic.name}, </span>
                     )
                   )}
                 </li>

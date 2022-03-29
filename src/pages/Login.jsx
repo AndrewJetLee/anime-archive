@@ -4,10 +4,12 @@ import Footer from "../components/Footer";
 import { useState } from "react";
 import { publicRequest } from "../requestMethods";
 import { useNavigate } from "react-router-dom";
+import Alert from "../components/Alert";
 
 const Login = () => {
   const navigate = useNavigate();
   const [forgot, toggleForgot] = useState(false);
+  const [alert, toggleAlert] = useState(false);
   const [formInputs, setFormInputs] = useState({
     username: "",
     password: "",
@@ -33,8 +35,9 @@ const Login = () => {
     }
   };
 
-  const handleForgotPassword = async () => {
-    toggleForgot(!forgot);
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    toggleAlert(true);
     console.log("In development");
   };
 
@@ -51,17 +54,16 @@ const Login = () => {
               <ForgotFormHeader>
                 <ForgotFormTitle>Forgot your password?</ForgotFormTitle>
                 <ForgotFormDescription>
-                  Enter your email to retrieve your password
+                  Please enter your email to retrieve your password
                 </ForgotFormDescription>
               </ForgotFormHeader>
               <EmailWrapper>
-                <Label>Email</Label>
-                <Username name="username" />
+                <EmailInput placeholder="JangoDarkBlade@gmail.com" />
               </EmailWrapper>
-              <ResetPassword onSubmit={handleForgotPassword}>
+              <ResetPassword onClick={(e) => handleForgotPassword(e)}>
                 Reset Your Password
               </ResetPassword>
-              <Forgot onClick={handleForgotPassword}>Back to Sign In</Forgot>
+              <Forgot onClick={() => toggleForgot(!forgot)}>Back to Sign In</Forgot>
             </Form>
           </Content>
         ) : (
@@ -77,13 +79,14 @@ const Login = () => {
               </PasswordWrapper>
               <LoginButton onClick={handleSubmit}>Login</LoginButton>
             </Form>
-            <Forgot onClick={handleForgotPassword}>
+            <Forgot onClick={() => toggleForgot(!forgot)}>
               Forgot your password?
             </Forgot>
             <Register>Create account</Register>
           </Content>
         )}
       </Wrapper>
+      <Alert alertStatus={alert} message="In Development" type="error"/>
       <Footer />
     </Container>
   );
@@ -146,6 +149,7 @@ const Username = styled.input`
   border: solid 1px grey;
   border-radius: 4px;
   font-size: 2rem;
+  padding: 8px;
 `;
 const PasswordWrapper = styled(UsernameWrapper)`
   margin-bottom: 30px;
@@ -156,6 +160,7 @@ const Password = styled(Username)``;
 const Label = styled.label`
   font-size: 1.5rem;
   margin-bottom: 5px;
+  font-weight: 600; 
 `;
 
 const LoginButton = styled.button`
@@ -168,11 +173,20 @@ const LoginButton = styled.button`
   border-radius: 4px;
   margin-bottom: 25px;
   cursor: pointer;
+  transition: opacity .167s ease-in-out;
+  :hover {
+    opacity: .8;
+  }
 `;
 const Register = styled.a`
   height: 45px;
   border: none;
   color: ${(props) => props.theme.main};
+  cursor: pointer;
+  :hover {
+    text-decoration: underline;
+    color: ${(props) => props.theme.main};
+  }
 `;
 
 const Forgot = styled(Register)``;
@@ -182,7 +196,12 @@ const Forgot = styled(Register)``;
 const ForgotFormHeader = styled.div``;
 const ForgotFormTitle = styled.h3``;
 
-const ForgotFormDescription = styled.span``;
+const ForgotFormDescription = styled.div`
+  margin-bottom: 5px;
+`;
 
 const ResetPassword = styled(LoginButton)``;
-const EmailWrapper = styled(UsernameWrapper)``;
+const EmailInput = styled(Username)`
+`;
+const EmailWrapper = styled(UsernameWrapper)`
+`;
