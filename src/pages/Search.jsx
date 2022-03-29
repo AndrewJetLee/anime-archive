@@ -188,7 +188,7 @@ const Wrapper = styled.div`
   min-height: 100vh;
 `;
 
-const More = styled.button`
+export const More = styled.button`
   width: 100%;
   background-color: ${props => props.theme.tertiary};
   padding: 16px;

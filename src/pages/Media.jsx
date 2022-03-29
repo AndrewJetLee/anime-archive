@@ -9,6 +9,7 @@ import { Title } from "../components/Carousel";
 import { Error } from "../components/Nav";
 import ErrorOutlinedIcon from "@mui/icons-material/ErrorOutlined";
 import Alert from "../components/Alert";
+import { More } from "./Search";
 
 const Media = () => {
   const location = useLocation();
@@ -17,6 +18,7 @@ const Media = () => {
   console.log(location.state);
 
   const [reviews, setReviews] = useState([]);
+  const [reviewsPagination, setReviewsPagination] = useState({});
   const [voiceActors, setVoiceActors] = useState([]);
   const [alert, toggleAlert] = useState(false);
   const [statusDropdown, setStatusDropdown] = useState("");
@@ -33,7 +35,7 @@ const Media = () => {
       getReviews();
     }
   }, [type, id]);
- 
+
   const handleError = async () => {
     toggleError(true);
     setTimeout(() => {
@@ -65,11 +67,21 @@ const Media = () => {
     }
   };
 
-  const getReviews = async () => {
+  const getReviews = async (page) => {
     try {
-      const res = await jikanRequest.get(`/${type}/${id}/reviews`);
-      console.log(res);
-      setReviews(res.data.data);
+      if (page) {
+        const res = await jikanRequest.get(
+          `/${type}/${id}/reviews?page=${page}`
+        );
+        console.log(res);
+        setReviews((prevReviews) => [...prevReviews, ...res.data.data]);
+        setReviewsPagination(res.data.pagination);
+      } else {
+        const res = await jikanRequest.get(`/${type}/${id}/reviews`);
+        console.log(res);
+        setReviews(res.data.data);
+        setReviewsPagination(res.data.pagination);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -101,7 +113,7 @@ const Media = () => {
           <ImageWrapper>
             <Image src={item.images.jpg.image_url} />
           </ImageWrapper>
-          {type !== "characters" && (
+          {type === "anime" && (
             <AddToListWrapper>
               <AddToListTitle>Add to My List</AddToListTitle>
 
@@ -139,7 +151,7 @@ const Media = () => {
                     setEpisodesWatched(e.target.value);
                   }}
                 />
-                /{item.episodes}
+                /{item.episodes || "?"}
               </EpisodesWatchedWrapper>
               <Inputs>
                 <AddButton onClick={handleAddToList}>Add To List</AddButton>
@@ -287,10 +299,10 @@ const Media = () => {
               <SideBarList>
                 <li>
                   <strong>Score:</strong>{" "}
-                  {item.score ? item.score : item.scored}
+                  {item.score ? item.score : item.scored ? item.scored : "N/A"}
                 </li>
                 <li>
-                  <strong>Ranked:</strong> #{item.rank}
+                  <strong>Ranked:</strong> #{item.rank || "N/A"}
                 </li>
                 <li>
                   <strong>Popularity: </strong>#{item.popularity}
@@ -334,13 +346,15 @@ const Media = () => {
             <Details>
               <ScoreWrapper>
                 <ScoreTitle>SCORE</ScoreTitle>
-                <Score>{item.scored ? item.scored : item.score}</Score>
+                <Score>
+                  {item.scored ? item.scored : item.score ? item.score : "N/A"}
+                </Score>
                 <Users>{item.scored_by} users</Users>
               </ScoreWrapper>
               <Data>
                 <ScoreData>
                   <span>
-                    Ranked <strong>#{item.rank}</strong>
+                    Ranked <strong>#{item.rank || "N/A"}</strong>
                   </span>
                   <span>
                     Popularity <strong>#{item.popularity}</strong>
@@ -389,17 +403,33 @@ const Media = () => {
                 ></iframe>
               </VideoWrapper>
             ) : null}
+
             <Reviews>
               <h5>Reviews</h5>
-              {reviews.map((review, i) => (
+              { reviews.length > 0 ? <>{reviews.map((review, i) => (
                 <Review review={review} key={i}></Review>
-              ))}
+              ))}</> : <p>No reviews have been submitted yet for this title</p>}
+              
             </Reviews>
+            {reviewsPagination.has_next_page && (
+              <More
+                onClick={() =>
+                  getReviews(reviewsPagination.last_visible_page + 1)
+                }
+              >
+                More Reviews
+              </More>
+            )}
           </Right>
         )}
       </Wrapper>
       <Footer />
-      {alert ? <Alert alertStatus={alert} message="Successfully added to list!"></Alert> : null}
+      {alert ? (
+        <Alert
+          alertStatus={alert}
+          message="Successfully added to list!"
+        ></Alert>
+      ) : null}
       <Error error={error}>
         <ErrorOutlinedIcon className="errorIcon" /> Invalid episode input
       </Error>
@@ -428,9 +458,7 @@ const Titles = styled.div`
   padding-left: 10px;
   border-bottom: 1px solid ${(props) => props.theme.main};
 `;
-const CanonTitle = styled.h3`
-
-`;
+const CanonTitle = styled.h3``;
 const EnglishTitle = styled.h4`
   color: #858585;
 `;
@@ -450,7 +478,9 @@ const Left = styled.div`
   flex-direction: column;
   padding: 4px;
 `;
-const ImageWrapper = styled.div``;
+const ImageWrapper = styled.div`
+  min-width: 200px;
+`;
 
 const Image = styled.img`
   width: 100%;
@@ -650,3 +680,4 @@ const VideoWrapper = styled(Synopsis)`
 `;
 
 const Reviews = styled(Synopsis)``;
+
