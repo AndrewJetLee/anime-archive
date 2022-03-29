@@ -52,6 +52,7 @@ export const fadeIn = keyframes`
 `;
 
 export const AlertWrapper = styled.div`
+  border-radius: 2px;
   pointer-events: none;
   opacity: 0;
   ${(props) =>
