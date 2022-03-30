@@ -15,8 +15,6 @@ const Media = () => {
   const location = useLocation();
   const { type, id } = useParams();
 
-  console.log(location.state);
-
   const [reviews, setReviews] = useState([]);
   const [reviewsPagination, setReviewsPagination] = useState({});
   const [voiceActors, setVoiceActors] = useState([]);
@@ -102,7 +100,7 @@ const Media = () => {
       <Nav />
       <Header>
         <Titles>
-          <CanonTitle>{item.title}</CanonTitle>
+          <CanonTitle>{item.title ? item.title : item.name}</CanonTitle>
           {item.title !== item.title_english ? (
             <EnglishTitle>{item.title_english}</EnglishTitle>
           ) : null}

@@ -10,7 +10,6 @@ const UserAnimeList = () => {
   const [filteredList, setFilteredList] = useState([]);
   const [activeTab, setActiveTab] = useState("all");
   const user = JSON.parse(sessionStorage.getItem("user"));
-  console.log(userList);
   
   useEffect(() => {
     getList()

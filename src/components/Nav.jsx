@@ -12,7 +12,6 @@ const Nav = () => {
   const [error, toggleError] = useState(false);
 
   const user = JSON.parse(sessionStorage?.getItem("user"));
-  console.log(user);
 
   const handleSearch = async (e) => {
     e.preventDefault();
