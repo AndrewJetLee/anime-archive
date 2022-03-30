@@ -122,6 +122,7 @@ export const HeaderTitle = styled.span`
   font-weight: 600;
   padding: 8px;
   margin-left: 20px;
+  text-transform: uppercase;
 `;
 
 const Content = styled.div`

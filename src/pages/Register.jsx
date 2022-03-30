@@ -24,6 +24,7 @@ const Register = () => {
   const [usernameError, toggleUsernameError] = useState(null);
   const [passwordError, togglePasswordError] = useState(null);
   const [success, toggleSuccess] = useState(false);
+  const [failure, toggleFailure] = useState(true);
   const [loading, toggleLoading] = useState(false);
 
   const handleFormChange = (e) => {
@@ -54,6 +55,8 @@ const Register = () => {
         toggleLoading(false);
         console.log(res);
       } catch (err) {
+        toggleLoading(false);
+        toggleFailure(true);
         console.log(err);
       }
     } else {
@@ -123,6 +126,25 @@ const Register = () => {
                   </LoginButton>
                 </SuccessContent>
               </Success>
+            )}
+            {failure && (
+              <Failure>
+                <FailureContent>
+                  <FailureHeader>
+                    <ErrorIcon className="errorIcon" />
+                  </FailureHeader>
+                  <FailureText>
+                    <h1>Error creating account!</h1>
+                    <p>Account with username or email already exists</p>
+                  </FailureText>
+                  <LoginButton
+                    onClick={() => toggleFailure(false)}
+                    failed={true}
+                  >
+                    Try Again
+                  </LoginButton>
+                </FailureContent>
+              </Failure>
             )}
             <Form onChange={handleFormChange}>
               <EmailWrapper>
@@ -275,6 +297,7 @@ const Month = styled.select`
   width: 70px;
   margin-right: 5px;
   text-align: center;
+  border-radius: 2px;
 `;
 const Day = styled(Month)`
   width: 50px;
@@ -365,9 +388,28 @@ const SuccessText = styled.div`
   margin-top: 10px;
 `;
 
+const Failure = styled(Success)``;
+
+const FailureHeader = styled.header`
+  width: 100%;
+  background-color: ${(props) => props.theme.main};
+  flex: 1.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .errorIcon {
+    font-size: 7.5rem;
+    color: white;
+  }
+`;
+
+const FailureContent = styled(SuccessContent)``;
+
+const FailureText = styled(SuccessText)``;
+
 const LoginButton = styled(CreateButton)`
   width: 80%;
-  background-color: green;
+  background-color: ${(props) => (props.failed ? props.theme.main : "green")};
 `;
 
 const InputErrorMessage = styled.div`
