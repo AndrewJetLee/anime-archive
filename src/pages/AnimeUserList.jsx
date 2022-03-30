@@ -144,7 +144,6 @@ const Wrapper = styled.main`
   display: flex;
   width: 91vw;
   flex-direction: column;
-  min-height: 100vh;
 `;
 
 // Header

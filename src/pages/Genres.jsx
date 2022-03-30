@@ -42,7 +42,12 @@ const Genres = () => {
       setLoading(true);
       const res = await jikanRequest.get("/genres/anime");
       console.log(res);
-      setGenres(res.data.data);
+      let uniqueObjArray = [
+        ...new Map(
+          res.data.data.map((item) => [item["mal_id"], item])
+        ).values(),
+      ];
+      setGenres(uniqueObjArray);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -54,7 +59,12 @@ const Genres = () => {
       setLoading(true);
       const res = await jikanRequest.get("/genres/manga");
       console.log(res);
-      setGenres(res.data.data);
+      let uniqueObjArray = [
+        ...new Map(
+          res.data.data.map((item) => [item["mal_id"], item])
+        ).values(),
+      ];
+      setGenres(uniqueObjArray);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -97,7 +107,7 @@ const Genres = () => {
         <HeaderTitle>Search</HeaderTitle>
       </Header>
       <Wrapper>
-      <SearchBar filters={filters} genreFilter={genreFilter} type={type}/>
+        <SearchBar filters={filters} genreFilter={genreFilter} type={type} />
         <AdvancedSearchWrapper>
           <AdvancedSearch
             onClick={() => {

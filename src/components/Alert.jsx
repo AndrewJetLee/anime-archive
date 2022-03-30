@@ -72,7 +72,7 @@ export const AlertWrapper = styled.div`
   top: 100px;
   background-color: ${(props) => props.theme.tertiary};
   color: white;
-  padding: 4px 12px;
+  padding: 4px 18px;
   .icon {
     font-size: 26px;
     margin-right: 10px;

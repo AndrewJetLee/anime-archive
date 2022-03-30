@@ -24,7 +24,7 @@ const Register = () => {
   const [usernameError, toggleUsernameError] = useState(null);
   const [passwordError, togglePasswordError] = useState(null);
   const [success, toggleSuccess] = useState(false);
-  const [failure, toggleFailure] = useState(true);
+  const [failure, toggleFailure] = useState(false);
   const [loading, toggleLoading] = useState(false);
 
   const handleFormChange = (e) => {
