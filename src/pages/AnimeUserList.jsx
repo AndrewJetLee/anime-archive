@@ -10,58 +10,90 @@ const UserAnimeList = () => {
   const [filteredList, setFilteredList] = useState([]);
   const [activeTab, setActiveTab] = useState("all");
   const user = JSON.parse(sessionStorage.getItem("user"));
-  
-  useEffect(() => {
-    getList()
-  }, [])
 
   useEffect(() => {
-    filterList()
-  }, [activeTab])
+    getList();
+  }, []);
+
+  useEffect(() => {
+    filterList();
+  }, [activeTab]);
 
   const getList = async () => {
     try {
       if (user) {
         const res = await publicRequest.get("/user/list");
-        setUserList([...res.data.list].sort((a, b) => {
-          if (a.userOptions.userStatus.toUpperCase() < b.userOptions.userStatus.toUpperCase()) {
-            return -1;
-          }
-          if (a.userOptions.userStatus.toUpperCase() > b.userOptions.userStatus.toUpperCase()) {
-            return 1;
-          }
-          return 0;
-        }));
-        setFilteredList([...res.data.list].sort((a, b) => {
-          if (a.userOptions.userStatus.toUpperCase() < b.userOptions.userStatus.toUpperCase()) {
-            return -1;
-          }
-          if (a.userOptions.userStatus.toUpperCase() > b.userOptions.userStatus.toUpperCase()) {
-            return 1;
-          }
-          return 0;
-        }));
+        setUserList(
+          [...res.data.list].sort((a, b) => {
+            if (
+              a.userOptions.userStatus.toUpperCase() <
+              b.userOptions.userStatus.toUpperCase()
+            ) {
+              return -1;
+            }
+            if (
+              a.userOptions.userStatus.toUpperCase() >
+              b.userOptions.userStatus.toUpperCase()
+            ) {
+              return 1;
+            }
+            return 0;
+          })
+        );
+        setFilteredList(
+          [...res.data.list].sort((a, b) => {
+            if (
+              a.userOptions.userStatus.toUpperCase() <
+              b.userOptions.userStatus.toUpperCase()
+            ) {
+              return -1;
+            }
+            if (
+              a.userOptions.userStatus.toUpperCase() >
+              b.userOptions.userStatus.toUpperCase()
+            ) {
+              return 1;
+            }
+            return 0;
+          })
+        );
       }
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   const filterList = () => {
     if (activeTab === "all") {
       setFilteredList(userList);
     } else if (activeTab === "current") {
-      setFilteredList(userList.filter((item, i) => item.userOptions.userStatus === "Currently Watching"))
+      setFilteredList(
+        userList.filter(
+          (item, i) => item.userOptions.userStatus === "Currently Watching"
+        )
+      );
     } else if (activeTab === "completed") {
-      setFilteredList(userList.filter((item, i) => item.userOptions.userStatus === "Completed"))
+      setFilteredList(
+        userList.filter(
+          (item, i) => item.userOptions.userStatus === "Completed"
+        )
+      );
     } else if (activeTab === "hold") {
-      setFilteredList(userList.filter((item, i) => item.userOptions.userStatus === "On Hold"))
+      setFilteredList(
+        userList.filter((item, i) => item.userOptions.userStatus === "On Hold")
+      );
     } else if (activeTab === "dropped") {
-      setFilteredList(userList.filter((item, i) => item.userOptions.userStatus === "Dropped"))
+      setFilteredList(
+        userList.filter((item, i) => item.userOptions.userStatus === "Dropped")
+      );
     } else if (activeTab === "planned") {
-      setFilteredList(userList.filter((item, i) => item.userOptions.userStatus === "Plan to Watch"))
+      setFilteredList(
+        userList.filter(
+          (item, i) => item.userOptions.userStatus === "Plan to Watch"
+        )
+      );
     }
-  } 
+  };
 
   const handleDelete = async (id) => {
     try {
@@ -112,6 +144,17 @@ const UserAnimeList = () => {
       </Header>
       <Wrapper>
         <AnimeList>
+          {filteredList.length === 0 && (
+            <NoList>
+              <NoListContent>
+                <NoListImg src="/images/aa-tohru-point.png" />
+                <NoListText>
+                  No anime found. Try adding more anime to your list first!
+                </NoListText>
+                <NoListButton>Browse Anime</NoListButton>
+              </NoListContent>
+            </NoList>
+          )}
           {filteredList.map((item, i) => (
             <UserListItem
               item={item}
@@ -272,5 +315,47 @@ const Planned = styled.div`
 // List
 const AnimeList = styled.section`
   width: 100%;
-  
+`;
+
+const NoList = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
+const NoListContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const NoListImg = styled.img`
+  background: transparent;
+  object-fit: contain;
+  height: 100%;
+  width: 300px;
+`;
+
+const NoListText = styled.p`
+  font-weight: 500;
+  font-size: 1.8rem;
+`;
+
+const NoListButton = styled.a`
+  background-color: ${(props) => props.theme.tertiary};
+  padding: 12px 30px;
+  font-size: 1.8rem;
+  font-weight: 600;  
+  color: white;
+  cursor: pointer;
+  border-radius: 2px;
+  width: 100%;
+  text-align: center;
+  border-radius: 4px;
+  transition: opacity .167s ease-in-out;
+  :hover {
+    color: white;
+    opacity: .8;
+  }
 `;
