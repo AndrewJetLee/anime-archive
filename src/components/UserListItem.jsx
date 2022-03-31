@@ -32,7 +32,6 @@ const UserListItem = ({
     navigate(`/${type}/${media.mal_id}`, { state: response.data.data });
   };
 
-  console.log(media);
   return (
     <>
       <Container mediaStatus={media.userOptions.userStatus}>

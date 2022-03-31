@@ -108,7 +108,7 @@ const Register = () => {
       </Header>
       <Wrapper>
         {loading ? (
-          <CircularProgress />
+          <CircularProgress color="secondary"/>
         ) : (
           <Content>
             {success && (

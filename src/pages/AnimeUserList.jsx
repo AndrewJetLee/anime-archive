@@ -4,11 +4,13 @@ import Footer from "../components/Footer";
 import UserListItem from "../components/UserListItem";
 import { useState, useEffect } from "react";
 import { publicRequest } from "../requestMethods";
+import { CircularProgress } from "@mui/material";
 
 const UserAnimeList = () => {
   const [userList, setUserList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
   const [activeTab, setActiveTab] = useState("all");
+  const [loading, toggleLoading] = useState(false);
   const user = JSON.parse(sessionStorage.getItem("user"));
 
   useEffect(() => {
@@ -21,6 +23,7 @@ const UserAnimeList = () => {
 
   const getList = async () => {
     try {
+      toggleLoading(true);
       if (user) {
         const res = await publicRequest.get("/user/list");
         setUserList(
@@ -57,6 +60,7 @@ const UserAnimeList = () => {
             return 0;
           })
         );
+        toggleLoading(false);
       }
     } catch (err) {
       console.log(err);
@@ -144,7 +148,8 @@ const UserAnimeList = () => {
       </Header>
       <Wrapper>
         <AnimeList>
-          {filteredList.length === 0 && (
+          { loading && <Loading><CircularProgress color="secondary"></CircularProgress></Loading>}
+          {!loading && filteredList.length === 0 && (
             <NoList>
               <NoListContent>
                 <NoListImg src="/images/aa-tohru-point.png" />
@@ -155,7 +160,7 @@ const UserAnimeList = () => {
               </NoListContent>
             </NoList>
           )}
-          {filteredList.map((item, i) => (
+          { !loading && filteredList.map((item, i) => (
             <UserListItem
               item={item}
               key={i}
@@ -359,3 +364,8 @@ const NoListButton = styled.a`
     opacity: .8;
   }
 `;
+
+const Loading = styled.div`
+  display: flex;
+  justify-content: center;
+`
