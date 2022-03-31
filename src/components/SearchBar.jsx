@@ -26,9 +26,9 @@ const SearchBar = ({ filters, genreFilter, type }) => {
       searchQuery += `?status=${filters.status}`;
     }
     if (filters.orderBy.length > 0 && searchQuery.length > 0) {
-      searchQuery += `&order_by=${filters.orderBy}`;
+      searchQuery += `&order_by=${filters.orderBy}&sort=desc`;
     } else if (filters.orderBy.length > 0) {
-      searchQuery += `?order_by=${filters.orderBy}`;
+      searchQuery += `?order_by=${filters.orderBy}&sort=desc`;
     }
     if (filters.rating.length > 0 && searchQuery.length > 0) {
       searchQuery += `&rating=${filters.rating}`;

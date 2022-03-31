@@ -73,11 +73,27 @@ const Genres = () => {
 
   const handleClickGenre = async (id, name) => {
     try {
-      setLoading(true);
-      const res = await jikanRequest.get(`/anime?genres=${id}`);
-      console.log(res);
-      navigate(`/anime/genres/${id}/${name}`);
-      setLoading(false);
+      if (type === "anime") {
+        setLoading(true);
+        const res = await jikanRequest.get(`/anime?genres=${id}`);
+        console.log(res);
+        navigate(`/anime/genres/${id}/${name}`, {
+          state: {
+            type: "anime",
+          },
+        });
+        setLoading(false);
+      } else {
+        setLoading(true);
+        const res = await jikanRequest.get(`/manga?genres=${id}`);
+        console.log(res);
+        navigate(`/manga/genres/${id}/${name}`, {
+          state: {
+            type: "manga",
+          },
+        });
+        setLoading(false);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -277,7 +293,7 @@ const Genre = styled.div`
   }
 `;
 
-const GenreWrapper = styled.div``
+const GenreWrapper = styled.div``;
 
 const SkeletonGenre = styled.div`
   width: 220px;

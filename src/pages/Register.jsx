@@ -36,6 +36,7 @@ const Register = () => {
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     const validEmail = validateEmail(formInputs.email);
     const validPassword = validatePassword(formInputs.password);
     const validUsername = validateUsername(formInputs.username);
@@ -218,8 +219,11 @@ const Register = () => {
                   ))}
                 </Year>
               </BirthdayWrapper>
+              <CreateButton type="submit" onClick={handleSubmit}>
+                Create Account
+              </CreateButton>
             </Form>
-            <CreateButton onClick={handleSubmit}>Create Account</CreateButton>
+
             <span>
               Already have an account? <Login href="/login">Login</Login>
             </span>
@@ -434,5 +438,5 @@ const Loading = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  color: ${props => props.theme.tertiary}
-`
+  color: ${(props) => props.theme.tertiary};
+`;
