@@ -52,7 +52,6 @@ export const fadeIn = keyframes`
 `;
 
 export const AlertWrapper = styled.div`
-  border-radius: 2px;
   pointer-events: none;
   opacity: 0;
   ${(props) =>
@@ -68,13 +67,13 @@ export const AlertWrapper = styled.div`
   display: flex;
   align-items: center;
   position: fixed;
-  right: 40px;
+  right: 28px;
   top: 100px;
   background-color: ${(props) => props.theme.tertiary};
   color: white;
   padding: 4px 18px;
   .icon {
-    font-size: 26px;
+    font-size: 30px;
     margin-right: 10px;
   }
 `;
@@ -83,4 +82,5 @@ const AlertMessage = styled.div`
   display: flex;
   align-items: center;
   padding: 2px;
+  font-size: 1.7rem;
 `;
