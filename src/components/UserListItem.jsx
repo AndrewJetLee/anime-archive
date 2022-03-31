@@ -20,7 +20,13 @@ const UserListItem = ({
   const [alertStatus, toggleAlertStatus] = useState(false);
 
   useEffect(() => {
-    setMedia(item);
+    let isMounted = true;
+    if (isMounted) {
+      setMedia(item);
+    }
+    return (() => {
+      isMounted = false;
+    })
   }, [filteredList]);
 
   const handleClick = async (e) => {

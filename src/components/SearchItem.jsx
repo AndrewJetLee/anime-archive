@@ -38,7 +38,7 @@ const SearchItem = ({ item }) => {
           {type !== "characters" && (
             <Genres>
               {item.genres?.map((genre, i) => (
-                <>{i < 5 && <Genre key={i}>{genre.name}</Genre>}</>
+               i < 5 && (<Genre key={i}>{genre.name}</Genre>)
               ))}
             </Genres>
           )}

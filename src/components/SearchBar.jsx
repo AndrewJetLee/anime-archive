@@ -5,7 +5,6 @@ import { jikanRequest } from "../requestMethods";
 import { useNavigate } from "react-router-dom";
 
 const SearchBar = ({ filters, genreFilter, type }) => {
-
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
 
@@ -44,9 +43,8 @@ const SearchBar = ({ filters, genreFilter, type }) => {
       searchQuery += `?genres=${genreString}`;
     }
     try {
-      const anime = await jikanRequest.get(`/anime${searchQuery}`);
-      const manga = await jikanRequest.get(`/manga${searchQuery}`);
       if (type === "anime") {
+        const anime = await jikanRequest.get(`/anime${searchQuery}`);
         navigate(`/search${searchQuery}`, {
           state: {
             anime: anime.data,
@@ -55,6 +53,7 @@ const SearchBar = ({ filters, genreFilter, type }) => {
           },
         });
       } else {
+        const manga = await jikanRequest.get(`/manga${searchQuery}`);
         navigate(`/search${searchQuery}`, {
           state: {
             anime: null,

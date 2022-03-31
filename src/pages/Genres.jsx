@@ -203,9 +203,9 @@ const Genres = () => {
 
         <GenresListWrapper>
           {genres.map((genre, i) => (
-            <>
+            <GenreWrapper key={i}>
               {loading ? (
-                <SkeletonGenre key={i}>
+                <SkeletonGenre>
                   <Skeleton baseColor="#FB9935" width="100%" height="100%" />
                 </SkeletonGenre>
               ) : (
@@ -244,7 +244,7 @@ const Genres = () => {
                   )}
                 </Genre>
               )}
-            </>
+            </GenreWrapper>
           ))}
         </GenresListWrapper>
       </Wrapper>
@@ -275,6 +275,8 @@ const Genre = styled.div`
     opacity: 0.8;
   }
 `;
+
+const GenreWrapper = styled.div``
 
 const SkeletonGenre = styled.div`
   width: 220px;
