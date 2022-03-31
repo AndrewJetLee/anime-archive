@@ -116,7 +116,7 @@ const Media = () => {
               <AddToListTitle>Add to My List</AddToListTitle>
 
               <StatusWrapper>
-                <label for="status">Status: </label>
+                <label>Status: </label>
                 <StatusDropdown
                   name="status"
                   onChange={(e) => setStatusDropdown(e.target.value)}
@@ -130,19 +130,19 @@ const Media = () => {
                 </StatusDropdown>
               </StatusWrapper>
               <RatingWrapper>
-                <label for="rating">Rating: </label>
+                <label >Rating: </label>
                 <RatingDropdown
                   name="rating"
                   onChange={(e) => setRatingDropdown(e.target.value)}
                 >
                   <option value="">Select</option>
                   {new Array(10).fill("").map((item, i) => (
-                    <option value={i + 1}>{i + 1}</option>
+                    <option key={i} value={i + 1}>{i + 1}</option>
                   ))}
                 </RatingDropdown>
               </RatingWrapper>
               <EpisodesWatchedWrapper>
-                <label for="episodes">Episodes: </label>
+                <label>Episodes: </label>
                 <EpisodesWatched
                   placeholder="0"
                   onChange={(e) => {
@@ -186,9 +186,9 @@ const Media = () => {
                   <strong>Genres: </strong>
                   {item.genres?.map((genre, i) =>
                     i === item.genres.length - 1 ? (
-                      <span>{genre.name} </span>
+                      <span key={i}>{genre.name} </span>
                     ) : (
-                      <span>{genre.name}, </span>
+                      <span key={i}>{genre.name}, </span>
                     )
                   )}
                 </li>
@@ -196,9 +196,9 @@ const Media = () => {
                   <strong>Themes: </strong>
                   {item.themes.map((theme, i) =>
                     i === item.themes.length - 1 ? (
-                      <span>{theme.name} </span>
+                      <span key={i}>{theme.name} </span>
                     ) : (
-                      <span>{theme.name}, </span>
+                      <span key={i}>{theme.name}, </span>
                     )
                   )}
                 </li>
@@ -206,9 +206,9 @@ const Media = () => {
                   <strong>Demographics: </strong>
                   {item.demographics?.map((demographic, i) =>
                     i === item.demographics.length - 1 ? (
-                      <span>{demographic.name} </span>
+                      <span key={i}>{demographic.name} </span>
                     ) : (
-                      <span>{demographic.name}, </span>
+                      <span key={i}>{demographic.name}, </span>
                     )
                   )}
                 </li>
@@ -226,9 +226,9 @@ const Media = () => {
                   <strong>Producers: </strong>
                   {item.producers?.map((producer, i) =>
                     i === item.producers.length - 1 ? (
-                      <span>{producer.name} </span>
+                      <span key={i}>{producer.name} </span>
                     ) : (
-                      <span>{producer.name}, </span>
+                      <span key={i}>{producer.name}, </span>
                     )
                   )}
                   {item.producers && item.producers.length === 0 && (
@@ -266,8 +266,8 @@ const Media = () => {
 
                 <li>
                   <strong>Genres: </strong>
-                  {item.genres?.map((genre) => (
-                    <a href="#">{genre.name} </a>
+                  {item.genres?.map((genre, i) => (
+                    <span key={i}>{genre.name} </span>
                   ))}
                 </li>
                 {
@@ -306,7 +306,7 @@ const Media = () => {
                   {item.score ? item.score : item.scored ? item.scored : "N/A"}
                 </li>
                 <li>
-                  <strong>Ranked:</strong> #{item.rank || "N/A"}
+                  <strong>Ranked:</strong> {item.rank ? "#" + item.rank : "N/A"}
                 </li>
                 <li>
                   <strong>Popularity: </strong>#{item.popularity}
@@ -357,7 +357,7 @@ const Media = () => {
               <Data>
                 <ScoreData>
                   <span>
-                    Ranked <strong>#{item.rank || "N/A"}</strong>
+                    Ranked <strong>{item.rank ? "#" + item.rank : "N/A"}</strong>
                   </span>
                   <span>
                     Popularity <strong>#{item.popularity}</strong>

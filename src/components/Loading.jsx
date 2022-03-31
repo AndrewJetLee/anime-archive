@@ -6,8 +6,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 const Loading = ({ count }) => {
   return (
     <Container>
-      {new Array(count).fill(" ").map(() => (
-        <SkeletonItem>
+      {new Array(count).fill(" ").map((item, i) => (
+        <SkeletonItem key={i}>
           <Skeleton width="100%" height="400px" />
         </SkeletonItem>
       ))}
