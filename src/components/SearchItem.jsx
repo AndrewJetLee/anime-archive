@@ -33,7 +33,7 @@ const SearchItem = ({ item }) => {
       <Container>
         <Header>
           <Title onClick={handleClick}>
-            {item.name ? item.name : item.title}
+            {item.name ? item.name : item.title.length > 70 ? item.title.slice(0, 90) + "..." : item.title}
           </Title>
           {type !== "characters" && (
             <Genres>
@@ -109,7 +109,7 @@ const Header = styled.header`
 const Title = styled.span`
   display: flex;
   color: ${(props) => props.theme.main};
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 500;
   text-align: center;
   padding: 5px;

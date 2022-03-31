@@ -269,6 +269,7 @@ const Genre = styled.div`
   padding: 8px 10px;
   background-color: ${(props) => props.theme.tertiary};
   color: white;
+  height: 40px;
   cursor: pointer;
   transition: opacity 0.167s ease-in-out;
   :hover {

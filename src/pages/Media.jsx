@@ -27,6 +27,10 @@ const Media = () => {
   const item = location.state;
 
   useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  useEffect(() => {
     if (type === "characters") {
       getVoiceActors();
     } else {
