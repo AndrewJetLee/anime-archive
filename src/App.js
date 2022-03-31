@@ -11,12 +11,8 @@ import Browse from "./pages/Browse";
 import Genres from "./pages/Genres";
 import Genre from "./pages/Genre";
 import Seasonal from "./pages/Seasonal";
-import { useEffect } from "react";
 
 function App() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
   return (
     <Container className="App">
       <Router>
