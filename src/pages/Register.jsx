@@ -108,7 +108,9 @@ const Register = () => {
       </Header>
       <Wrapper>
         {loading ? (
-          <CircularProgress color="secondary"/>
+          <Loading>
+            <CircularProgress color="inherit" />
+          </Loading>
         ) : (
           <Content>
             {success && (
@@ -426,3 +428,11 @@ const InputErrorMessage = styled.div`
     font-size: 3rem;
   }
 `;
+
+const Loading = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: ${props => props.theme.tertiary}
+`

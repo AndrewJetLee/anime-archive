@@ -148,7 +148,7 @@ const UserAnimeList = () => {
       </Header>
       <Wrapper>
         <AnimeList>
-          { loading && <Loading><CircularProgress color="secondary"></CircularProgress></Loading>}
+          { loading && <Loading><CircularProgress color="inherit"></CircularProgress></Loading>}
           {!loading && filteredList.length === 0 && (
             <NoList>
               <NoListContent>
@@ -368,4 +368,5 @@ const NoListButton = styled.a`
 const Loading = styled.div`
   display: flex;
   justify-content: center;
+  color: ${props => props.theme.tertiary}
 `
