@@ -78,5 +78,6 @@ export const Container = styled.div`
 export const Wrapper = styled.div`
   display: flex;
   width: 70%;
+  min-height: 80vh;
   flex-direction: column;
 `;

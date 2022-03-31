@@ -6,13 +6,17 @@ import Loading from "./Loading";
 const List = ({ type, items, getNextPage, pagination, loading }) => {
   const containsItems = items.length > 0;
 
-  return (
+  return loading ? (
+    <Loading count={10} />
+  ) : (
     <>
       {type === "search" ? (
         <Container containsItems={containsItems}>
           {containsItems ? (
-            items?.map((item, i) => <SearchItem type={type} item={item} key={i} />)
-          ) : (
+            items?.map((item, i) => (
+              <SearchItem type={type} item={item} key={i} />
+            ))
+          ) :  (
             <NoneFound>
               Sorry, your search term did not return any results
             </NoneFound>
@@ -20,27 +24,17 @@ const List = ({ type, items, getNextPage, pagination, loading }) => {
         </Container>
       ) : (
         <>
-          {loading ? (
-            <Loading count={10}/>
-          ) :  <InfiniteScroll
-          dataLength={items.length}
-          next={getNextPage}
-          hasMore={pagination.has_next_page}
-          loader={
-            <Loading count={5}/>
-          }
-        >
-          <Container containsItems={containsItems}>
-            {containsItems ? (
-              items?.map((item, i) => <SearchItem item={item} key={i} />)
-            ) : (
-              <NoneFound>
-                Sorry, your search term did not return any results
-              </NoneFound>
-            )}
-          </Container>
-        </InfiniteScroll>}
-         
+          <InfiniteScroll
+            dataLength={items.length}
+            next={getNextPage}
+            hasMore={pagination.has_next_page}
+            loader={<Loading count={5} />}
+          >
+            <Container containsItems={containsItems}>
+              {containsItems &&
+                items?.map((item, i) => <SearchItem item={item} key={i} />)}
+            </Container>
+          </InfiniteScroll>
         </>
       )}
     </>

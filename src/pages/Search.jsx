@@ -37,6 +37,7 @@ const Search = () => {
     setActiveMedia("");
   }, [location.state]);
 
+
   const getNextPage = async () => {
     try {
       if (activeMedia === "anime") {
