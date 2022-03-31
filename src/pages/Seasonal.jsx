@@ -18,7 +18,7 @@ const Seasonal = () => {
     seasons[getSeason(new Date())]
   );
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-  const [pagination, setPagination] = useState({})
+  const [pagination, setPagination] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [allAnime, setAllAnime] = useState([]);
   const [sort, setSort] = useState("");
@@ -52,7 +52,6 @@ const Seasonal = () => {
     } catch (err) {
       console.log(err);
     }
-    
   };
 
   const getNextPage = async () => {
@@ -120,8 +119,8 @@ const Seasonal = () => {
               <option className="default" value="">
                 Select
               </option>
-              <option value="members">Members</option>
               <option value="score">Score</option>
+              <option value="members">Members</option>
             </Sort>
           </SortWrapper>
           <SelectSeasonWrapper>
@@ -149,7 +148,12 @@ const Seasonal = () => {
         </SeasonTabs>
 
         <Content>
-          <List items={allAnime} getNextPage={getNextPage} pagination={pagination} loading={loading}></List>
+          <List
+            items={allAnime}
+            getNextPage={getNextPage}
+            pagination={pagination}
+            loading={loading}
+          ></List>
         </Content>
       </Wrapper>
       <Footer />

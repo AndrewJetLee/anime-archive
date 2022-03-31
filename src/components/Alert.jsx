@@ -1,14 +1,23 @@
 import styled, { keyframes, css } from "styled-components";
 import ErrorOutlinedIcon from "@mui/icons-material/ErrorOutlined";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const Alert = ({ alertStatus, message, type }) => {
   const [alert, toggleAlert] = useState(alertStatus);
+  const isMounted = useRef(true);
 
   useEffect(() => {
-    handleAlert();
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isMounted) handleAlert();
   }, [alertStatus]);
+
+  
 
   const handleAlert = async () => {
     if (alertStatus) {

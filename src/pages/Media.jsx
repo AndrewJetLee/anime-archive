@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { publicRequest, jikanRequest } from "../requestMethods";
 import Nav from "../components/Nav";
@@ -24,17 +24,23 @@ const Media = () => {
   const [episodesWatched, setEpisodesWatched] = useState(0);
   const [error, toggleError] = useState(false);
 
+  const isMounted = useRef(true);
   const item = location.state;
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    return () => {
+      isMounted.current = false;
+    };
   }, []);
 
   useEffect(() => {
-    if (type === "characters") {
-      getVoiceActors();
-    } else {
-      getReviews();
+    if (isMounted.current) {
+      if (type === "characters") {
+        getVoiceActors();
+      } else {
+        getReviews();
+      }
     }
   }, [type, id]);
 
@@ -134,14 +140,16 @@ const Media = () => {
                 </StatusDropdown>
               </StatusWrapper>
               <RatingWrapper>
-                <label >Rating: </label>
+                <label>Rating: </label>
                 <RatingDropdown
                   name="rating"
                   onChange={(e) => setRatingDropdown(e.target.value)}
                 >
                   <option value="">Select</option>
                   {new Array(10).fill("").map((item, i) => (
-                    <option key={i} value={i + 1}>{i + 1}</option>
+                    <option key={i} value={i + 1}>
+                      {i + 1}
+                    </option>
                   ))}
                 </RatingDropdown>
               </RatingWrapper>
@@ -361,7 +369,8 @@ const Media = () => {
               <Data>
                 <ScoreData>
                   <span>
-                    Ranked <strong>{item.rank ? "#" + item.rank : "N/A"}</strong>
+                    Ranked{" "}
+                    <strong>{item.rank ? "#" + item.rank : "N/A"}</strong>
                   </span>
                   <span>
                     Popularity <strong>#{item.popularity}</strong>

@@ -5,6 +5,7 @@ import Loading from "./Loading";
 
 const List = ({ type, items, getNextPage, pagination, loading }) => {
   const containsItems = items.length > 0;
+  const user = JSON.parse(sessionStorage.getItem("user"));
 
   return loading ? (
     <Loading count={10} />
@@ -32,7 +33,7 @@ const List = ({ type, items, getNextPage, pagination, loading }) => {
           >
             <Container containsItems={containsItems}>
               {containsItems &&
-                items?.map((item, i) => <SearchItem item={item} key={i} />)}
+                items?.map((item, i) => <SearchItem user={user} item={item} key={i} />)}
             </Container>
           </InfiniteScroll>
         </>

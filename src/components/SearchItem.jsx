@@ -4,22 +4,31 @@ import { useNavigate } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
 import PersonIcon from "@mui/icons-material/Person";
 import Modal from "./Modal";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Alert from "./Alert";
 
-const SearchItem = ({ item }) => {
+const SearchItem = ({ item, user }) => {
   const navigate = useNavigate();
   const [modal, toggleModal] = useState(false);
   const [alertStatus, toggleAlertStatus] = useState(false);
   const [type, setType] = useState(null);
+  const isMounted = useRef(true);
 
   useEffect(() => {
-    if (item.episodes || item.episodes === null) {
-      setType("anime");
-    } else if (item.chapters || item.chapters === null) {
-      setType("manga");
-    } else {
-      setType("characters");
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isMounted.current) {
+      if (item.episodes || item.episodes === null) {
+        setType("anime");
+      } else if (item.chapters || item.chapters === null) {
+        setType("manga");
+      } else {
+        setType("characters");
+      }
     }
   }, []);
 
@@ -33,13 +42,17 @@ const SearchItem = ({ item }) => {
       <Container>
         <Header>
           <Title onClick={handleClick}>
-            {item.name ? item.name : item.title.length > 70 ? item.title.slice(0, 90) + "..." : item.title}
+            {item.name
+              ? item.name
+              : item.title.length > 70
+              ? item.title.slice(0, 90) + "..."
+              : item.title}
           </Title>
           {type !== "characters" && (
             <Genres>
-              {item.genres?.map((genre, i) => (
-               i < 5 && (<Genre key={i}>{genre.name}</Genre>)
-              ))}
+              {item.genres?.map(
+                (genre, i) => i < 5 && <Genre key={i}>{genre.name}</Genre>
+              )}
             </Genres>
           )}
         </Header>
@@ -66,7 +79,13 @@ const SearchItem = ({ item }) => {
             {type === "anime" ? (
               <AddToList
                 onClick={() => {
-                  toggleModal(true);
+                  if (user) toggleModal(true);
+                  else {
+                    toggleAlertStatus(true);
+                    setTimeout(() => {
+                      toggleAlertStatus(false);
+                    }, 1000);
+                  }
                 }}
               >
                 Add To List
@@ -77,7 +96,18 @@ const SearchItem = ({ item }) => {
           </Bottom>
         )}
       </Container>
-      <Alert alertStatus={alertStatus} message="Successfully added to list!" />
+      {user ? (
+        <Alert
+          alertStatus={alertStatus}
+          message="Successfully added to list!"
+        />
+      ) : (
+        <Alert
+          alertStatus={alertStatus}
+          message="Please login to add to list!"
+        />
+      )}
+
       {modal && (
         <Modal
           media={item}

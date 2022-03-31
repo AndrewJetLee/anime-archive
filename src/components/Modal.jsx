@@ -67,7 +67,7 @@ const Modal = ({media, title, toggleAlertStatus, toggleModal, modal, type, helpe
         </Header>
         <Title>Anime Title: {media.title}</Title>
         <Status>
-          <label for="status">Status: </label>
+          <label htmlFor="status">Status: </label>
           <StatusDropdown
             name="status"
             onChange={(e) => setStatusDropdown(e.target.value)}
@@ -81,24 +81,24 @@ const Modal = ({media, title, toggleAlertStatus, toggleModal, modal, type, helpe
           </StatusDropdown>
         </Status>
         <Watched>
-          <label for="episodes">Episodes: </label>
+          <label htmlFor="episodes">Episodes: </label>
           <EpisodesWatched
             placeholder="0"
             onChange={(e) => {
               setEpisodesWatched(e.target.value);
             }}
           />
-          /{media.episodes}
+          /{media.episodes || "?"}
         </Watched>
         <Score>
-          <label for="rating">Rating: </label>
+          <label htmlFor="rating">Rating: </label>
           <RatingDropdown
             name="rating"
             onChange={(e) => setRatingDropdown(e.target.value)}
           >
             <option value="">Select</option>
             {new Array(10).fill("").map((item, i) => (
-              <option value={i + 1}>{i + 1}</option>
+              <option key={i} value={i + 1}>{i + 1}</option>
             ))}
           </RatingDropdown>
         </Score>
