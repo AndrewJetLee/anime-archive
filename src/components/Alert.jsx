@@ -8,13 +8,12 @@ const Alert = ({ alertStatus, message, type }) => {
   const isMounted = useRef(true);
 
   useEffect(() => {
+    if (isMounted) {
+      handleAlert();
+    }
     return () => {
       isMounted.current = false;
     };
-  }, []);
-
-  useEffect(() => {
-    if (isMounted) handleAlert();
   }, [alertStatus]);
 
   

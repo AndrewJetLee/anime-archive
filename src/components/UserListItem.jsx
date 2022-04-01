@@ -21,15 +21,12 @@ const UserListItem = ({
   const isMounted = useRef(true);
 
   useEffect(() => {
-    return (() => {
-      isMounted.current = false;
-    })
-  }, []);
-
-  useEffect(() => {
     if (isMounted.current) {
       setMedia(item);
     }
+    return (() => {
+      isMounted.current = false;
+    })
   }, [filteredList]);
 
   const handleClick = async (e) => {

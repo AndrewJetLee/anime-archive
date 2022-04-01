@@ -29,9 +29,6 @@ const Media = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    return () => {
-      isMounted.current = false;
-    };
   }, []);
 
   useEffect(() => {
@@ -42,6 +39,9 @@ const Media = () => {
         getReviews();
       }
     }
+    return () => {
+      isMounted.current = false;
+    };
   }, [type, id]);
 
   const handleError = async () => {

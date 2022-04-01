@@ -15,12 +15,6 @@ const SearchItem = ({ item, user }) => {
   const isMounted = useRef(true);
 
   useEffect(() => {
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-
-  useEffect(() => {
     if (isMounted.current) {
       if (item.episodes || item.episodes === null) {
         setType("anime");
@@ -30,6 +24,9 @@ const SearchItem = ({ item, user }) => {
         setType("characters");
       }
     }
+    return () => {
+      isMounted.current = false;
+    };
   }, []);
 
   const handleClick = async (e) => {

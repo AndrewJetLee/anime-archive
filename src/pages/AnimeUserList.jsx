@@ -156,7 +156,7 @@ const UserAnimeList = () => {
                 <NoListText>
                   No anime found. Try adding more anime to your list first!
                 </NoListText>
-                <NoListButton>Browse Anime</NoListButton>
+                <NoListButton href="/browse/top/anime">Browse Anime</NoListButton>
               </NoListContent>
             </NoList>
           )}
