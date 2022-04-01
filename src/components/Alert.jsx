@@ -63,6 +63,7 @@ export const fadeIn = keyframes`
 export const AlertWrapper = styled.div`
   pointer-events: none;
   opacity: 0;
+  z-index: 1000;
   ${(props) =>
     props.alert
       ? css`
@@ -76,7 +77,7 @@ export const AlertWrapper = styled.div`
   display: flex;
   align-items: center;
   position: fixed;
-  right: 28px;
+  right: 25px;
   top: 100px;
   background-color: ${(props) => props.theme.tertiary};
   color: white;

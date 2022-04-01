@@ -17,7 +17,7 @@ const List = ({ type, items, getNextPage, pagination, loading }) => {
             items?.map((item, i) => (
               <SearchItem type={type} item={item} key={i} />
             ))
-          ) :  (
+          ) : (
             <NoneFound>
               Sorry, your search term did not return any results
             </NoneFound>
@@ -25,17 +25,25 @@ const List = ({ type, items, getNextPage, pagination, loading }) => {
         </Container>
       ) : (
         <>
-          <InfiniteScroll
-            dataLength={items.length}
-            next={getNextPage}
-            hasMore={pagination.has_next_page}
-            loader={<Loading count={5} />}
-          >
-            <Container containsItems={containsItems}>
-              {containsItems &&
-                items?.map((item, i) => <SearchItem user={user} item={item} key={i} />)}
-            </Container>
-          </InfiniteScroll>
+          {containsItems ? (
+            <InfiniteScroll
+              dataLength={items.length}
+              next={getNextPage}
+              hasMore={pagination.has_next_page}
+              loader={<Loading count={5} />}
+            >
+              <Container containsItems={containsItems}>
+                {containsItems &&
+                  items?.map((item, i) => (
+                    <SearchItem user={user} item={item} key={i} />
+                  ))}
+              </Container>
+            </InfiniteScroll>
+          ) : (
+            <NoneFound>
+              Sorry, your query did not return any results
+            </NoneFound>
+          )}
         </>
       )}
     </>
