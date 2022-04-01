@@ -394,9 +394,9 @@ const SuccessText = styled.div`
   margin-top: 10px;
 `;
 
-const Failure = styled(Success)``;
+export const Failure = styled(Success)``;
 
-const FailureHeader = styled.header`
+export const FailureHeader = styled.header`
   width: 100%;
   background-color: ${(props) => props.theme.main};
   flex: 1.5;
@@ -409,9 +409,9 @@ const FailureHeader = styled.header`
   }
 `;
 
-const FailureContent = styled(SuccessContent)``;
+export const FailureContent = styled(SuccessContent)``;
 
-const FailureText = styled(SuccessText)``;
+export const FailureText = styled(SuccessText)``;
 
 const LoginButton = styled(CreateButton)`
   width: 80%;

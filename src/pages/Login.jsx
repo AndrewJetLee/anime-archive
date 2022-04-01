@@ -4,12 +4,20 @@ import Footer from "../components/Footer";
 import { useState } from "react";
 import { publicRequest } from "../requestMethods";
 import { useNavigate } from "react-router-dom";
+import {
+  Failure,
+  FailureContent,
+  FailureHeader,
+  FailureText,
+} from "./Register";
 import Alert from "../components/Alert";
+import ErrorIcon from "@mui/icons-material/Error";
 
 const Login = () => {
   const navigate = useNavigate();
   const [forgot, toggleForgot] = useState(false);
   const [alert, toggleAlert] = useState(false);
+  const [failure, toggleFailure] = useState(false);
   const [formInputs, setFormInputs] = useState({
     username: "",
     password: "",
@@ -31,6 +39,7 @@ const Login = () => {
       sessionStorage.setItem("user", JSON.stringify(res.data));
       navigate("/");
     } catch (err) {
+      toggleFailure(true);
       console.log(err);
     }
   };
@@ -63,11 +72,34 @@ const Login = () => {
               <ResetPassword onClick={(e) => handleForgotPassword(e)}>
                 Reset Your Password
               </ResetPassword>
-              <Forgot onClick={() => toggleForgot(!forgot)}>Back to Sign In</Forgot>
+              <Forgot onClick={() => toggleForgot(!forgot)}>
+                Back to Sign In
+              </Forgot>
             </Form>
           </Content>
         ) : (
           <Content>
+            {failure && (
+              <Failure>
+                <FailureContent>
+                  <FailureHeader>
+                    <ErrorIcon className="errorIcon" />
+                  </FailureHeader>
+                  <FailureText>
+                    <h1>Error logging in!</h1>
+                    <p>
+                      Please check your username and password and try again!
+                    </p>
+                  </FailureText>
+                  <TryAgainButton
+                    onClick={() => toggleFailure(false)}
+                    failed={true}
+                  >
+                    Try Again
+                  </TryAgainButton>
+                </FailureContent>
+              </Failure>
+            )}
             <Form onChange={handleFormChange}>
               <UsernameWrapper>
                 <Label>Username</Label>
@@ -83,10 +115,10 @@ const Login = () => {
               Forgot your password?
             </Forgot>
             <Register href="/register">Create account</Register>
-          </Content> 
+          </Content>
         )}
       </Wrapper>
-      <Alert alertStatus={alert} message="In Development" type="error"/>
+      <Alert alertStatus={alert} message="In Development" type="error" />
       <Footer />
     </Container>
   );
@@ -161,7 +193,7 @@ const Password = styled(Username)``;
 const Label = styled.label`
   font-size: 1.5rem;
   margin-bottom: 5px;
-  font-weight: 600; 
+  font-weight: 600;
 `;
 
 const LoginButton = styled.button`
@@ -174,11 +206,17 @@ const LoginButton = styled.button`
   border-radius: 4px;
   margin-bottom: 25px;
   cursor: pointer;
-  transition: opacity .167s ease-in-out;
+  transition: opacity 0.167s ease-in-out;
   :hover {
-    opacity: .8;
+    opacity: 0.8;
   }
 `;
+
+const TryAgainButton = styled(LoginButton)`
+  width: 80%;
+  background-color: ${(props) => (props.failed ? props.theme.main : "green")};
+`
+
 const Register = styled.a`
   height: 45px;
   border: none;
@@ -202,7 +240,5 @@ const ForgotFormDescription = styled.div`
 `;
 
 const ResetPassword = styled(LoginButton)``;
-const EmailInput = styled(Username)`
-`;
-const EmailWrapper = styled(UsernameWrapper)`
-`;
+const EmailInput = styled(Username)``;
+const EmailWrapper = styled(UsernameWrapper)``;
