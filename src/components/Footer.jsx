@@ -193,6 +193,9 @@ const LinkListItem = styled.li`
   color: ${(props) => props.theme.main};
   margin-bottom: 15px;
   cursor: pointer;
+  :hover {
+    text-decoration: underline;
+  }
 `;
 
 const Content = styled.section`
