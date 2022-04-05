@@ -3,6 +3,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
+![aa-seasonal-page](https://user-images.githubusercontent.com/73206753/161662184-78a456e8-ce3c-42de-ad6d-a551f1191089.gif)
 
 In the project directory, you can run:
 
@@ -44,7 +45,6 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-![aa-home-page](https://user-images.githubusercontent.com/73206753/161659412-df7e7894-7662-46da-8769-8b25eaa427ed.gif)
 
 ### Code Splitting
 
